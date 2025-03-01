@@ -1,0 +1,29 @@
+name: Auto-Kanban Workflow
+
+on:
+  issues:
+    types: [assigned, reopened, closed]
+  pull_request:
+    types: [opened, review_requested, merged]
+
+jobs:
+  kanban_automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issue to "In Progress" when assigned
+        if: github.event_name == 'issues' && github.event.action == 'assigned'
+        run: gh project item edit --project "HoneyHole MVP Roadmap" --id ${{ github.event.issue.id }} --field Status --value "In Progress"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Move issue to "Review" when PR is created
+        if: github.event_name == 'pull_request' && github.event.action == 'review_requested'
+        run: gh project item edit --project "HoneyHole MVP Roadmap" --id ${{ github.event.pull_request.id }} --field Status --value "Review"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Move issue to "Done" when PR is merged
+        if: github.event.pull_request.merged == true
+        run: gh project item edit --project "HoneyHole MVP Roadmap" --id ${{ github.event.pull_request.id }} --field Status --value "Done"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
