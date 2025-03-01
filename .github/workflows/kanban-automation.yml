@@ -1,43 +1,40 @@
-name: Auto-Kanban Workflow
+name: Automate Kanban Board
 
 on:
   issues:
-    types: [assigned, reopened, closed]
+    types: [labeled, unlabeled, opened, edited]
   pull_request:
-    types: [opened, review_requested, merged]
+    types: [opened, edited]
 
 jobs:
-  kanban_automation:
+  move-issues:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Install jq (for JSON processing)
-        run: sudo apt-get install jq
+    - name: Move issues based on labels
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const columnName = {
+            'todo': 'To do',
+            'in-progress': 'In progress',
+            'done': 'Done'
+          }[context.payload.label.name.toLowerCase()];
 
-      - name: Authenticate GitHub CLI
-        run: gh auth setup-git
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if (columnName) {
+            const columns = await github.projects.listColumns({
+              project_id: https://github.com/users/BryanZin123/projects/7 // Replace with your project ID
+            });
 
-      - name: Get Project ID
-        id: get_project
-        run: echo "PROJECT_ID=$(gh project list --owner ${{ github.repository_owner }} --format json | jq -r '.[] | select(.title==\"HoneyHole MVP Roadmap\") | .id')" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            const column = columns.data.find(col => col.name === columnName);
 
-      - name: Move issue to "In Progress" when assigned
-        if: github.event_name == 'issues' && github.event.action == 'assigned'
-        run: gh project item-edit --id "${{ github.event.issue.node_id }}" --project-id "$PROJECT_ID" --field "Status=In Progress"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Move issue to "Review" when PR is created
-        if: github.event_name == 'pull_request' && github.event.action == 'review_requested'
-        run: gh project item-edit --id "${{ github.event.pull_request.node_id }}" --project-id "$PROJECT_ID" --field "Status=Review"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Move issue to "Done" when PR is merged
-        if: github.event.pull_request.merged == true
-        run: gh project item-edit --id "${{ github.event.pull_request.node_id }}" --project-id "$PROJECT_ID" --field "Status=Done"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            if (column) {
+              await github.projects.moveProjectCard({
+                card_id: context.payload.issue.node_id,
+                column_id: column.id,
+                position: 'top'
+              });
+            }
+          }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
