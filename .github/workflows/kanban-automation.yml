@@ -10,8 +10,11 @@ jobs:
   kanban_automation:
     runs-on: ubuntu-latest
     steps:
+      - name: Install jq (for JSON processing)
+        run: sudo apt-get install jq
+
       - name: Authenticate GitHub CLI
-        run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+        run: gh auth setup-git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -23,18 +26,18 @@ jobs:
 
       - name: Move issue to "In Progress" when assigned
         if: github.event_name == 'issues' && github.event.action == 'assigned'
-        run: gh project item-edit --project-id "$PROJECT_ID" --id "${{ github.event.issue.node_id }}" --field "Status=In Progress"
+        run: gh project item-edit --id "${{ github.event.issue.node_id }}" --project-id "$PROJECT_ID" --field "Status=In Progress"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Move issue to "Review" when PR is created
         if: github.event_name == 'pull_request' && github.event.action == 'review_requested'
-        run: gh project item-edit --project-id "$PROJECT_ID" --id "${{ github.event.pull_request.node_id }}" --field "Status=Review"
+        run: gh project item-edit --id "${{ github.event.pull_request.node_id }}" --project-id "$PROJECT_ID" --field "Status=Review"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Move issue to "Done" when PR is merged
         if: github.event.pull_request.merged == true
-        run: gh project item-edit --project-id "$PROJECT_ID" --id "${{ github.event.pull_request.node_id }}" --field "Status=Done"
+        run: gh project item-edit --id "${{ github.event.pull_request.node_id }}" --project-id "$PROJECT_ID" --field "Status=Done"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
