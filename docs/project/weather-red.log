@@ -1,0 +1,189 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/nws.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/nws.test.ts (13 tests | 13 failed) 13ms
+   ❯ NWS forecast adapter contracts, test fixtures only (13)
+     × normalizes Fahrenheit and wind ranges and distinguishes forecast provenance 6ms
+     × normalizes metric units 1ms
+     × never coerces absent fields to calm wind or zero temperature 0ms
+     × marks stale forecast updates 1ms
+     × rejects future forecast update times 0ms
+     × rejects invalid dates 2026-02-30T12:00:00Z 0ms
+     × rejects invalid dates bad-time 0ms
+     × does not return expired periods 0ms
+     × rejects reverse time windows 0ms
+     × rejects untrusted discovery URLs before following them 1ms
+     × reports unavailable hourly coastal coverage 1ms
+     × isolates network failures as unavailable data 0ms
+     × rejects invalid coordinates before network access 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > normalizes Fahrenheit and wind ranges and distinguishes forecast provenance
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:12:151
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > normalizes metric units
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:13:140
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > never coerces absent fields to calm wind or zero temperature
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:14:169
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > marks stale forecast updates
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:15:107
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects future forecast update times
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:16:115
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects invalid dates 2026-02-30T12:00:00Z
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects invalid dates bad-time
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:17:145
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > does not return expired periods
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:18:156
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects reverse time windows
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:19:125
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects untrusted discovery URLs before following them
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:20:225
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > reports unavailable hourly coastal coverage
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:21:175
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > isolates network failures as unavailable data
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:22:175
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯
+
+ FAIL  tests/nws.test.ts > NWS forecast adapter contracts, test fixtures only > rejects invalid coordinates before network access
+Error: Not implemented
+ ❯ NwsWeatherProvider.getForecast src/infrastructure/nws.ts:6:125
+      4| export class NwsWeatherProvider implements WeatherProvider {
+      5|  constructor(private fetcher:typeof fetch=fetch,private now:()=>Date=(…
+      6|  async getForecast(coordinates:Coordinates):Promise<WeatherForecast>{v…
+       |                                                                                                                             ^
+      7| }
+      8|
+ ❯ tests/nws.test.ts:23:125
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  13 failed (13)
+   Start at  03:27:14
+   Duration  863ms (environment 77%, setup 14%, transform 6%, tests 2%, import 1%, worker 1%)
+

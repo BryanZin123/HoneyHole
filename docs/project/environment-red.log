@@ -1,0 +1,42 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/environment.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/environment.test.ts (2 tests | 2 failed) 9ms
+   × uses verified station coordinates and preserves marine results when forecast is unavailable 4ms
+   × does not query weather for a station outside the active region 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/environment.test.ts > uses verified station coordinates and preserves marine results when forecast is unavailable
+Error: Not implemented
+ ❯ getEnvironmentalConditions src/application/get-environmental-conditions.ts:6:219
+
+ ❯ tests/environment.test.ts:9:183
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/environment.test.ts > does not query weather for a station outside the active region
+AssertionError: expected [Function] to throw error matching /region/ but got 'Not implemented'
+
+- Expected:
+/region/
+
++ Received:
+"Not implemented"
+
+ ❯ tests/environment.test.ts:10:293
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  03:28:23
+   Duration  712ms (environment 78%, setup 14%, transform 5%, tests 2%, import 1%, worker 1%)
+

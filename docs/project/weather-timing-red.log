@@ -1,0 +1,30 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/nws.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/nws.test.ts (14 tests | 1 failed) 50ms
+   × accepts forecasts generated during the request, using response receipt time 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nws.test.ts > accepts forecasts generated during the request, using response receipt time
+AssertionError: expected 'unavailable' to be 'available' // Object.is equality
+
+Expected: "available"
+Received: "unavailable"
+
+ ❯ tests/nws.test.ts:170:104
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  03:31:18
+   Duration  874ms (environment 72%, setup 13%, tests 7%, transform 6%, import 1%, worker 1%)
+

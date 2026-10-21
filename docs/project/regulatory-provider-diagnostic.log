@@ -1,0 +1,2 @@
+{"url":"https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/ParkEntryPoints/FeatureServer/2?f=json","status":200,"elapsedMs":4322,"type":"Feature Layer"}
+{"url":"https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/ParkEntryPoints/FeatureServer/2/query?f=geojson&where=PARK_NAME+LIKE+%27%25+SB%27&outFields=*&outSR=4326&returnGeometry=true&resultRecordCount=500&orderByFields=OBJECTID","status":200,"elapsedMs":139,"type":"FeatureCollection","count":63}

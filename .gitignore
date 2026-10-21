@@ -1,0 +1,18 @@
+node_modules/
+.next/
+coverage/
+.env*
+!.env.example
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+.data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+# Retain raw restricted provider payloads locally; publish only summarized verification.
+docs/project/discovery-live.log
+docs/project/regulatory-live-api-retry.log
+
+.vitest/

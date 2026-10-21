@@ -1,0 +1,3 @@
+Full execution: npx vitest run --reporter=json --outputFile=docs/project/current-tests.json
+12 test files passed. 85 tests executed; 85 passed; 0 failed; 0 pending.
+See machine-readable current-tests.json for individual results.

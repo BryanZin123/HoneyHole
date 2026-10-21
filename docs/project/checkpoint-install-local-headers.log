@@ -1,0 +1,52 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "nodedir". This will stop working in the next major version of npm.
+npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm error code 1
+npm error path /tmp/honeyhole-checkpoint-j2eqxnzz/node_modules/better-sqlite3
+npm error command failed
+npm error command sh -c node-gyp rebuild
+npm error gyp info it worked if it ends with ok
+npm error gyp info using node-gyp@12.2.0
+npm error gyp info using node@24.19.0 | linux | x64
+npm error gyp info find Python using Python version 3.12.14 found at "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3"
+npm error gyp WARN read config.gypi ENOENT: no such file or directory, open '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/include/node/config.gypi'
+npm error gyp info spawn /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3
+npm error gyp info spawn args [
+npm error gyp info spawn args '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py',
+npm error gyp info spawn args 'binding.gyp',
+npm error gyp info spawn args '-f',
+npm error gyp info spawn args 'make',
+npm error gyp info spawn args '-I',
+npm error gyp info spawn args '/tmp/honeyhole-checkpoint-j2eqxnzz/node_modules/better-sqlite3/build/config.gypi',
+npm error gyp info spawn args '-I',
+npm error gyp info spawn args '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/node-gyp/addon.gypi',
+npm error gyp info spawn args '-I',
+npm error gyp info spawn args '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/common.gypi',
+npm error gyp info spawn args '-Dlibrary=shared_library',
+npm error gyp info spawn args '-Dvisibility=default',
+npm error gyp info spawn args '-Dnode_root_dir=/opt/codex/runtimes/codex-primary-runtime/dependencies/node',
+npm error gyp info spawn args '-Dnode_gyp_dir=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/node-gyp',
+npm error gyp info spawn args '-Dnode_lib_file=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/$(Configuration)/node.lib',
+npm error gyp info spawn args '-Dmodule_root_dir=/tmp/honeyhole-checkpoint-j2eqxnzz/node_modules/better-sqlite3',
+npm error gyp info spawn args '-Dnode_engine=v8',
+npm error gyp info spawn args '--depth=.',
+npm error gyp info spawn args '--no-parallel',
+npm error gyp info spawn args '--generator-output',
+npm error gyp info spawn args 'build',
+npm error gyp info spawn args '-Goutput_dir=.'
+npm error gyp info spawn args ]
+npm error gyp: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/common.gypi not found (cwd: /tmp/honeyhole-checkpoint-j2eqxnzz/node_modules/better-sqlite3) while reading includes of binding.gyp while trying to load binding.gyp
+npm error gyp ERR! configure error 
+npm error gyp ERR! stack Error: `gyp` failed with exit code: 1
+npm error gyp ERR! stack at ChildProcess.<anonymous> (/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/node-gyp/lib/configure.js:317:18)
+npm error gyp ERR! stack at ChildProcess.emit (node:events:509:28)
+npm error gyp ERR! stack at ChildProcess._handle.onexit (node:internal/child_process:295:12)
+npm error gyp ERR! System Linux 6.18.55
+npm error gyp ERR! command "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node" "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "rebuild"
+npm error gyp ERR! cwd /tmp/honeyhole-checkpoint-j2eqxnzz/node_modules/better-sqlite3
+npm error gyp ERR! node -v v24.19.0
+npm error gyp ERR! node-gyp -v v12.2.0
+npm error gyp ERR! $npm_package_name better-sqlite3
+npm error gyp ERR! $npm_package_version 13.0.3
+npm error gyp ERR! not ok
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-21T21_55_24_147Z-debug-0.log

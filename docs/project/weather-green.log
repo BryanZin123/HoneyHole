@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+
+ Test Files  7 passed (7)
+      Tests  47 passed (47)
+   Start at  03:27:56
+   Duration  1.31s (environment 77%, setup 12%, tests 7%, transform 2%, import 1%, worker 1%)
+

@@ -1,0 +1,87 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/nws.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/nws.test.ts (22 tests | 4 failed) 81ms
+   × accepts forecasts generated during the request, using response receipt time 11ms
+   × enforces the inclusive two-minute clock-skew boundary 2026-10-18T18:02:00Z 3ms
+   × distinguishes an upstream HTTP failure from malformed provider data 2ms
+   × records request and response instants separately 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nws.test.ts > accepts forecasts generated during the request, using response receipt time
+AssertionError: expected 'unavailable' to be 'available' // Object.is equality
+
+Expected: "available"
+Received: "unavailable"
+
+ ❯ tests/nws.test.ts:170:104
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/nws.test.ts > enforces the inclusive two-minute clock-skew boundary 2026-10-18T18:02:00Z
+AssertionError: expected 'unavailable' to be 'available' // Object.is equality
+
+Expected: "available"
+Received: "unavailable"
+
+ ❯ tests/nws.test.ts:173:102
+    171| });
+    172| it.each([['2026-10-18T18:02:00Z','available'],['2026-10-18T18:02:01Z',…
+    173|  const {provider}=fixture(period,timestamp);expect((await provider.get…
+       |                                                                                                      ^
+    174| });
+    175| it.each([null,undefined,'not-an-iso-time','2026-10-18T24:00:00Z'])('re…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/nws.test.ts > distinguishes an upstream HTTP failure from malformed provider data
+AssertionError: expected undefined to be 'provider-http-503' // Object.is equality
+
+- Expected:
+"provider-http-503"
+
++ Received:
+undefined
+
+ ❯ tests/nws.test.ts:181:91
+    179| it('distinguishes an upstream HTTP failure from malformed provider dat…
+    180|  const transport=vi.fn(async()=>new Response('unavailable',{status:503…
+    181|  expect((await new NwsWeatherProvider(transport,now).getForecast(coord…
+       |                                                                                           ^
+    182| });
+    183| it('records request and response instants separately',async()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/nws.test.ts > records request and response instants separately
+AssertionError: expected undefined to be '2026-10-18T18:00:00.000Z' // Object.is equality
+
+- Expected:
+"2026-10-18T18:00:00.000Z"
+
++ Received:
+undefined
+
+ ❯ tests/nws.test.ts:186:29
+    184|  const clock=vi.fn().mockReturnValueOnce(new Date('2026-10-18T18:00:00…
+    185|  const {fetcher}=fixture();const r=await new NwsWeatherProvider(fetche…
+    186|  expect(r.requestStartedAt).toBe('2026-10-18T18:00:00.000Z');expect(r.…
+       |                             ^
+    187| });
+    188|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 18 passed (22)
+   Start at  08:19:49
+   Duration  1.13s (environment 68%, setup 14%, tests 9%, transform 8%, import 1%, worker 1%)
+

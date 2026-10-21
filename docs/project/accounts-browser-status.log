@@ -1,0 +1,6 @@
+{"path":"/root/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome","available":false}
+{"path":"/root/.cache/ms-playwright/firefox-1555/firefox/firefox","available":false}
+{"path":"/usr/bin/chromium","available":false}
+{"path":"/usr/bin/google-chrome","available":false}
+{"path":"/usr/bin/firefox","available":false}
+BLOCKED: prior Firefox page creation crash and sandbox EPERM evidence retained in regulatory-browser-probe.log and discovery-firefox-launch.log. No new browser assertions executed. No reinstall or security bypass.

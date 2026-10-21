@@ -1,0 +1,156 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/atmosphere-panel.test.tsx
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/atmosphere-panel.test.tsx (1 test | 1 failed) 49ms
+   × renders missing data as unavailable and identifies nearby observations 48ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/atmosphere-panel.test.tsx > renders missing data as unavailable and identifies nearby observations
+TestingLibraryElementError: Unable to find an element with the text: /Cloud cover forecast unavailable/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33mclass[39m=[32m"card"[39m
+    [36m>[39m
+      [36m<h2>[39m
+        [0mAtmosphere and natural light[0m
+      [36m</h2>[39m
+      [36m<h3>[39m
+        [0mNearby atmospheric pressure · [0m
+        [0munavailable[0m
+      [36m</h3>[39m
+      [36m<p>[39m
+        [0mStation pressure:[0m
+        [0m [0m
+        [0munavailable[0m
+        [0m. Observed [0m
+        [0munavailable[0m
+        [0m.[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mStation [0m
+        [0munavailable[0m
+        [0m ·[0m
+        [0m [0m
+        [0munknown[0m
+        [0m km from your coordinate. This is a nearby observation, not an on-site measurement.[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mPressure change:[0m
+        [0m [0m
+        [0munavailable[0m
+        [0m [0m
+        [0m. No fishing suitability inferred.[0m
+      [36m</p>[39m
+      [36m<h3>[39m
+        [0mCloud cover and wind gust forecast · [0m
+        [0munavailable[0m
+      [36m</h3>[39m
+      [36m<p>[39m
+        [0mUpdated [0m
+        [0munavailable[0m
+      [36m</p>[39m
+      [36m<ul />[39m
+      [36m<p>[39m
+        [0mCloud cover and gust forecast unavailable.[0m
+      [36m</p>[39m
+      [36m<h3>[39m
+        [0mCalculated light · [0m
+        [0munavailable[0m
+      [36m</h3>[39m
+      [36m<p>[39m
+        [0munknown[0m
+        [0m. These astronomical events do not measure actual brightness or cloud effects.[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mSunrise: [0m
+        [0munavailable[0m
+        [36m<br />[39m
+        [0mSunset: [0m
+        [0munavailable[0m
+        [36m<br />[39m
+        [0mCivil dawn: [0m
+        [0munavailable[0m
+        [36m<br />[39m
+        [0mCivil dusk: [0m
+        [0munavailable[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mProvider data unavailable, stale for this purpose, or invalid; no values inferred.[0m
+        [0m [0m
+        [36m<a[39m
+          [33mhref[39m=[32m"https://api.weather.gov/points/37.0000,-122.0000"[39m
+          [33mrel[39m=[32m"noreferrer"[39m
+          [33mtarget[39m=[32m"_blank"[39m
+        [36m>[39m
+          [0mNWS [0m
+          [0mobservation[0m
+          [0m source[0m
+        [36m</a>[39m
+        [0m [0m
+        [0m· retrieved [0m
+        [0m10/18/2026, 5:07:07 PM PDT[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mProvider data unavailable, stale for this purpose, or invalid; no values inferred.[0m
+        [0m [0m
+        [36m<a[39m
+          [33mhref[39m=[32m"https://api.weather.gov/points/37.0000,-122.0000"[39m
+          [33mrel[39m=[32m"noreferrer"[39m
+          [33mtarget[39m=[32m"_blank"[39m
+        [36m>[39m
+          [0mNWS [0m
+          [0mforecast[0m
+          [0m source[0m
+        [36m</a>[39m
+        [0m [0m
+        [0m· retrieved [0m
+        [0m10/18/2026, 5:07:07 PM PDT[0m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0mProvider data unavailable, stale for this purpose, or invalid; no values inferred.[0m
+        [0m [0m
+        [36m<a[39m
+          [33mhref[39m=[32m"https://api.weather.gov/points/37.0000,-122.0000"[39m
+          [33mrel[39m=[32m"noreferrer"[39m
+          [33mtarget[39m=[32m"_blank"[39m
+        [36m>[39m
+          [0mNWS [0m
+          [0mcalculated[0m
+          [0m source[0m
+        [36m</a>[39m
+        [0m [0m
+        [0m· retrieved [0m
+        [0m10/18/2026, 5:07:07 PM PDT[0m
+      [36m</p>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/atmosphere-panel.test.tsx:10:16
+      8|  expect(screen.getByText(/Station pressure: unavailable/)).toBeInTheDo…
+      9|  expect(screen.getByText(/not an on-site measurement/)).toBeInTheDocum…
+     10|  expect(screen.getByText(/Cloud cover forecast unavailable/)).toBeInTh…
+       |                ^
+     11|  expect(screen.getByText(/Wind gust forecast unavailable/)).toBeInTheD…
+     12| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  02:07:06
+   Duration  743ms (environment 72%, setup 13%, tests 8%, transform 5%, import 2%, worker 1%)
+

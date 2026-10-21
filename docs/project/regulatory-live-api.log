@@ -1,0 +1,23 @@
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+502 !== 200
+
+    at file:///workspace/scratch/972d008c416a/HoneyHole/scripts/smoke.mjs:152:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 502,
+  expected: 200,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

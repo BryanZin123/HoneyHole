@@ -1,0 +1,26 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/accounts-integration.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/accounts-integration.test.ts [ tests/accounts-integration.test.ts ]
+Error: Cannot find module '../src/infrastructure/accounts' imported from /workspace/scratch/972d008c416a/HoneyHole/tests/accounts-integration.test.ts
+ ❯ tests/accounts-integration.test.ts:6:1
+      4| import { tmpdir } from "node:os";
+      5| import { join } from "node:path";
+      6| import { openAccounts } from "../src/infrastructure/accounts";
+       | ^
+      7| import { handleAccountRequest } from "../src/application/account-http";
+      8| const directories:string[]=[];const stores:Awaited<ReturnType<typeof o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  08:26:44
+   Duration  302ms (setup 80%, transform 16%, worker 4%)
+

@@ -1,0 +1,63 @@
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+{
+  "live": true,
+  "httpStatus": 200,
+  "body": {
+    "station": {
+      "id": "9414290",
+      "name": "San Francisco",
+      "latitude": 37.806305,
+      "longitude": -122.46589,
+      "state": "CA"
+    },
+    "waterTemperature": {
+      "sourceUrl": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=9414290&product=water_temperature&units=metric&time_zone=gmt&format=json&application=HoneyHole&date=latest",
+      "retrievedAt": "2026-10-18T18:18:31.355Z",
+      "status": "unavailable",
+      "measurements": [],
+      "reason": "NOAA data is unavailable or failed validation. Try again later or check the source."
+    },
+    "tides": {
+      "sourceUrl": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=9414290&product=predictions&units=metric&time_zone=gmt&format=json&application=HoneyHole&begin_date=2026-10-18+18%3A18&range=24&interval=hilo&datum=MLLW",
+      "retrievedAt": "2026-10-18T18:18:31.355Z",
+      "status": "available",
+      "measurements": [
+        {
+          "value": 1.078,
+          "unit": "m",
+          "validAt": "2026-10-18T19:25:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "low"
+        },
+        {
+          "value": 1.449,
+          "unit": "m",
+          "validAt": "2026-10-19T00:21:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "high"
+        },
+        {
+          "value": 0.199,
+          "unit": "m",
+          "validAt": "2026-10-19T07:42:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "low"
+        },
+        {
+          "value": 1.375,
+          "unit": "m",
+          "validAt": "2026-10-19T15:27:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "high"
+        }
+      ]
+    }
+  }
+}

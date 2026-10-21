@@ -1,0 +1,43 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "nodedir". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config took 10ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.7s
+  Running TypeScript ...
+  Finished TypeScript in 3.3s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/11) ...
+  Generating static pages using 8 workers (2/11) 
+  Generating static pages using 8 workers (5/11) 
+  Generating static pages using 8 workers (8/11) 
+✓ Generating static pages using 8 workers (11/11) in 250ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/conditions
+├ ƒ /api/v1/coastal-access
+├ ƒ /api/v1/conditions
+├ ƒ /api/v1/locations
+├ ƒ /api/v1/locations/[id]
+├ ƒ /api/v1/me
+├ ƒ /api/v1/pins
+├ ƒ /api/v1/pins/[id]
+├ ƒ /api/v1/preferences
+├ ○ /conditions
+├ ○ /explore
+└ ○ /saved
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

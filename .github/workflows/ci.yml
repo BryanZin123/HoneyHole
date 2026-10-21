@@ -1,0 +1,35 @@
+name: HoneyHole quality gates
+on:
+  pull_request:
+  push:
+    branches: [main, 'feature/**', 'develop']
+permissions:
+  contents: read
+concurrency:
+  group: honeyhole-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Unit, component and isolated database integration tests
+        run: npm test
+      - name: Production dependency audit
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run build
+      - name: Production HTTP workflow and restart persistence (no live providers)
+        run: node scripts/accounts-smoke.mjs
+# Live NOAA/NWS/CSP checks and browser checks are separate, not silently skipped as passed.

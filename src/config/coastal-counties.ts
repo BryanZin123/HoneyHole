@@ -1,0 +1,17 @@
+export const coastalCounties = [
+  "Del Norte",
+  "Humboldt",
+  "Mendocino",
+  "Sonoma",
+  "Marin",
+  "San Francisco",
+  "San Mateo",
+  "Santa Cruz",
+  "Monterey",
+  "San Luis Obispo",
+  "Santa Barbara",
+  "Ventura",
+  "Los Angeles",
+  "Orange",
+  "San Diego",
+] as const;

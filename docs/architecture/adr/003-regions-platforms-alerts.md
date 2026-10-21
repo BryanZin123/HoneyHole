@@ -1,0 +1,14 @@
+# ADR 003 — Regional policies, versioned APIs, and notification boundaries
+
+Accepted under updated directive, before implementation. Retain the running Next.js web foundation and portable TypeScript domain/application layers; do not initialize again. Initial deployment remains California shore fishing. Android follows verified web functionality; iOS follows Android. No inland rollout is authorized.
+
+Regional identity, supported fishing modes, time zone, provider IDs and jurisdiction policies are configuration. Providers normalize measurements without enforcing California business rules. Application services enforce the active regional policy before returning production data. No exact-state boundary or legal-access claim is inferred from a weather station's metadata. Geography models represent country/state/local jurisdictions, water bodies, coastal regions, access references and species distribution.
+
+Add /api/v1/conditions; retain /api/conditions as a compatibility alias. Document JSON contract for reusable web/mobile clients. Business rules and secrets stay server-side; future mobile clients must not access databases directly. Future auth provider selection must support server web sessions and standard mobile OAuth/OIDC flows; no bespoke tokens or unverified provider selected now.
+
+Alerts are a mandatory future service, not browser timers. Define portable preference, forecast-window, scheduled-alert, delivery-record and subscription models plus repository/scheduler/delivery interfaces. Later persistence uses PostgreSQL with migrations and geospatial capability evaluation. A durable job runner/outbox will evaluate forecasts while clients are closed, enforce opt-out/quiet hours/DST/privacy/deduplication and retry delivery. No in-memory queue may be called durable. Web Push/Android/APNs adapters require separate current-platform research and real delivery verification before activation. No subscriptions, real notifications, background deployments or push credentials created now.
+
+Separate forecast issue/validity, fishing window, evaluation, scheduled delivery and actual delivery timestamps. Store instants as explicit UTC ISO strings, geographic and user preference IANA zones separately. Exact coordinates are excluded from notification payloads unless explicitly enabled by the owner. Unknown/stale forecasts, unverified legal/access status and unresolved hazards block opportunity alerts.
+
+NWS selected next for normalized weather forecast input using documented points → grid forecast discovery. Official docs distinguish marine grid forecasts from hourly forecast coverage, so missing coastal hourly coverage will be unavailable, never fabricated.
+Sources accessed 2026-10-18: https://www.weather.gov/documentation/services-web-api ; existing Next/Vitest ADR references remain applicable. Platform-specific push choices remain pending research at milestone 6.

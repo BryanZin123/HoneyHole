@@ -1,0 +1,2065 @@
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+{
+  "live": true,
+  "httpStatus": 200,
+  "body": {
+    "station": {
+      "id": "9414290",
+      "name": "San Francisco",
+      "latitude": 37.806305,
+      "longitude": -122.46589,
+      "state": "CA",
+      "countryCode": "US"
+    },
+    "waterTemperature": {
+      "sourceUrl": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=9414290&product=water_temperature&units=metric&time_zone=gmt&format=json&application=HoneyHole&date=latest",
+      "retrievedAt": "2026-10-18T23:27:43.605Z",
+      "status": "unavailable",
+      "measurements": [],
+      "reason": "NOAA data is unavailable or failed validation. Try again later or check the source."
+    },
+    "tides": {
+      "sourceUrl": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=9414290&product=predictions&units=metric&time_zone=gmt&format=json&application=HoneyHole&begin_date=2026-10-18+23%3A27&range=24&interval=hilo&datum=MLLW",
+      "retrievedAt": "2026-10-18T23:27:43.605Z",
+      "status": "available",
+      "measurements": [
+        {
+          "value": 1.449,
+          "unit": "m",
+          "validAt": "2026-10-19T00:21:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "high"
+        },
+        {
+          "value": 0.199,
+          "unit": "m",
+          "validAt": "2026-10-19T07:42:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "low"
+        },
+        {
+          "value": 1.375,
+          "unit": "m",
+          "validAt": "2026-10-19T15:27:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "high"
+        },
+        {
+          "value": 0.965,
+          "unit": "m",
+          "validAt": "2026-10-19T20:31:00.000Z",
+          "kind": "prediction",
+          "datum": "MLLW",
+          "phase": "low"
+        }
+      ]
+    },
+    "region": {
+      "id": "US-CA-coast",
+      "countryCode": "US",
+      "stateCode": "CA",
+      "timeZone": "America/Los_Angeles",
+      "modes": [
+        "shore"
+      ]
+    },
+    "weather": {
+      "status": "available",
+      "kind": "forecast",
+      "coordinates": {
+        "latitude": 37.806305,
+        "longitude": -122.46589
+      },
+      "sourceUrl": "https://api.weather.gov/gridpoints/MTR/83,107/forecast/hourly?units=si",
+      "retrievedAt": "2026-10-18T23:27:51.725Z",
+      "requestStartedAt": "2026-10-18T23:27:49.160Z",
+      "issuedAt": null,
+      "updatedAt": "2026-10-18T20:47:14.000Z",
+      "generatedAt": "2026-10-18T23:24:20.000Z",
+      "timeZone": "America/Los_Angeles",
+      "periods": [
+        {
+          "start": "2026-10-18T23:00:00.000Z",
+          "end": "2026-10-19T00:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-19T00:00:00.000Z",
+          "end": "2026-10-19T01:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T01:00:00.000Z",
+          "end": "2026-10-19T02:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-19T02:00:00.000Z",
+          "end": "2026-10-19T03:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-19T03:00:00.000Z",
+          "end": "2026-10-19T04:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T04:00:00.000Z",
+          "end": "2026-10-19T05:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-19T05:00:00.000Z",
+          "end": "2026-10-19T06:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T06:00:00.000Z",
+          "end": "2026-10-19T07:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T07:00:00.000Z",
+          "end": "2026-10-19T08:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T08:00:00.000Z",
+          "end": "2026-10-19T09:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T09:00:00.000Z",
+          "end": "2026-10-19T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-19T10:00:00.000Z",
+          "end": "2026-10-19T11:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T11:00:00.000Z",
+          "end": "2026-10-19T12:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T12:00:00.000Z",
+          "end": "2026-10-19T13:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T13:00:00.000Z",
+          "end": "2026-10-19T14:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-19T14:00:00.000Z",
+          "end": "2026-10-19T15:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T15:00:00.000Z",
+          "end": "2026-10-19T16:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-19T16:00:00.000Z",
+          "end": "2026-10-19T17:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T17:00:00.000Z",
+          "end": "2026-10-19T18:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T18:00:00.000Z",
+          "end": "2026-10-19T19:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T19:00:00.000Z",
+          "end": "2026-10-19T20:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T20:00:00.000Z",
+          "end": "2026-10-19T21:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T21:00:00.000Z",
+          "end": "2026-10-19T22:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-19T22:00:00.000Z",
+          "end": "2026-10-19T23:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-19T23:00:00.000Z",
+          "end": "2026-10-20T00:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 6.666666666666667,
+            "maximum": 6.666666666666667
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T00:00:00.000Z",
+          "end": "2026-10-20T01:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T01:00:00.000Z",
+          "end": "2026-10-20T02:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T02:00:00.000Z",
+          "end": "2026-10-20T03:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T03:00:00.000Z",
+          "end": "2026-10-20T04:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T04:00:00.000Z",
+          "end": "2026-10-20T05:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T05:00:00.000Z",
+          "end": "2026-10-20T06:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T06:00:00.000Z",
+          "end": "2026-10-20T07:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T07:00:00.000Z",
+          "end": "2026-10-20T08:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T08:00:00.000Z",
+          "end": "2026-10-20T09:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T09:00:00.000Z",
+          "end": "2026-10-20T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WSW",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T10:00:00.000Z",
+          "end": "2026-10-20T11:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WSW",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T11:00:00.000Z",
+          "end": "2026-10-20T12:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WSW",
+          "isDaytime": false,
+          "summary": "Cloudy"
+        },
+        {
+          "start": "2026-10-20T12:00:00.000Z",
+          "end": "2026-10-20T13:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "SSW",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T13:00:00.000Z",
+          "end": "2026-10-20T14:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "SSW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T14:00:00.000Z",
+          "end": "2026-10-20T15:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "SSW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T15:00:00.000Z",
+          "end": "2026-10-20T16:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T16:00:00.000Z",
+          "end": "2026-10-20T17:00:00.000Z",
+          "airTemperatureC": 12,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T17:00:00.000Z",
+          "end": "2026-10-20T18:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-20T18:00:00.000Z",
+          "end": "2026-10-20T19:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "E",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T19:00:00.000Z",
+          "end": "2026-10-20T20:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "E",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T20:00:00.000Z",
+          "end": "2026-10-20T21:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "E",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T21:00:00.000Z",
+          "end": "2026-10-20T22:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T22:00:00.000Z",
+          "end": "2026-10-20T23:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-20T23:00:00.000Z",
+          "end": "2026-10-21T00:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-21T00:00:00.000Z",
+          "end": "2026-10-21T01:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T01:00:00.000Z",
+          "end": "2026-10-21T02:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T02:00:00.000Z",
+          "end": "2026-10-21T03:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T03:00:00.000Z",
+          "end": "2026-10-21T04:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T04:00:00.000Z",
+          "end": "2026-10-21T05:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T05:00:00.000Z",
+          "end": "2026-10-21T06:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T06:00:00.000Z",
+          "end": "2026-10-21T07:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T07:00:00.000Z",
+          "end": "2026-10-21T08:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T08:00:00.000Z",
+          "end": "2026-10-21T09:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T09:00:00.000Z",
+          "end": "2026-10-21T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NNE",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T10:00:00.000Z",
+          "end": "2026-10-21T11:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NNE",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T11:00:00.000Z",
+          "end": "2026-10-21T12:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "NNE",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T12:00:00.000Z",
+          "end": "2026-10-21T13:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ENE",
+          "isDaytime": false,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T13:00:00.000Z",
+          "end": "2026-10-21T14:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ENE",
+          "isDaytime": true,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T14:00:00.000Z",
+          "end": "2026-10-21T15:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ENE",
+          "isDaytime": true,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T15:00:00.000Z",
+          "end": "2026-10-21T16:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T16:00:00.000Z",
+          "end": "2026-10-21T17:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T17:00:00.000Z",
+          "end": "2026-10-21T18:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Light Rain Likely"
+        },
+        {
+          "start": "2026-10-21T18:00:00.000Z",
+          "end": "2026-10-21T19:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T19:00:00.000Z",
+          "end": "2026-10-21T20:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T20:00:00.000Z",
+          "end": "2026-10-21T21:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 2.5,
+            "maximum": 2.5
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T21:00:00.000Z",
+          "end": "2026-10-21T22:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T22:00:00.000Z",
+          "end": "2026-10-21T23:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-21T23:00:00.000Z",
+          "end": "2026-10-22T00:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 1.9444444444444446,
+            "maximum": 1.9444444444444446
+          },
+          "windDirection": "ESE",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T00:00:00.000Z",
+          "end": "2026-10-22T01:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T01:00:00.000Z",
+          "end": "2026-10-22T02:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T02:00:00.000Z",
+          "end": "2026-10-22T03:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T03:00:00.000Z",
+          "end": "2026-10-22T04:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T04:00:00.000Z",
+          "end": "2026-10-22T05:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T05:00:00.000Z",
+          "end": "2026-10-22T06:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T06:00:00.000Z",
+          "end": "2026-10-22T07:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T07:00:00.000Z",
+          "end": "2026-10-22T08:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T08:00:00.000Z",
+          "end": "2026-10-22T09:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T09:00:00.000Z",
+          "end": "2026-10-22T10:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T10:00:00.000Z",
+          "end": "2026-10-22T11:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T11:00:00.000Z",
+          "end": "2026-10-22T12:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T12:00:00.000Z",
+          "end": "2026-10-22T13:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "NNW",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T13:00:00.000Z",
+          "end": "2026-10-22T14:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "NNW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T14:00:00.000Z",
+          "end": "2026-10-22T15:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "NNW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T15:00:00.000Z",
+          "end": "2026-10-22T16:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T16:00:00.000Z",
+          "end": "2026-10-22T17:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T17:00:00.000Z",
+          "end": "2026-10-22T18:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NW",
+          "isDaytime": true,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-22T18:00:00.000Z",
+          "end": "2026-10-22T19:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-22T19:00:00.000Z",
+          "end": "2026-10-22T20:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-22T20:00:00.000Z",
+          "end": "2026-10-22T21:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-22T21:00:00.000Z",
+          "end": "2026-10-22T22:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-22T22:00:00.000Z",
+          "end": "2026-10-22T23:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-22T23:00:00.000Z",
+          "end": "2026-10-23T00:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-23T00:00:00.000Z",
+          "end": "2026-10-23T01:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.61111111111111,
+            "maximum": 8.61111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Partly Sunny"
+        },
+        {
+          "start": "2026-10-23T01:00:00.000Z",
+          "end": "2026-10-23T02:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.61111111111111,
+            "maximum": 8.61111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-23T02:00:00.000Z",
+          "end": "2026-10-23T03:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.61111111111111,
+            "maximum": 8.61111111111111
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-23T03:00:00.000Z",
+          "end": "2026-10-23T04:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-23T04:00:00.000Z",
+          "end": "2026-10-23T05:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-23T05:00:00.000Z",
+          "end": "2026-10-23T06:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Cloudy"
+        },
+        {
+          "start": "2026-10-23T06:00:00.000Z",
+          "end": "2026-10-23T07:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T07:00:00.000Z",
+          "end": "2026-10-23T08:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T08:00:00.000Z",
+          "end": "2026-10-23T09:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 8.333333333333334,
+            "maximum": 8.333333333333334
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T09:00:00.000Z",
+          "end": "2026-10-23T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T10:00:00.000Z",
+          "end": "2026-10-23T11:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T11:00:00.000Z",
+          "end": "2026-10-23T12:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T12:00:00.000Z",
+          "end": "2026-10-23T13:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "NW",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-23T13:00:00.000Z",
+          "end": "2026-10-23T14:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "NW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-23T14:00:00.000Z",
+          "end": "2026-10-23T15:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 4.722222222222222,
+            "maximum": 4.722222222222222
+          },
+          "windDirection": "NW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-23T15:00:00.000Z",
+          "end": "2026-10-23T16:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-23T16:00:00.000Z",
+          "end": "2026-10-23T17:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-23T17:00:00.000Z",
+          "end": "2026-10-23T18:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "NNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-23T18:00:00.000Z",
+          "end": "2026-10-23T19:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-23T19:00:00.000Z",
+          "end": "2026-10-23T20:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-23T20:00:00.000Z",
+          "end": "2026-10-23T21:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-23T21:00:00.000Z",
+          "end": "2026-10-23T22:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-23T22:00:00.000Z",
+          "end": "2026-10-23T23:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-23T23:00:00.000Z",
+          "end": "2026-10-24T00:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-24T00:00:00.000Z",
+          "end": "2026-10-24T01:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Sunny"
+        },
+        {
+          "start": "2026-10-24T01:00:00.000Z",
+          "end": "2026-10-24T02:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T02:00:00.000Z",
+          "end": "2026-10-24T03:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T03:00:00.000Z",
+          "end": "2026-10-24T04:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 5.555555555555555,
+            "maximum": 5.555555555555555
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T04:00:00.000Z",
+          "end": "2026-10-24T05:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 5.555555555555555,
+            "maximum": 5.555555555555555
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T05:00:00.000Z",
+          "end": "2026-10-24T06:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 5.555555555555555,
+            "maximum": 5.555555555555555
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T06:00:00.000Z",
+          "end": "2026-10-24T07:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T07:00:00.000Z",
+          "end": "2026-10-24T08:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T08:00:00.000Z",
+          "end": "2026-10-24T09:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.611111111111111,
+            "maximum": 3.611111111111111
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T09:00:00.000Z",
+          "end": "2026-10-24T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T10:00:00.000Z",
+          "end": "2026-10-24T11:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T11:00:00.000Z",
+          "end": "2026-10-24T12:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Mostly Clear"
+        },
+        {
+          "start": "2026-10-24T12:00:00.000Z",
+          "end": "2026-10-24T13:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "WNW",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-24T13:00:00.000Z",
+          "end": "2026-10-24T14:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T14:00:00.000Z",
+          "end": "2026-10-24T15:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T15:00:00.000Z",
+          "end": "2026-10-24T16:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T16:00:00.000Z",
+          "end": "2026-10-24T17:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T17:00:00.000Z",
+          "end": "2026-10-24T18:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 3.055555555555556,
+            "maximum": 3.055555555555556
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T18:00:00.000Z",
+          "end": "2026-10-24T19:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T19:00:00.000Z",
+          "end": "2026-10-24T20:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T20:00:00.000Z",
+          "end": "2026-10-24T21:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 4.166666666666667,
+            "maximum": 4.166666666666667
+          },
+          "windDirection": "N",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T21:00:00.000Z",
+          "end": "2026-10-24T22:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T22:00:00.000Z",
+          "end": "2026-10-24T23:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-24T23:00:00.000Z",
+          "end": "2026-10-25T00:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 5.277777777777778,
+            "maximum": 5.277777777777778
+          },
+          "windDirection": "WNW",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-25T00:00:00.000Z",
+          "end": "2026-10-25T01:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": true,
+          "summary": "Mostly Sunny"
+        },
+        {
+          "start": "2026-10-25T01:00:00.000Z",
+          "end": "2026-10-25T02:00:00.000Z",
+          "airTemperatureC": 16,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-25T02:00:00.000Z",
+          "end": "2026-10-25T03:00:00.000Z",
+          "airTemperatureC": 15,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-25T03:00:00.000Z",
+          "end": "2026-10-25T04:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-25T04:00:00.000Z",
+          "end": "2026-10-25T05:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-25T05:00:00.000Z",
+          "end": "2026-10-25T06:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.222222222222222,
+            "maximum": 7.222222222222222
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Partly Cloudy"
+        },
+        {
+          "start": "2026-10-25T06:00:00.000Z",
+          "end": "2026-10-25T07:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-25T07:00:00.000Z",
+          "end": "2026-10-25T08:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-25T08:00:00.000Z",
+          "end": "2026-10-25T09:00:00.000Z",
+          "airTemperatureC": 14,
+          "windSpeedMps": {
+            "minimum": 7.777777777777779,
+            "maximum": 7.777777777777779
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-25T09:00:00.000Z",
+          "end": "2026-10-25T10:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        },
+        {
+          "start": "2026-10-25T10:00:00.000Z",
+          "end": "2026-10-25T11:00:00.000Z",
+          "airTemperatureC": 13,
+          "windSpeedMps": {
+            "minimum": 6.111111111111112,
+            "maximum": 6.111111111111112
+          },
+          "windDirection": "W",
+          "isDaytime": false,
+          "summary": "Slight Chance Light Rain"
+        }
+      ],
+      "missingFields": [
+        "barometricPressure",
+        "pressureTrend",
+        "cloudCoverPercent",
+        "sunrise",
+        "sunset",
+        "windGust",
+        "hazardAssessment",
+        "forecastIssueTime"
+      ],
+      "responseReceivedAt": "2026-10-18T23:27:51.725Z"
+    }
+  }
+}
+PASS live versioned endpoint: NOAA tides, NWS forecast, matching coordinates and timestamp tolerance
+{
+  "coastalLive": true,
+  "httpStatus": 200,
+  "body": {
+    "coordinates": {
+      "latitude": 37.8063,
+      "longitude": -122.4659
+    },
+    "regionId": "california-coast",
+    "access": {
+      "status": "unknown",
+      "evidence": {
+        "status": "available",
+        "records": [],
+        "source": {
+          "url": "https://gis.cnra.ca.gov/arcgis/rest/services/Boundaries/CPAD_AccessType/MapServer/0",
+          "attribution": "California Protected Areas Database (CPAD), GreenInfo Network; California Natural Resources Agency",
+          "datasetVersion": "CPAD 2026a, June 2026",
+          "license": "Creative Commons Attribution (California Open Data catalog)",
+          "retrievedAt": "2026-10-18T23:27:57.904Z"
+        }
+      }
+    },
+    "protectedAreas": {
+      "status": "available",
+      "records": [],
+      "source": {
+        "url": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds582_fpu/FeatureServer/0",
+        "attribution": "California Department of Fish and Wildlife, Marine Region GIS Lab",
+        "datasetVersion": "ds582; advisory geometry, current legal boundaries unverified",
+        "license": "Creative Commons Attribution (California Open Data catalog)",
+        "retrievedAt": "2026-10-18T23:27:53.964Z"
+      }
+    },
+    "fishingPermission": "unknown",
+    "temporaryClosures": "unknown",
+    "speciesRegulations": "unknown",
+    "legallyVerified": false
+  }
+}
+PASS live coastal point query with independent access/MPA evidence and no legal clearance
+{
+  "coastalLive": true,
+  "httpStatus": 200,
+  "body": {
+    "coordinates": {
+      "latitude": 37.514,
+      "longitude": -122.516
+    },
+    "regionId": "california-coast",
+    "access": {
+      "status": "unknown",
+      "evidence": {
+        "status": "available",
+        "records": [],
+        "source": {
+          "url": "https://gis.cnra.ca.gov/arcgis/rest/services/Boundaries/CPAD_AccessType/MapServer/0",
+          "attribution": "California Protected Areas Database (CPAD), GreenInfo Network; California Natural Resources Agency",
+          "datasetVersion": "CPAD 2026a, June 2026",
+          "license": "Creative Commons Attribution (California Open Data catalog)",
+          "retrievedAt": "2026-10-18T23:27:57.970Z"
+        }
+      }
+    },
+    "protectedAreas": {
+      "status": "available",
+      "records": [
+        {
+          "id": "120",
+          "name": "Montara State Marine Reserve",
+          "access": "unknown",
+          "sourceAccessValue": null,
+          "shoreType": "unknown",
+          "designation": "SMR"
+        }
+      ],
+      "source": {
+        "url": "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds582_fpu/FeatureServer/0",
+        "attribution": "California Department of Fish and Wildlife, Marine Region GIS Lab",
+        "datasetVersion": "ds582; advisory geometry, current legal boundaries unverified",
+        "license": "Creative Commons Attribution (California Open Data catalog)",
+        "retrievedAt": "2026-10-18T23:27:58.002Z"
+      }
+    },
+    "fishingPermission": "unknown",
+    "temporaryClosures": "unknown",
+    "speciesRegulations": "unknown",
+    "legallyVerified": false
+  }
+}
+PASS live coastal point query with independent access/MPA evidence and no legal clearance

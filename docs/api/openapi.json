@@ -1,0 +1,1834 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "HoneyHole environmental API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/conditions": {
+      "get": {
+        "operationId": "getConditions",
+        "parameters": [
+          {
+            "name": "station",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{7}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Station verified; products may be unavailable or stale",
+            "headers": {
+              "X-API-Version": {
+                "schema": {
+                  "const": "1"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conditions"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid station identifier",
+            "headers": {
+              "X-API-Version": {
+                "schema": {
+                  "const": "1"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Unable to resolve station in active region",
+            "headers": {
+              "X-API-Version": {
+                "schema": {
+                  "const": "1"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/coastal-access": {
+      "get": {
+        "operationId": "getCoastalAccess",
+        "description": "Point evidence query only. Public source access is not fishing permission; no shoreline membership or current legal boundary guarantee.",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "minimum": 32,
+              "maximum": 42.1
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "minimum": -125,
+              "maximum": -114
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Independent access and MPA evidence, including unavailable states",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoastalAssessment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid coordinate or outside California search envelope"
+          }
+        }
+      }
+    },
+    "/api/v1/locations": {
+      "get": {
+        "description": "Local/personal CSP source integration; commercial deployment requires permission. Source failures are explicit.",
+        "parameters": [
+          {
+            "name": "county",
+            "in": "query",
+            "required": false,
+            "description": "Coastal county; defaults to San Mateo. Coordinate mode takes precedence.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "latitude",
+            "in": "query",
+            "required": false,
+            "description": "Requires longitude and radiusKm.",
+            "schema": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "required": false,
+            "description": "Requires latitude and radiusKm.",
+            "schema": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          },
+          {
+            "name": "radiusKm",
+            "in": "query",
+            "required": false,
+            "description": "Required in coordinate mode.",
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Source-backed discovery/evidence; no verified fishing permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoveryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "502": {
+            "description": "Provider unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/locations/{id}": {
+      "get": {
+        "description": "Local/personal CSP source integration; commercial deployment requires permission. Source failures are explicit.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "species",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "description": "Activity context only; does not imply verified species rules."
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Activity date, default current Los Angeles date; environmental products retain their own validity periods."
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "schema": {
+              "enum": ["shore-angling", "hand-gathering"],
+              "default": "shore-angling"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Source-backed discovery/evidence; no verified fishing permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query"
+          },
+          "502": {
+            "description": "Provider unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "summary": "Owner-scoped get /api/v1/me",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/pins": {
+      "get": {
+        "summary": "Owner-scoped get /api/v1/pins",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SavedPin"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        }
+      },
+      "post": {
+        "summary": "Owner-scoped post /api/v1/pins",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedPin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pins/{id}": {
+      "get": {
+        "summary": "Owner-scoped get /api/v1/pins/{id}",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedPin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Owner-scoped patch /api/v1/pins/{id}",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedPin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinInput"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Owner-scoped delete /api/v1/pins/{id}",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Owner data; private no-store caching"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/preferences": {
+      "get": {
+        "summary": "Owner-scoped get /api/v1/preferences",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        }
+      },
+      "put": {
+        "summary": "Owner-scoped put /api/v1/preferences",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Owner data; private no-store caching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Mutation Origin must match configured origin"
+          },
+          "404": {
+            "description": "Missing or not owned; indistinguishable"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate location"
+          },
+          "503": {
+            "description": "Storage/source unavailable"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preferences"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/sign-up/email": {
+      "post": {
+        "summary": "sign-up/email; exact Origin required; credentials never echoed",
+        "responses": {
+          "200": {
+            "description": "ok:true; session via HttpOnly Set-Cookie only"
+          },
+          "400": {
+            "description": "Invalid account request"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/api/auth/sign-in/email": {
+      "post": {
+        "summary": "sign-in/email; exact Origin required; credentials never echoed",
+        "responses": {
+          "200": {
+            "description": "ok:true; session via HttpOnly Set-Cookie only"
+          },
+          "400": {
+            "description": "Invalid account request"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/api/auth/sign-out": {
+      "post": {
+        "summary": "sign-out; exact Origin required; credentials never echoed",
+        "responses": {
+          "200": {
+            "description": "ok:true; session via HttpOnly Set-Cookie only"
+          },
+          "400": {
+            "description": "Invalid account request"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Coordinates": {
+        "type": "object",
+        "required": ["latitude", "longitude"],
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          }
+        }
+      },
+      "Region": {
+        "type": "object",
+        "required": ["id", "countryCode", "stateCode", "timeZone", "modes"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "stateCode": {
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "modes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Station": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "latitude",
+          "longitude",
+          "state",
+          "countryCode"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          }
+        }
+      },
+      "Measurement": {
+        "type": "object",
+        "required": ["value", "unit", "validAt", "kind"],
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "enum": ["\u00b0C", "m"]
+          },
+          "validAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "kind": {
+            "enum": ["observation", "prediction"]
+          },
+          "datum": {
+            "const": "MLLW"
+          },
+          "phase": {
+            "enum": ["high", "low"]
+          }
+        }
+      },
+      "ProductResult": {
+        "type": "object",
+        "required": ["status", "measurements", "sourceUrl", "retrievedAt"],
+        "properties": {
+          "status": {
+            "enum": ["available", "stale", "unavailable"]
+          },
+          "measurements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            }
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "ForecastPeriod": {
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "airTemperatureC",
+          "windSpeedMps",
+          "windDirection",
+          "isDaytime",
+          "summary"
+        ],
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "airTemperatureC": {
+            "type": ["number", "null"]
+          },
+          "windSpeedMps": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": ["minimum", "maximum"],
+                "properties": {
+                  "minimum": {
+                    "type": "number"
+                  },
+                  "maximum": {
+                    "type": "number"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "windDirection": {
+            "type": ["string", "null"]
+          },
+          "isDaytime": {
+            "type": ["boolean", "null"]
+          },
+          "summary": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "required": [
+          "status",
+          "kind",
+          "coordinates",
+          "sourceUrl",
+          "retrievedAt",
+          "issuedAt",
+          "updatedAt",
+          "generatedAt",
+          "timeZone",
+          "periods",
+          "missingFields"
+        ],
+        "properties": {
+          "status": {
+            "enum": ["available", "stale", "unavailable"]
+          },
+          "kind": {
+            "const": "forecast"
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "issuedAt": {
+            "type": ["string", "null"]
+          },
+          "updatedAt": {
+            "type": ["string", "null"]
+          },
+          "generatedAt": {
+            "type": ["string", "null"]
+          },
+          "timeZone": {
+            "type": ["string", "null"]
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForecastPeriod"
+            }
+          },
+          "missingFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reason": {
+            "type": "string"
+          },
+          "requestStartedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "responseReceivedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "string"
+          }
+        }
+      },
+      "Conditions": {
+        "type": "object",
+        "required": [
+          "station",
+          "region",
+          "waterTemperature",
+          "tides",
+          "weather"
+        ],
+        "properties": {
+          "station": {
+            "$ref": "#/components/schemas/Station"
+          },
+          "region": {
+            "$ref": "#/components/schemas/Region"
+          },
+          "waterTemperature": {
+            "$ref": "#/components/schemas/ProductResult"
+          },
+          "tides": {
+            "$ref": "#/components/schemas/ProductResult"
+          },
+          "weather": {
+            "$ref": "#/components/schemas/WeatherForecast"
+          },
+          "atmosphere": {
+            "$ref": "#/components/schemas/Atmosphere"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "GeographicSource": {
+        "type": "object",
+        "required": [
+          "url",
+          "attribution",
+          "license",
+          "datasetVersion",
+          "retrievedAt"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "datasetVersion": {
+            "type": "string"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "GeographicEvidence": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "access",
+          "sourceAccessValue",
+          "shoreType",
+          "designation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "access": {
+            "enum": ["verified-public", "restricted", "unknown"]
+          },
+          "sourceAccessValue": {
+            "type": ["string", "null"]
+          },
+          "shoreType": {
+            "enum": [
+              "beach",
+              "pier",
+              "jetty",
+              "rocky-shore",
+              "bay",
+              "estuary",
+              "unknown"
+            ]
+          },
+          "designation": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "EvidenceResult": {
+        "type": "object",
+        "required": ["status", "records", "source"],
+        "properties": {
+          "status": {
+            "enum": ["available", "unavailable"]
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GeographicEvidence"
+            }
+          },
+          "source": {
+            "$ref": "#/components/schemas/GeographicSource"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "CoastalAssessment": {
+        "type": "object",
+        "required": [
+          "coordinates",
+          "regionId",
+          "access",
+          "protectedAreas",
+          "fishingPermission",
+          "temporaryClosures",
+          "speciesRegulations",
+          "legallyVerified"
+        ],
+        "properties": {
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "regionId": {
+            "type": "string"
+          },
+          "access": {
+            "type": "object",
+            "required": ["status", "evidence"],
+            "properties": {
+              "status": {
+                "enum": ["verified-public", "restricted", "unknown"]
+              },
+              "evidence": {
+                "$ref": "#/components/schemas/EvidenceResult"
+              }
+            }
+          },
+          "protectedAreas": {
+            "$ref": "#/components/schemas/EvidenceResult"
+          },
+          "fishingPermission": {
+            "const": "unknown"
+          },
+          "temporaryClosures": {
+            "const": "unknown"
+          },
+          "speciesRegulations": {
+            "const": "unknown"
+          },
+          "legallyVerified": {
+            "const": false
+          }
+        }
+      },
+      "Atmosphere": {
+        "type": "object",
+        "required": ["coordinates", "grid", "pressure", "light"],
+        "properties": {
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "grid": {
+            "type": "object",
+            "required": [
+              "status",
+              "sourceUrl",
+              "retrievedAt",
+              "kind",
+              "updatedAt",
+              "values"
+            ],
+            "properties": {
+              "status": {
+                "enum": ["available", "stale", "unavailable"]
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "forecast"
+              },
+              "updatedAt": {
+                "type": ["string", "null"]
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["parameter", "value", "unit", "start", "end"],
+                  "properties": {
+                    "parameter": {
+                      "enum": ["cloudCover", "windGust"]
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "enum": ["%", "m/s"]
+                    },
+                    "start": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "end": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "pressure": {
+            "type": "object",
+            "required": [
+              "status",
+              "sourceUrl",
+              "retrievedAt",
+              "kind",
+              "stationId",
+              "stationCoordinates",
+              "distanceKm",
+              "observedAt",
+              "hPa",
+              "trendHpaPerHour",
+              "trendFrom"
+            ],
+            "properties": {
+              "status": {
+                "enum": ["available", "stale", "unavailable"]
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "observation"
+              },
+              "stationId": {
+                "type": ["string", "null"]
+              },
+              "stationCoordinates": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/Coordinates"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "distanceKm": {
+                "type": ["number", "null"]
+              },
+              "observedAt": {
+                "type": ["string", "null"]
+              },
+              "hPa": {
+                "type": ["number", "null"]
+              },
+              "trendHpaPerHour": {
+                "type": ["number", "null"]
+              },
+              "trendFrom": {
+                "type": ["string", "null"]
+              }
+            }
+          },
+          "light": {
+            "type": "object",
+            "required": [
+              "status",
+              "sourceUrl",
+              "retrievedAt",
+              "kind",
+              "sunrise",
+              "sunset",
+              "civilDawn",
+              "civilDusk",
+              "phase"
+            ],
+            "properties": {
+              "status": {
+                "enum": ["available", "stale", "unavailable"]
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "calculated"
+              },
+              "sunrise": {
+                "type": ["string", "null"]
+              },
+              "sunset": {
+                "type": ["string", "null"]
+              },
+              "civilDawn": {
+                "type": ["string", "null"]
+              },
+              "civilDusk": {
+                "type": ["string", "null"]
+              },
+              "phase": {
+                "enum": ["daylight", "civil-twilight", "night", "unknown"]
+              }
+            }
+          }
+        }
+      },
+      "ShoreLocation": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "coordinates",
+          "type",
+          "county",
+          "access",
+          "sourceUrl",
+          "parkUrl",
+          "retrievedAt",
+          "datasetUpdatedAt",
+          "sourceFeature"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "type": {
+            "const": "beach"
+          },
+          "county": {
+            "type": "string"
+          },
+          "access": {
+            "const": "unknown"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "parkUrl": {
+            "type": ["string", "null"]
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "datasetUpdatedAt": {
+            "type": ["string", "null"]
+          },
+          "sourceFeature": {
+            "type": "object"
+          }
+        }
+      },
+      "DiscoveryResult": {
+        "type": "object",
+        "required": ["status", "locations", "attribution", "license"],
+        "properties": {
+          "status": {
+            "enum": ["available", "unavailable"]
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShoreLocation"
+            }
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "LocationDetail": {
+        "type": "object",
+        "required": [
+          "location",
+          "activity",
+          "weather",
+          "atmosphere",
+          "access",
+          "tides",
+          "regulations",
+          "opportunity"
+        ],
+        "properties": {
+          "location": {
+            "$ref": "#/components/schemas/ShoreLocation"
+          },
+          "activity": {
+            "type": "object",
+            "required": [
+              "species",
+              "method",
+              "date",
+              "coordinates",
+              "jurisdiction"
+            ],
+            "properties": {
+              "species": {
+                "type": "string"
+              },
+              "method": {
+                "enum": ["shore-angling", "hand-gathering"]
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "coordinates": {
+                "$ref": "#/components/schemas/Coordinates"
+              },
+              "jurisdiction": {
+                "const": "US-CA"
+              }
+            }
+          },
+          "weather": {
+            "$ref": "#/components/schemas/WeatherForecast"
+          },
+          "atmosphere": {
+            "$ref": "#/components/schemas/Atmosphere"
+          },
+          "access": {
+            "$ref": "#/components/schemas/CoastalAssessment"
+          },
+          "tides": {
+            "type": "object",
+            "required": [
+              "status",
+              "transferRelevance",
+              "distanceKm",
+              "conditions",
+              "reason"
+            ],
+            "properties": {
+              "status": {
+                "enum": ["available", "unavailable"]
+              },
+              "transferRelevance": {
+                "const": "UNVERIFIED"
+              },
+              "distanceKm": {
+                "type": ["number", "null"]
+              },
+              "conditions": {
+                "type": ["object", "null"]
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          },
+          "regulations": {
+            "type": "object",
+            "required": [
+              "status",
+              "records",
+              "questions",
+              "reason",
+              "findings",
+              "missing",
+              "conflicts",
+              "checkedOn"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "VERIFIED_PERMITTED",
+                  "VERIFIED_PROHIBITED",
+                  "CONDITIONAL",
+                  "UNVERIFIED"
+                ]
+              },
+              "records": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "questions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["question", "status"],
+                  "properties": {
+                    "question": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "VERIFIED_PERMITTED",
+                        "VERIFIED_PROHIBITED",
+                        "CONDITIONAL",
+                        "UNVERIFIED"
+                      ]
+                    }
+                  }
+                }
+              },
+              "reason": {
+                "type": "string"
+              },
+              "checkedOn": {
+                "type": "string",
+                "format": "date"
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["rule", "status", "reason", "restriction"],
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/components/schemas/EffectiveRule"
+                    },
+                    "status": {
+                      "enum": [
+                        "VERIFIED_PERMITTED",
+                        "VERIFIED_PROHIBITED",
+                        "CONDITIONAL",
+                        "UNVERIFIED"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "restriction": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "opportunity": {
+            "type": "object",
+            "properties": {
+              "suitability": {
+                "const": "not-assessed"
+              },
+              "confidence": {
+                "const": "insufficient"
+              },
+              "eligibility": {
+                "const": "UNVERIFIED"
+              }
+            }
+          }
+        }
+      },
+      "EffectiveRule": {
+        "type": "object",
+        "required": [
+          "id",
+          "authority",
+          "sourceUrl",
+          "jurisdiction",
+          "scopeId",
+          "summary",
+          "verifiedOn",
+          "reviewDue",
+          "coverageFrom",
+          "coverageThrough",
+          "effectiveFrom",
+          "effectiveTo",
+          "species",
+          "methods",
+          "exceptions",
+          "expirationKnown",
+          "verification",
+          "question",
+          "restriction"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "authority": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "jurisdiction": {
+            "type": "string"
+          },
+          "scopeId": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "verifiedOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "reviewDue": {
+            "type": "string",
+            "format": "date"
+          },
+          "coverageFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "coverageThrough": {
+            "type": "string",
+            "format": "date"
+          },
+          "effectiveFrom": {
+            "type": ["string", "null"],
+            "format": "date"
+          },
+          "effectiveTo": {
+            "type": ["string", "null"],
+            "format": "date"
+          },
+          "species": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "methods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exceptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expirationKnown": {
+            "type": "boolean"
+          },
+          "verification": {
+            "enum": ["verified", "unverified"]
+          },
+          "question": {
+            "type": "string"
+          },
+          "restriction": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "enum": ["closed-season", "limit", "prohibition", "clearance"]
+              }
+            }
+          }
+        }
+      },
+      "SavedPin": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "latitude",
+          "longitude",
+          "notes",
+          "privacy",
+          "sharingEligible",
+          "sourceId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "privacy": {
+            "const": "PRIVATE"
+          },
+          "sharingEligible": {
+            "type": "boolean"
+          },
+          "sourceId": {
+            "type": ["string", "null"]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PinInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "latitude", "longitude"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "privacy": {
+            "const": "PRIVATE"
+          },
+          "sharingEligible": {
+            "type": "boolean"
+          },
+          "sourceId": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "Preferences": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "regions",
+          "species",
+          "favoriteIds",
+          "units",
+          "timeZone",
+          "alertOptIn",
+          "leadMinutes",
+          "quietHours"
+        ],
+        "properties": {
+          "regions": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "species": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "favoriteIds": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "units": {
+            "enum": ["metric", "imperial"]
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "alertOptIn": {
+            "type": "boolean"
+          },
+          "leadMinutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10080
+          },
+          "quietHours": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["start", "end"],
+                "properties": {
+                  "start": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "end": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "better-auth.session_token",
+        "description": "HttpOnly cookie; __Secure- prefix when HTTPS. Session secret is never returned in JSON."
+      }
+    }
+  }
+}

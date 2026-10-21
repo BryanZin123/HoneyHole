@@ -1,0 +1,142 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/noaa.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/noaa.test.ts (17 tests | 13 failed) 17ms
+   ❯ NOAA adapter contracts (isolated fixtures, not live evidence) (17)
+     × normalizes observations and predictions with source, units, station and UTC 6ms
+     × rejects invalid temperature  instead of coercing to zero 1ms
+     × rejects invalid temperature NaN instead of coercing to zero 0ms
+     × rejects invalid temperature Infinity instead of coercing to zero 0ms
+     × rejects invalid temperature 15 fish instead of coercing to zero 0ms
+     × rejects flagged data 0ms
+     × marks old observations stale 0ms
+     × rejects invalid/future observation 2026-02-30 17:54 0ms
+     × rejects invalid/future observation 2026-10-18 19:00 1ms
+     × rejects invalid/future observation not-a-time 0ms
+     × isolates missing water temperature from available tides 0ms
+     × does not accept empty predictions 0ms
+     × rejects a station outside California 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > normalizes observations and predictions with source, units, station and UTC
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:18:64
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid temperature  instead of coercing to zero
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid temperature NaN instead of coercing to zero
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid temperature Infinity instead of coercing to zero
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid temperature 15 fish instead of coercing to zero
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:26:88
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects flagged data
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:28:113
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > marks old observations stale
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:29:132
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid/future observation 2026-02-30 17:54
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid/future observation 2026-10-18 19:00
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects invalid/future observation not-a-time
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:30:181
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > isolates missing water temperature from available tides
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:32:63
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > does not accept empty predictions
+Error: NOAA adapter not implemented
+ ❯ NoaaMarineProvider.getConditions src/infrastructure/noaa.ts:7:9
+      5|  async getConditions(stationId:string):Promise<MarineConditions> {
+      6|   void stationId; void this.fetcher; void this.now; void this.freshnes…
+      7|   throw new Error('NOAA adapter not implemented');
+       |         ^
+      8|  }
+      9| }
+ ❯ tests/noaa.test.ts:34:111
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  tests/noaa.test.ts > NOAA adapter contracts (isolated fixtures, not live evidence) > rejects a station outside California
+AssertionError: expected [Function] to throw error matching /California/ but got 'NOAA adapter not implemented'
+
+- Expected:
+/California/
+
++ Received:
+"NOAA adapter not implemented"
+
+ ❯ tests/noaa.test.ts:35:177
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  13 failed | 4 passed (17)
+   Start at  03:16:36
+   Duration  801ms (environment 76%, setup 14%, transform 6%, tests 3%, import 2%, worker 1%)
+

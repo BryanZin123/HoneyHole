@@ -1,0 +1,42 @@
+{
+  "cleanExport": "/tmp/honeyhole-checkpoint-j2eqxnzz",
+  "checks": [
+    {
+      "check": "install-default",
+      "exitCode": 1,
+      "cause": "Node header extraction fchown EINVAL"
+    },
+    {
+      "check": "install-local-headers",
+      "exitCode": 1
+    },
+    {
+      "check": "install-prepared-headers",
+      "exitCode": 0
+    },
+    {
+      "check": "typecheck",
+      "exitCode": 0
+    },
+    {
+      "check": "lint",
+      "exitCode": 0
+    },
+    {
+      "check": "tests",
+      "exitCode": 0
+    },
+    {
+      "check": "audit",
+      "exitCode": 0
+    },
+    {
+      "check": "build",
+      "exitCode": 0
+    },
+    {
+      "check": "http",
+      "exitCode": 0
+    }
+  ]
+}

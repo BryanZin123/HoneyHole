@@ -1,0 +1,38 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/coastal.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/coastal.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/coastal.test.ts [ tests/coastal.test.ts ]
+Error: Failed to resolve import "../src/infrastructure/california-coastal" from "tests/coastal.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/scratch/972d008c416a/HoneyHole/tests/coastal.test.ts:3:42
+  1  |  import { expect, it, vi } from "vitest";
+  2  |  import { containsCoordinate } from "../src/domain/spatial";
+  3  |  import { CaliforniaCoastalProvider } from "../src/infrastructure/california-coastal";
+     |                                             ^
+  4  |  import { assessCoastalAccess } from "../src/application/assess-coastal-access";
+  5  |  const point = {
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/node.js:8766:39
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/node.js:8763:14
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/node.js:26632:18
+ ❯ node_modules/vite/dist/node/chunks/node.js:26702:30
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/node.js:26668:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/node.js:8545:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:20184:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  08:24:53
+   Duration  1.14s (environment 84%, setup 14%, transform 1%, worker 1%)
+

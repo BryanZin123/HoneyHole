@@ -1,0 +1,5 @@
+{"name":"FGC effective date","url":"https://fgc.ca.gov/Regulations/2021-New-and-Proposed","retrievedAt":"2026-10-21T15:14:33.368Z","httpStatus":200,"sha256":"82e1ed8d2a7b4448d9e12b2afb0c28d41f4a604d987c02656fb83c8aad8d7655","expectedTextPresent":true}
+{"name":"CDFW current grunion","url":"https://wildlife.ca.gov/Fishing/Ocean/Grunion","retrievedAt":"2026-10-21T15:14:39.068Z","httpStatus":200,"sha256":"da4ddac188904ee15cc1025f4a4e176b402954df3615b486651b0f53a9e9b007","expectedTextPresent":true}
+{"name":"CDFW in-season index","url":"https://wildlife.ca.gov/Fishing/Ocean/Regulations/Inseason","retrievedAt":"2026-10-21T15:14:43.256Z","httpStatus":200,"sha256":"14851f2d4f0947896052f115deb79cc9f6c96431be006663b7d74b2f7a6bf002","expectedTextPresent":true}
+{"name":"CSP terms","url":"https://www.arcgis.com/sharing/rest/content/items/4a641ba6d51c44fdb734754d83d7eb43?f=json","owner":"Seth.Paine","publisher":"California State Parks: Enterprise Geographic Information Systems","commercialApprovalRequired":true,"reviewedAt":"2026-10-21T15:14:46.474Z"}
+PASS source availability and reviewed text checks. This is not automated legal interpretation or a freshness renewal.

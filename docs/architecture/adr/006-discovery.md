@@ -1,0 +1,11 @@
+# ADR 006 — Local shoreline discovery and map
+
+2026-10-21. Deliver an actual discovery flow, preserving existing services. California State Parks entry-point FeatureServer/2 linked from official GIS downloads is the first source. Coastal county + explicit SB designation filters restrict this initial catalog to State Beach park entries. These are park entry/reference points, not verified fishing positions or safe access routes. Names and GeoJSON coordinates remain as supplied; original source features preserved. No crowds, terrain inference, or fabricated pins.
+
+Personal/local development use only under CSP license: attribution required, materials not sold/altered, commercial use requires prior CSP approval. No public deployment authorized. State Parks data not claimed CC licensed. Official terms: https://www.parks.ca.gov/?page_id=29682 ; linked item 4a641ba6d51c44fdb734754d83d7eb43. Service https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/ParkEntryPoints/FeatureServer/2. Dataset edit date is not on-site access verification; limitations displayed. CCC source additionally reviewed previously; special source terms remain unresolved, adapter not enabled. CPAD/CDFW advisory access evidence retained.
+
+Leaflet client-only map with OSM standard raster tiles, visible attribution, default browser cache/referrer, no prefetch/offline download; tile endpoint configurable. List remains usable on tile failure. Terms https://operations.osmfoundation.org/policies/tiles/ ; library https://leafletjs.com/ . No private saved pins or public sharing introduced.
+
+Weather is requested at selected entry coordinate, not transplanted from NOAA station. Tide station products are separate reference data only, with distance and unverified transfer relevance; no cross-location suitability combination. Regulation source records and evaluation dimensions are explicit. Missing effective dates, emergency rules, species, method or legal geometry cannot authorize fishing. Recommendations remain contracts separating suitability, confidence and eligibility, not numerical scoring.
+
+Station selection bounded to five nearest candidates within 25 km, distance then ID tie break, inspect in parallel, choose nearest fresh quality-checked observation. No interpolation or cross-station trend. No fresh sample => unavailable.

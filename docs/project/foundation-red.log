@@ -1,0 +1,113 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/readiness.test.ts (9 tests | 8 failed) 13ms
+   ❯ assessment readiness — missing information is not permission or a recommendation (9)
+     × withholds readiness when weather is missing 6ms
+     × withholds readiness when tides is missing 1ms
+     × withholds readiness when waterTemperature is missing 1ms
+     × rejects stale conditions 1ms
+     × does not treat unknown access as verified 1ms
+     × does not treat unknown regulations as verified 0ms
+     × hard-excludes closed access even with missing weather 0ms
+     × hard-excludes known restrictions 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > withholds readiness when weather is missing
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > withholds readiness when tides is missing
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > withholds readiness when waterTemperature is missing
+AssertionError: expected 'ready-for-analysis' to be 'incomplete' // Object.is equality
+
+Expected: "incomplete"
+Received: "ready-for-analysis"
+
+ ❯ tests/readiness.test.ts:7:27
+      5|   it.each(['weather','tides','waterTemperature'] as const)('withholds …
+      6|     const result=assessReadiness({...complete,[key]:'missing'});
+      7|     expect(result.status).toBe('incomplete'); expect(result.reasons.le…
+       |                           ^
+      8|   });
+      9|   it('rejects stale conditions',()=>expect(assessReadiness({...complet…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > rejects stale conditions
+AssertionError: expected 'ready-for-analysis' to be 'incomplete' // Object.is equality
+
+Expected: "incomplete"
+Received: "ready-for-analysis"
+
+ ❯ tests/readiness.test.ts:9:99
+      7|     expect(result.status).toBe('incomplete'); expect(result.reasons.le…
+      8|   });
+      9|   it('rejects stale conditions',()=>expect(assessReadiness({...complet…
+       |                                                                                                   ^
+     10|   it.each(['access','regulations'] as const)('does not treat unknown %…
+     11|   it('hard-excludes closed access even with missing weather',()=>expec…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > does not treat unknown access as verified
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > does not treat unknown regulations as verified
+AssertionError: expected 'ready-for-analysis' to be 'incomplete' // Object.is equality
+
+Expected: "incomplete"
+Received: "ready-for-analysis"
+
+ ❯ tests/readiness.test.ts:10:153
+      8|   });
+      9|   it('rejects stale conditions',()=>expect(assessReadiness({...complet…
+     10|   it.each(['access','regulations'] as const)('does not treat unknown %…
+       |                                                                                                                                                         ^
+     11|   it('hard-excludes closed access even with missing weather',()=>expec…
+     12|   it('hard-excludes known restrictions',()=>expect(assessReadiness({..…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > hard-excludes closed access even with missing weather
+AssertionError: expected 'ready-for-analysis' to be 'blocked' // Object.is equality
+
+Expected: "blocked"
+Received: "ready-for-analysis"
+
+ ❯ tests/readiness.test.ts:11:146
+      9|   it('rejects stale conditions',()=>expect(assessReadiness({...complet…
+     10|   it.each(['access','regulations'] as const)('does not treat unknown %…
+     11|   it('hard-excludes closed access even with missing weather',()=>expec…
+       |                                                                                                                                                  ^
+     12|   it('hard-excludes known restrictions',()=>expect(assessReadiness({..…
+     13|   it('allows analysis of complete inputs without claiming fishing suit…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/readiness.test.ts > assessment readiness — missing information is not permission or a recommendation > hard-excludes known restrictions
+AssertionError: expected 'ready-for-analysis' to be 'blocked' // Object.is equality
+
+Expected: "blocked"
+Received: "ready-for-analysis"
+
+ ❯ tests/readiness.test.ts:12:116
+     10|   it.each(['access','regulations'] as const)('does not treat unknown %…
+     11|   it('hard-excludes closed access even with missing weather',()=>expec…
+     12|   it('hard-excludes known restrictions',()=>expect(assessReadiness({..…
+       |                                                                                                                    ^
+     13|   it('allows analysis of complete inputs without claiming fishing suit…
+     14| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 1 passed (9)
+   Start at  03:14:06
+   Duration  729ms (environment 77%, setup 14%, transform 5%, tests 2%, worker 1%, import 1%)
+

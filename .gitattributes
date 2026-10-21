@@ -1,0 +1,4 @@
+# Preserve historical console evidence and original directives verbatim.
+docs/project/*.log -whitespace
+docs/project/original-specification.md -whitespace
+docs/project/updated-directive.md -whitespace

@@ -1,0 +1,33 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run tests/nws.test.ts
+
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/nws.test.ts (23 tests | 1 failed) 55ms
+   × rejects a valid forecast for an unrelated grid cell 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nws.test.ts > rejects a valid forecast for an unrelated grid cell
+AssertionError: expected undefined to be 'location-mismatch' // Object.is equality
+
+- Expected:
+"location-mismatch"
+
++ Received:
+undefined
+
+ ❯ tests/nws.test.ts:267:107
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 22 passed (23)
+   Start at  08:20:53
+   Duration  1.03s (environment 74%, setup 12%, tests 7%, transform 6%, import 1%, worker 1%)
+

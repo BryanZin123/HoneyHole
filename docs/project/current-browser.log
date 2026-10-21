@@ -1,0 +1,120 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 4 workers
+
+(node:57) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout (5ms)
+(node:56) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout (2ms)
+  ✘  3 [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions (5ms)
+  ✘  4 [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions (5ms)
+
+
+  1) [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ─────
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ──────
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ──────
+    [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+    [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ───────
+    [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 

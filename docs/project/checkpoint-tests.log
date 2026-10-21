@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "nodedir". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test
+> vitest run --reporter=json
+
+JSON report written to /tmp/honeyhole-checkpoint-j2eqxnzz/.vitest/json/output.json
