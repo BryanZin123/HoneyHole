@@ -6,8 +6,7 @@ import type { DiscoveryResult, ShoreLocation } from "../domain/discovery";
 import type { getLocationDetail } from "../application/get-location-detail";
 import { coastalCounties } from "../config/coastal-counties";
 import { SaveLocation } from "./save-location";
-import { WeatherPanel } from "./weather-panel";
-import { AtmospherePanel } from "./atmosphere-panel";
+import { SelectedConditionsPanel } from "./selected-conditions-panel";
 const Map = dynamic(() => import("./explore-map").then((m) => m.ExploreMap), {
   ssr: false,
   loading: () => <p>Loading interactive map…</p>,
@@ -411,51 +410,7 @@ export function ExploreDiscovery() {
                   </li>
                 ))}
               </ul>
-              <p>
-                Environmental forecasts below describe their own validity
-                windows, not necessarily your selected fishing date.
-              </p>
-              <WeatherPanel
-                forecast={detail.weather}
-                timeZone="America/Los_Angeles"
-              />
-              <AtmospherePanel
-                data={detail.atmosphere}
-                timeZone="America/Los_Angeles"
-              />
-              <h3>Nearby tide station reference · {detail.tides.status}</h3>
-              <p>{detail.tides.reason}</p>
-              {detail.tides.conditions && (
-                <>
-                  <p>
-                    {detail.tides.conditions.station.name} ·{" "}
-                    {detail.tides.distanceKm?.toFixed(1)} km away · transfer
-                    relevance UNVERIFIED.
-                  </p>
-                  <ul>
-                    {detail.tides.conditions.tides.measurements.map((m) => (
-                      <li key={m.validAt}>
-                        {m.phase}: {m.value} {m.unit} {m.datum} · {m.validAt} ·{" "}
-                        {m.kind}
-                      </li>
-                    ))}
-                  </ul>
-                  <p>
-                    Water temperature:{" "}
-                    {detail.tides.conditions.waterTemperature.status}.{" "}
-                    {detail.tides.conditions.waterTemperature.measurements
-                      .map((m) => `${m.value} ${m.unit} at ${m.validAt}`)
-                      .join(", ")}
-                  </p>
-                  <a
-                    href={detail.tides.conditions.tides.sourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    NOAA tide source
-                  </a>
-                </>
-              )}
+              <SelectedConditionsPanel detail={detail} />
             </>
           )}
         </section>

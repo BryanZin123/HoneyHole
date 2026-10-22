@@ -1,4 +1,5 @@
 import { expect, it } from "vitest";
+import { assessLocationEligibility } from "../src/domain/location-eligibility";
 import {
   assessRegulations,
   type EffectiveRule,
@@ -190,4 +191,34 @@ it("minimum-size restrictions remain conditional and conflicting minima stay unv
     restriction: { ...a.restriction, minimum: 12 },
   } as EffectiveRule;
   expect(assessRegulations(context, [a, b]).conflicts).toContain("size");
+});
+
+it("keeps a verified prohibition despite incomplete same-question evidence", () => {
+  const r = assessRegulations(context, [
+    rule(),
+    rule({ id: "incomplete", verification: "unverified" }),
+  ]);
+  expect(r.status).toBe("VERIFIED_PROHIBITED");
+  expect(r.questions.find((q) => q.question === "season")?.status).toBe(
+    "VERIFIED_PROHIBITED",
+  );
+  expect(r.missing).toContain("season");
+  expect(assessLocationEligibility("unknown", r.status)).toMatchObject({
+    eligibility: "EXCLUDED",
+    alertEligible: false,
+    reasons: ["REGULATORY_PROHIBITION"],
+  });
+  expect(r.findings.map((f) => f.status)).toEqual([
+    "VERIFIED_PROHIBITED",
+    "UNVERIFIED",
+  ]);
+});
+it("does not turn contradictory evidence plus an incomplete finding into a prohibition", () => {
+  const r = assessRegulations(context, [
+    rule(),
+    rule({ id: "clearance", restriction: { kind: "clearance" } }),
+    rule({ id: "incomplete", verification: "unverified" }),
+  ]);
+  expect(r.status).toBe("UNVERIFIED");
+  expect(r.conflicts).toContain("season");
 });

@@ -55,7 +55,13 @@ export const californiaSurfperchRules: EffectiveRule[] = [
     id: `CA-28.59-bay-${question}-research`,
     scopeId: "CA-SF-SanPablo-bays",
     question,
-    restriction: { kind: "limit" as const, maximum: 5, unit: "fish" as const },
+    restriction: {
+      kind: "aggregate-limit" as const,
+      maximum: 5,
+      unit: "fish" as const,
+      group: "Embiotocidae",
+      excludedSpecies: ["Cymatogaster aggregata"],
+    },
     summary:
       "Research evidence only: San Francisco/San Pablo bays have a five-surfperch aggregate limit excluding shiner perch. This is not five per species. Applicability and other limits remain UNVERIFIED.",
   })),

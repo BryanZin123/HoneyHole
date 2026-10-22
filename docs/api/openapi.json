@@ -1663,7 +1663,7 @@
             "required": ["kind"],
             "properties": {
               "kind": {
-                "enum": ["closed-season", "limit", "minimum-size", "prohibition", "clearance"]
+                "enum": ["closed-season", "limit", "aggregate-limit", "minimum-size", "prohibition", "clearance"]
               }
             }
           }

@@ -742,3 +742,11 @@ Original environmental/regulatory/nationwide/mobile/sharing/recommendation/notif
 | REQ-GEO-001/002 | resolve-jurisdiction, California adapter and jurisdiction tests | Resolver tested; production legal geometry/precision unresolved |
 | REQ-SURF-001 | california-surfperch and surfperch/API tests | Research cases only; legal-date and geography blockers documented in jurisdiction-surfperch.md |
 | REQ-UI-GEO-001 | jurisdiction-panel and component tests | Implemented; actual browser unverified |
+
+## 2026-10-22 continuation
+- REQ-ELIG-001/002: confirmed same-question incomplete-evidence precedence defect; effective-regulations and regression now preserve verified exclusion, missing findings and contradictions. Recommendation and alert exclusion asserted.
+- REQ-GEO-001/002: spatial-uncertainty policy and resolver distinguish reliable interior/exterior, ambiguity and missing worst-case accuracy/clearance. Production legal boundary evidence remains unavailable; no invented scopes.
+- REQ-SURF-001: explicit aggregate-limit group/shiner exclusion; existing redtail/barred cases remain research-only UNVERIFIED. Operative-date and water-boundary blockers detailed in safety-conditions-delivery.md.
+- REQ-ENV-DATE-001: selected-conditions domain and panel filter forecasts, observations and calculated events by California civil date, preserve provenance/freshness, show missing samples and unverified marine transfer. No scientific scoring or legal inference.
+- REQ-UI-GEO-001: Explore exposes spatial classification and separate conditions/eligibility. Component verified; browser UNVERIFIED.
+- Verification: 230 tests passed/0 failed; typecheck/lint/build passed; HTTP account/restart and route evidence in safety-conditions-verification.log. Authentication/private pins/preferences retained. CI/remote commit verified at delivery rather than inferred from local tests.

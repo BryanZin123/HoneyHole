@@ -19,6 +19,13 @@ export type Restriction =
       unit: "inches";
       measurement: "total-length";
     }
+  | {
+      kind: "aggregate-limit";
+      maximum: number;
+      unit: "fish";
+      group: string;
+      excludedSpecies: string[];
+    }
   | { kind: "prohibition" }
   | { kind: "clearance" };
 export interface EffectiveRule {
@@ -145,7 +152,9 @@ export function assessRegulations(
           status =
             r.kind === "prohibition"
               ? "VERIFIED_PROHIBITED"
-              : r.kind === "limit" || r.kind === "minimum-size"
+              : r.kind === "limit" ||
+                  r.kind === "aggregate-limit" ||
+                  r.kind === "minimum-size"
                 ? "CONDITIONAL"
                 : "VERIFIED_PERMITTED";
       }
@@ -163,6 +172,7 @@ export function assessRegulations(
           .filter(
             (f) =>
               f.restriction.kind === "limit" ||
+              f.restriction.kind === "aggregate-limit" ||
               f.restriction.kind === "minimum-size",
           )
           .map((f) => JSON.stringify(f.restriction)),
@@ -172,19 +182,25 @@ export function assessRegulations(
   const questions = regulatoryQuestions.map((question) => {
     const f = findings.filter((f) => f.rule.question === question);
     const status: RegulatoryStatus =
-      conflicts.includes(question) ||
-      !f.length ||
-      f.some((f) => f.status === "UNVERIFIED")
+      conflicts.includes(question) || !f.length
         ? "UNVERIFIED"
         : f.some((f) => f.status === "VERIFIED_PROHIBITED")
           ? "VERIFIED_PROHIBITED"
-          : f.some((f) => f.status === "CONDITIONAL")
-            ? "CONDITIONAL"
-            : "VERIFIED_PERMITTED";
+          : f.some((f) => f.status === "UNVERIFIED")
+            ? "UNVERIFIED"
+            : f.some((f) => f.status === "CONDITIONAL")
+              ? "CONDITIONAL"
+              : "VERIFIED_PERMITTED";
     return { question, status };
   });
   const missing = questions
-    .filter((q) => q.status === "UNVERIFIED")
+    .filter(
+      (q) =>
+        q.status === "UNVERIFIED" ||
+        findings.some(
+          (f) => f.rule.question === q.question && f.status === "UNVERIFIED",
+        ),
+    )
     .map((q) => q.question);
   const status: RegulatoryStatus = questions.some(
     (q) => q.status === "VERIFIED_PROHIBITED",

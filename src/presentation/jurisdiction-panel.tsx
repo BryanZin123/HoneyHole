@@ -43,7 +43,8 @@ export function JurisdictionPanel({ assessment }: { assessment: Assessment }) {
               Legal dates: {f.effectiveFrom ?? "unknown"} to{" "}
               {f.effectiveThrough ?? "unknown"}. Review:{" "}
               {f.verifiedOn ?? "not verified"}; due {f.reviewDue ?? "unknown"}.
-              Retrieved: {f.retrievedAt}. Spatial uncertainty:{" "}
+              Retrieved: {f.retrievedAt}. Spatial classification:{" "}
+              {f.spatialStatus}. Source uncertainty:{" "}
               {f.precisionMeters === null
                 ? "unknown"
                 : `${f.precisionMeters} m`}

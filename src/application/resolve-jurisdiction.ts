@@ -1,3 +1,4 @@
+import { classifySpatialUncertainty } from "../domain/spatial-uncertainty";
 import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
 import type { Polygon, MultiPolygon } from "geojson";
 import type { Coordinates } from "../domain/geography";
@@ -26,16 +27,25 @@ export interface JurisdictionEvidence {
   effectiveThrough: string | null;
   precisionMeters: number | null;
   geometry: Polygon | MultiPolygon | null;
+  /** Reviewed lower-bound distance to every ring, including holes, for this exact query point. */
+  spatialEvidence?: {
+    point: Coordinates;
+    minimumBoundaryDistanceMeters: number;
+    boundaryUncertaintyMeters: number;
+    method: string;
+    sourceUrl: string;
+  };
 }
 export interface JurisdictionProvider {
   getEvidence(point: Coordinates): Promise<JurisdictionEvidence[]>;
 }
-/** Conservative exact-point resolver. Nonzero/unknown uncertainty needs a reviewed buffer policy; no legal scopes are emitted for it. */
+/** Legal authority and dated geometry are required independently of spatial confidence. */
 export async function resolveJurisdiction(
   point: Coordinates,
   activityDate: string,
   checkedOn: string,
   provider: JurisdictionProvider,
+  locationAccuracyMeters: number | null = null,
 ) {
   validateCoordinates(point);
   if (!validDate(activityDate) || !validDate(checkedOn))
@@ -50,17 +60,17 @@ export async function resolveJurisdiction(
   const findings = records.map((record) => {
     let reason = "Legal geographic applicability is unresolved.";
     let status: "VERIFIED" | "UNVERIFIED" = "UNVERIFIED";
+    let spatialStatus: ReturnType<typeof classifySpatialUncertainty> =
+      "missing";
     if (record.authority !== "legal")
       reason =
         "Administrative or advisory data does not establish a legal boundary.";
     else if (
       !record.sourceUrl.startsWith("https://") ||
       !record.attribution ||
-      !record.geometry ||
-      record.precisionMeters !== 0
+      !record.geometry
     )
-      reason =
-        "Reviewed legal geometry or exact spatial precision is unavailable.";
+      reason = "Reviewed legal geometry is unavailable.";
     else if (
       [
         record.verifiedOn,
@@ -83,22 +93,46 @@ export async function resolveJurisdiction(
     else {
       try {
         const geometry = validateArea(record.geometry);
+        const interior = booleanPointInPolygon(
+          [point.longitude, point.latitude],
+          geometry,
+          { ignoreBoundary: true },
+        );
+        const inclusive = booleanPointInPolygon(
+          [point.longitude, point.latitude],
+          geometry,
+        );
+        const evidence = record.spatialEvidence;
         if (
-          booleanPointInPolygon([point.longitude, point.latitude], geometry, {
-            ignoreBoundary: true,
-          })
+          evidence &&
+          evidence.point.latitude === point.latitude &&
+          evidence.point.longitude === point.longitude &&
+          evidence.method.trim() &&
+          evidence.sourceUrl.startsWith("https://")
         ) {
+          spatialStatus = classifySpatialUncertainty({
+            relation: interior ? "inside" : inclusive ? "boundary" : "outside",
+            minimumBoundaryDistanceMeters:
+              evidence.minimumBoundaryDistanceMeters,
+            locationAccuracyMeters,
+            sourceAccuracyMeters: record.precisionMeters,
+            boundaryUncertaintyMeters: evidence.boundaryUncertaintyMeters,
+          });
+        }
+        if (spatialStatus === "reliably-inside") {
           status = "VERIFIED";
           reason =
-            "Exact point is strictly inside the reviewed legal geometry for the selected date.";
+            "Reviewed legal geometry contains the point beyond the combined location, source and boundary uncertainty.";
         } else
           reason =
-            "Point is outside or on the boundary; no applicability established.";
+            spatialStatus === "reliably-outside"
+              ? "Reliably outside this geometry; this does not establish any alternative jurisdiction or fishing permission."
+              : "Geographic clearance or uncertainty evidence is missing or overlaps a boundary.";
       } catch {
         reason = "Invalid source geometry.";
       }
     }
-    return { ...record, status, reason };
+    return { ...record, status, reason, spatialStatus };
   });
   const scopes: RegulatoryContext["scopes"] = [];
   const dimensions = Object.fromEntries(

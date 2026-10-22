@@ -42,6 +42,7 @@ export async function getLocationDetail(
     regulationProvider?: RegulationProvider;
     regulatoryScopes?: RegulatoryContext["scopes"];
     checkedOn?: string;
+    locationAccuracyMeters?: number;
     jurisdiction?: (access: CoastalAssessment) => JurisdictionProvider;
   },
 ) {
@@ -67,6 +68,7 @@ export async function getLocationDetail(
     activity.date,
     checkedOn,
     ports.jurisdiction?.(access) ?? { getEvidence: async () => [] },
+    ports.locationAccuracyMeters ?? null,
   );
   const regulatoryAssessment = await getRegulatoryAssessment(
     {

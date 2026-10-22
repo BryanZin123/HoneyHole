@@ -1,0 +1,291 @@
+## baseline
+ Test Files  32 passed (32)
+      Tests  214 passed (214)
+   Duration  5.55s (environment 65%, tests 18%, setup 11%, import 4%, transform 2%, worker 1%)
+
+## precedence-red
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/effective-regulations.test.ts (22 tests | 1 failed) 18ms
+   × keeps a verified prohibition despite incomplete same-question evidence 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/effective-regulations.test.ts > keeps a verified prohibition despite incomplete same-question evidence
+AssertionError: expected 'UNVERIFIED' to be 'VERIFIED_PROHIBITED' // Object.is equality
+
+Expected: "VERIFIED_PROHIBITED"
+Received: "UNVERIFIED"
+
+ ❯ tests/effective-regulations.test.ts:197:20
+    195| it("keeps a verified prohibition despite incomplete same-question evid…
+    196|   const r = assessRegulations(context, [rule(), rule({ id: "incomplete…
+    197|   expect(r.status).toBe("VERIFIED_PROHIBITED");
+       |                    ^
+    198|   expect(r.questions.find(q => q.question === "season")?.status).toBe(…
+    199|   expect(r.missing).toContain("season");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 21 passed (22)
+   Start at  08:39:29
+   Duration  868ms (environment 78%, setup 11%, transform 5%, tests 3%, import 2%, worker 1%)
+
+
+
+## precedence-green
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+
+ Test Files  2 passed (2)
+      Tests  29 passed (29)
+   Start at  08:39:45
+   Duration  928ms (environment 78%, setup 15%, transform 3%, import 1%, tests 1%, worker 1%)
+
+
+
+## conditions-red
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/selected-conditions.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/selected-conditions.test.ts [ tests/selected-conditions.test.ts ]
+Error: Failed to resolve import "../src/domain/selected-conditions" from "tests/selected-conditions.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/scratch/972d008c416a/HoneyHole/tests/selected-conditions.test.ts:2:74
+  1  |  import { expect, it } from "vitest";
+  2  |  import { dateContainsInstant, periodOverlapsDate, selectConditions } from "../src/domain/selected-conditions";
+     |                                                                             ^
+  3  |  import { NwsWeatherProvider } from "../src/infrastructure/nws";
+  4  |  import { NwsAtmosphereProvider } from "../src/infrastructure/nws-atmosphere";
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/node.js:8766:39
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/node.js:8763:14
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/node.js:26632:18
+ ❯ node_modules/vite/dist/node/chunks/node.js:26702:30
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/node.js:26668:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/node.js:8545:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:20184:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  08:40:44
+   Duration  711ms (environment 81%, setup 15%, transform 3%, worker 1%)
+
+
+
+## conditions-green
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  08:41:24
+   Duration  961ms (environment 72%, setup 13%, transform 9%, tests 3%, import 2%, worker 1%)
+
+
+
+## conditions-ui
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  08:42:21
+   Duration  1.12s (environment 65%, setup 12%, tests 11%, transform 9%, import 3%)
+
+
+
+## spatial-red
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/spatial-uncertainty.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/spatial-uncertainty.test.ts [ tests/spatial-uncertainty.test.ts ]
+Error: Failed to resolve import "../src/domain/spatial-uncertainty" from "tests/spatial-uncertainty.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/scratch/972d008c416a/HoneyHole/tests/spatial-uncertainty.test.ts:2:43
+  1  |  import { expect, it } from "vitest";
+  2  |  import { classifySpatialUncertainty } from "../src/domain/spatial-uncertainty";
+     |                                              ^
+  3  |  const evidence = {
+  4  |  	relation: "inside",
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/node.js:8766:39
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/node.js:8763:14
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/node.js:26632:18
+ ❯ node_modules/vite/dist/node/chunks/node.js:26702:30
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/node.js:26668:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/node.js:8545:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:20184:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  08:43:35
+   Duration  732ms (environment 84%, setup 14%, transform 1%, worker 1%)
+
+
+
+## spatial-green
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+
+ Test Files  3 passed (3)
+      Tests  31 passed (31)
+   Start at  08:44:31
+   Duration  921ms (environment 78%, setup 13%, transform 6%, import 2%, tests 1%, worker 1%)
+
+
+
+## aggregate-red
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+ RUN  v5.0.5 /workspace/scratch/972d008c416a/HoneyHole
+
+ ❯ tests/surfperch.test.ts (7 tests | 1 failed) 12ms
+   × models one shared aggregate limit excluding shiner, not separate per-species allowances 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/surfperch.test.ts > models one shared aggregate limit excluding shiner, not separate per-species allowances
+AssertionError: expected { kind: 'limit', maximum: 5, …(1) } to deeply equal { kind: 'aggregate-limit', …(4) }
+
+- Expected
++ Received
+
+  {
+-   "excludedSpecies": [
+-     "Cymatogaster aggregata",
+-   ],
+-   "group": "Embiotocidae",
+-   "kind": "aggregate-limit",
++   "kind": "limit",
+    "maximum": 5,
+    "unit": "fish",
+  }
+
+ ❯ tests/surfperch.test.ts:78:30
+     76|   expect(limits).toHaveLength(2);
+     77|   for (const rule of limits) {
+     78|     expect(rule.restriction).toEqual({ kind: "aggregate-limit", maximu…
+       |                              ^
+     79|     expect(rule.verification).toBe("unverified");
+     80|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  08:44:58
+   Duration  753ms (environment 77%, setup 13%, transform 6%, tests 2%, import 2%, worker 1%)
+
+
+
+## final-tests
+ Test Files  35 passed (35)
+      Tests  230 passed (230)
+   Duration  6.80s (environment 64%, tests 18%, setup 11%, import 4%, transform 3%, worker 1%)
+
+## typecheck
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 typecheck
+> tsc --noEmit
+
+
+
+## lint
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 lint
+> eslint . --max-warnings 0
+
+
+
+## build
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config took 13ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 703ms
+  Running TypeScript ...
+  Finished TypeScript in 2.7s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/11) ...
+  Generating static pages using 8 workers (2/11) 
+  Generating static pages using 8 workers (5/11) 
+  Generating static pages using 8 workers (8/11) 
+✓ Generating static pages using 8 workers (11/11) in 259ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/conditions
+├ ƒ /api/v1/coastal-access
+├ ƒ /api/v1/conditions
+├ ƒ /api/v1/locations
+├ ƒ /api/v1/locations/[id]
+├ ƒ /api/v1/me
+├ ƒ /api/v1/pins
+├ ƒ /api/v1/pins/[id]
+├ ƒ /api/v1/preferences
+├ ○ /conditions
+├ ○ /explore
+└ ○ /saved
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+
+## routes
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+
+
+## accounts
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks

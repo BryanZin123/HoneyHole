@@ -46,7 +46,14 @@ it.each([
       reviewDue: "2026-10-28",
       effectiveFrom: "2026-01-01",
       effectiveThrough: "2026-12-31",
-      precisionMeters: 0,
+      precisionMeters: 10,
+      spatialEvidence: {
+        point: selected.coordinates,
+        minimumBoundaryDistanceMeters: 100,
+        boundaryUncertaintyMeters: 10,
+        method: "Synthetic fixture clearance",
+        sourceUrl: "https://example.test/accuracy",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -84,6 +91,7 @@ it.each([
         },
         regulations: [],
         checkedOn: "2026-10-21",
+        locationAccuracyMeters: 5,
         jurisdiction: () => ({ getEvidence: async () => [evidence] }),
         regulationProvider: {
           getRules: async () => [

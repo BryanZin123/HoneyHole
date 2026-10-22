@@ -49,3 +49,6 @@ Continued synchronized checkpoint 3124743. Added same-location activity guard an
 
 ## October 21, 2026 — jurisdiction and surfperch evidence
 Continued a13a4d2 with provider-independent geographic scope resolution, conservative California metadata adapter, source-linked unverified surfperch cases and Explore jurisdiction display. See jurisdiction-surfperch.md for exact evidence blockers, coverage, files and verification. No new verified production surfperch eligibility; all alerts remain inactive.
+
+## October 22, 2026 — safety regression and practical conditions
+Continued clean synchronized 90a8b3a. Confirmed and corrected prohibition precedence while retaining incomplete/conflicting findings. Added explicit spatial uncertainty policy, aggregate surfperch research-limit semantics and selected-date environmental view in Explore. 230 tests pass; typecheck/lint/build pass. See safety-conditions-delivery.md and safety-conditions-verification.log. No new verified surfperch legal coverage; exact operative history and production legal geography remain blocked. Browser unverified; recommendations/alerts inactive. Overall PARTIALLY COMPLETE.

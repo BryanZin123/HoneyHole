@@ -18,7 +18,14 @@ const evidence = (
   reviewDue: "2026-10-28",
   effectiveFrom: "2026-01-01",
   effectiveThrough: "2026-12-31",
-  precisionMeters: 0,
+  precisionMeters: 10,
+  spatialEvidence: {
+    point,
+    minimumBoundaryDistanceMeters: 100,
+    boundaryUncertaintyMeters: 20,
+    method: "Synthetic test clearance",
+    sourceUrl: "https://example.test/accuracy",
+  },
   geometry: {
     type: "Polygon",
     coordinates: [
@@ -38,9 +45,15 @@ const resolve = (
   p = point,
   date = "2026-10-21",
 ) =>
-  resolveJurisdiction(p, date, "2026-10-21", {
-    getEvidence: async () => records,
-  });
+  resolveJurisdiction(
+    p,
+    date,
+    "2026-10-21",
+    {
+      getEvidence: async () => records,
+    },
+    5,
+  );
 it("resolves reviewed interior legal geometry into a regulatory scope", async () => {
   expect((await resolve([evidence()])).scopes.map((s) => s.id)).toEqual([
     "fixture-ocean",
@@ -75,7 +88,7 @@ it("allows overlapping legal MPA restrictions without treating them as mutually 
 it.each([
   { authority: "advisory" as const },
   { precisionMeters: null },
-  { precisionMeters: 10 },
+  { precisionMeters: 100 },
   { reviewDue: "2026-10-20" },
   { verifiedOn: "2026-10-22" },
   { effectiveFrom: null },
@@ -112,4 +125,34 @@ it("rejects invalid coordinates without normalization", async () => {
   await expect(
     resolve([], { latitude: NaN, longitude: -122 }),
   ).rejects.toThrow();
+});
+
+it("distinguishes reliable exterior, ambiguity and missing clearance evidence", async () => {
+  const outside = { latitude: 37, longitude: -120 };
+  const base = evidence();
+  const external = await resolve(
+    [
+      evidence({
+        spatialEvidence: { ...base.spatialEvidence!, point: outside },
+      }),
+    ],
+    outside,
+  );
+  expect(external.findings[0].spatialStatus).toBe("reliably-outside");
+  expect(external.scopes).toEqual([]);
+  expect(
+    (await resolve([evidence({ precisionMeters: 100 })])).findings[0]
+      .spatialStatus,
+  ).toBe("ambiguous");
+  expect(
+    (await resolve([evidence({ spatialEvidence: undefined })])).findings[0]
+      .spatialStatus,
+  ).toBe("missing");
+  expect(
+    (
+      await resolveJurisdiction(point, "2026-10-21", "2026-10-21", {
+        getEvidence: async () => [base],
+      })
+    ).scopes,
+  ).toEqual([]);
 });

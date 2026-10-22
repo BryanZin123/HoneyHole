@@ -70,3 +70,20 @@ it("does not establish bay restrictions from an ocean scope", () => {
     /geographic/,
   );
 });
+
+it("models one shared aggregate limit excluding shiner, not separate per-species allowances", () => {
+  const limits = californiaSurfperchRules.filter(
+    (r) => r.question === "bag" || r.question === "possession",
+  );
+  expect(limits).toHaveLength(2);
+  for (const rule of limits) {
+    expect(rule.restriction).toEqual({
+      kind: "aggregate-limit",
+      maximum: 5,
+      unit: "fish",
+      group: "Embiotocidae",
+      excludedSpecies: ["Cymatogaster aggregata"],
+    });
+    expect(rule.verification).toBe("unverified");
+  }
+});
