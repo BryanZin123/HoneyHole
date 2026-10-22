@@ -1,3 +1,8 @@
+import {
+  resolveJurisdiction,
+  type JurisdictionProvider,
+} from "./resolve-jurisdiction";
+import type { CoastalAssessment } from "../domain/coastal";
 import { assessLocationEligibility } from "../domain/location-eligibility";
 import { validateCoordinates } from "../domain/spatial";
 import {
@@ -37,6 +42,7 @@ export async function getLocationDetail(
     regulationProvider?: RegulationProvider;
     regulatoryScopes?: RegulatoryContext["scopes"];
     checkedOn?: string;
+    jurisdiction?: (access: CoastalAssessment) => JurisdictionProvider;
   },
 ) {
   validateCoordinates(location.coordinates);
@@ -47,28 +53,33 @@ export async function getLocationDetail(
   ) {
     throw new Error("Activity coordinates must match the selected location");
   }
-  const [weather, atmosphere, access, tides, regulatoryAssessment] =
-    await Promise.all([
-      ports.weather.getForecast(location.coordinates),
-      ports.atmosphere.getAtmosphere(location.coordinates),
-      assessCoastalAccess(location.coordinates, ports.access),
-      ports.tides.get(location.coordinates),
-      getRegulatoryAssessment(
-        {
-          activity,
-          scopes: ports.regulatoryScopes ?? [],
-          checkedOn:
-            ports.checkedOn ??
-            new Date().toLocaleDateString("en-CA", {
-              timeZone: "America/Los_Angeles",
-            }),
-        },
-        ports.regulationProvider ?? { getRules: async () => [] },
-      ),
-    ]);
+  const checkedOn =
+    ports.checkedOn ??
+    new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const [weather, atmosphere, access, tides] = await Promise.all([
+    ports.weather.getForecast(location.coordinates),
+    ports.atmosphere.getAtmosphere(location.coordinates),
+    assessCoastalAccess(location.coordinates, ports.access),
+    ports.tides.get(location.coordinates),
+  ]);
+  const jurisdiction = await resolveJurisdiction(
+    location.coordinates,
+    activity.date,
+    checkedOn,
+    ports.jurisdiction?.(access) ?? { getEvidence: async () => [] },
+  );
+  const regulatoryAssessment = await getRegulatoryAssessment(
+    {
+      activity,
+      checkedOn,
+      scopes: [...(ports.regulatoryScopes ?? []), ...jurisdiction.scopes],
+    },
+    ports.regulationProvider ?? { getRules: async () => [] },
+  );
   return {
     location,
     activity,
+    jurisdiction,
     weather,
     atmosphere,
     access,

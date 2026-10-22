@@ -170,3 +170,24 @@ it("rejects malformed dates and invalid coordinates", () => {
       "UNVERIFIED",
     );
 });
+it("minimum-size restrictions remain conditional and conflicting minima stay unverified", () => {
+  const a = rule({
+    question: "size",
+    restriction: {
+      kind: "minimum-size",
+      minimum: 10.5,
+      unit: "inches",
+      measurement: "total-length",
+    },
+  });
+  expect(
+    assessRegulations(context, [a]).questions.find((q) => q.question === "size")
+      ?.status,
+  ).toBe("CONDITIONAL");
+  const b = {
+    ...a,
+    id: "conflicting-fixture-size",
+    restriction: { ...a.restriction, minimum: 12 },
+  } as EffectiveRule;
+  expect(assessRegulations(context, [a, b]).conflicts).toContain("size");
+});

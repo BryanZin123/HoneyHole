@@ -19,12 +19,13 @@ afterEach(() => {
   vi.useRealTimers();
 });
 it.each([
-  ["2026-06-30", "VERIFIED_PROHIBITED"],
-  ["2026-07-01", "UNVERIFIED"],
-  ["2027-04-01", "UNVERIFIED"],
+  ["2026-06-30", "VERIFIED_PROHIBITED", "California grunion"],
+  ["2026-07-01", "UNVERIFIED", "California grunion"],
+  ["2027-04-01", "UNVERIFIED", "California grunion"],
+  ["2026-10-21", "UNVERIFIED", "redtail surfperch"],
 ])(
   "API preserves regulatory evidence during environmental outage on %s",
-  async (date, status) => {
+  async (date, status, species) => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-10-21T15:00:00Z"));
     vi.spyOn(StateParksDiscovery.prototype, "get").mockResolvedValue({
@@ -48,7 +49,7 @@ it.each([
     );
     const response = await GET(
       new Request(
-        `http://localhost/api/v1/locations/1?species=California%20grunion&method=hand-gathering&date=${date}`,
+        `http://localhost/api/v1/locations/1?species=${encodeURIComponent(species)}&method=${species === "redtail surfperch" ? "shore-angling" : "hand-gathering"}&date=${date}`,
       ),
       { params: Promise.resolve({ id: "1" }) },
     );
@@ -57,7 +58,11 @@ it.each([
     expect(validate(body), JSON.stringify(validate.errors)).toBe(true);
     expect(body.regulations.status).toBe(status);
     expect(body.weather.status).toBe("unavailable");
-    expect(body.regulations.findings).toHaveLength(3);
+    expect(body.regulations.findings).toHaveLength(
+      species === "redtail surfperch" ? 4 : 3,
+    );
+    expect(body.jurisdiction.dimensions.water.status).toBe("UNVERIFIED");
+    expect(body.jurisdiction.scopes).toEqual([]);
     expect(body.regulations.missing).toContain("mpa");
     expect(body.opportunity.suitability).toBe("not-assessed");
   },

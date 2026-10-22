@@ -1,3 +1,4 @@
+import { CaliforniaJurisdictionProvider } from "../../../../../infrastructure/california-jurisdiction";
 import { CaliforniaRegulationProvider } from "../../../../../infrastructure/california-effective-rules";
 import { StateParksDiscovery } from "../../../../../infrastructure/state-parks-discovery";
 import { NwsWeatherProvider } from "../../../../../infrastructure/nws";
@@ -54,6 +55,8 @@ export async function GET(
           tides: { get: nearbyTideReference },
           regulations: californiaRegulationRecords,
           regulationProvider: new CaliforniaRegulationProvider(),
+          jurisdiction: (access) =>
+            new CaliforniaJurisdictionProvider(location, access.protectedAreas),
           // Canonical State Parks California entries establish state only, never MPA/local legal boundaries.
           regulatoryScopes: [
             { id: "US-CA", authority: "legal", sourceUrl: location.sourceUrl },

@@ -46,3 +46,6 @@ Accounts/Saved/preferences implemented; exact files and limitations in accounts-
 
 ## October 21, 2026 — exclusion gate
 Continued synchronized checkpoint 3124743. Added same-location activity guard and explainable restricted-access/verified-prohibition exclusions. 180 automated tests, lint and typecheck passed. See eligibility-gate.md and accompanying logs for build/HTTP evidence and limitations. No new species regulation claimed; alerts inactive.
+
+## October 21, 2026 — jurisdiction and surfperch evidence
+Continued a13a4d2 with provider-independent geographic scope resolution, conservative California metadata adapter, source-linked unverified surfperch cases and Explore jurisdiction display. See jurisdiction-surfperch.md for exact evidence blockers, coverage, files and verification. No new verified production surfperch eligibility; all alerts remain inactive.

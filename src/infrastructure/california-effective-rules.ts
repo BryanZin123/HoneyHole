@@ -1,3 +1,4 @@
+import { californiaSurfperchRules } from "./california-surfperch";
 import type { RegulationProvider } from "../application/get-regulatory-assessment";
 import type { EffectiveRule } from "../domain/effective-regulations";
 /** Human-reviewed FGC adopted text + current CDFW corroboration. No automatic legal-date inference. */
@@ -47,6 +48,9 @@ export const californiaEffectiveRules: EffectiveRule[] = [
 ];
 export class CaliforniaRegulationProvider implements RegulationProvider {
   async getRules() {
-    return structuredClone(californiaEffectiveRules);
+    return structuredClone([
+      ...californiaEffectiveRules,
+      ...californiaSurfperchRules,
+    ]);
   }
 }

@@ -13,6 +13,12 @@ export type Restriction =
       unit: "fish" | "inches";
       minimum?: number;
     }
+  | {
+      kind: "minimum-size";
+      minimum: number;
+      unit: "inches";
+      measurement: "total-length";
+    }
   | { kind: "prohibition" }
   | { kind: "clearance" };
 export interface EffectiveRule {
@@ -139,7 +145,7 @@ export function assessRegulations(
           status =
             r.kind === "prohibition"
               ? "VERIFIED_PROHIBITED"
-              : r.kind === "limit"
+              : r.kind === "limit" || r.kind === "minimum-size"
                 ? "CONDITIONAL"
                 : "VERIFIED_PERMITTED";
       }
@@ -154,7 +160,11 @@ export function assessRegulations(
         f.some((f) => f.status === "VERIFIED_PERMITTED")) ||
       new Set(
         f
-          .filter((f) => f.restriction.kind === "limit")
+          .filter(
+            (f) =>
+              f.restriction.kind === "limit" ||
+              f.restriction.kind === "minimum-size",
+          )
           .map((f) => JSON.stringify(f.restriction)),
       ).size > 1
     );

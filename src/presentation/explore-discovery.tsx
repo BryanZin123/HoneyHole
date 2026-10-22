@@ -1,4 +1,5 @@
 "use client";
+import { JurisdictionPanel } from "./jurisdiction-panel";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback } from "react";
 import type { DiscoveryResult, ShoreLocation } from "../domain/discovery";
@@ -216,6 +217,8 @@ export function ExploreDiscovery() {
               >
                 <option value="">Not selected</option>
                 <option>California grunion</option>
+                <option>redtail surfperch</option>
+                <option>barred surfperch</option>
                 <option>Surfperch</option>
                 <option>California halibut</option>
                 <option>Northern anchovy</option>
@@ -379,11 +382,14 @@ export function ExploreDiscovery() {
                 ))}
               </ul>
               <p>
-                Current supported rules cover California grunion seasonal
-                closure and bag/possession limits only. Hand-only gear, size,
+                Verified rule coverage remains limited to the existing
+                California grunion slice. Redtail and barred surfperch records
+                are research evidence only: legal effective dates and exact
+                water boundaries remain unresolved. Hand-only gear, size,
                 licensing, local rules, MPA boundaries and emergency
                 restrictions are not comprehensively verified.
               </p>
+              <JurisdictionPanel assessment={detail.jurisdiction} />
               <h3>Regulatory questions</h3>
               <ul>
                 {detail.regulations.questions.map((q) => (

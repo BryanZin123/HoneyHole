@@ -1,0 +1,68 @@
+tests-final
+ Test Files  32 passed (32)
+      Tests  214 passed (214)
+   Start at  06:43:42
+   Duration  5.50s (environment 64%, tests 19%, setup 11%, import 4%, transform 2%, worker 1%)
+typecheck-final
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 typecheck
+> tsc --noEmit
+
+
+lint-final
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 lint
+> eslint . --max-warnings 0
+
+
+build
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config took 9ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 733ms
+  Running TypeScript ...
+  Finished TypeScript in 2.7s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/11) ...
+  Generating static pages using 8 workers (2/11) 
+  Generating static pages using 8 workers (5/11) 
+  Generating static pages using 8 workers (8/11) 
+✓ Generating static pages using 8 workers (11/11) in 226ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/conditions
+├ ƒ /api/v1/coastal-access
+├ ƒ /api/v1/conditions
+├ ƒ /api/v1/locations
+├ ƒ /api/v1/locations/[id]
+├ ƒ /api/v1/me
+├ ƒ /api/v1/pins
+├ ƒ /api/v1/pins/[id]
+├ ƒ /api/v1/preferences
+├ ○ /conditions
+├ ○ /explore
+└ ○ /saved
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+http
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks

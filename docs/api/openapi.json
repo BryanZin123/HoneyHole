@@ -1365,7 +1365,8 @@
           "access",
           "tides",
           "regulations",
-          "opportunity"
+          "opportunity",
+          "jurisdiction"
         ],
         "properties": {
           "location": {
@@ -1529,6 +1530,22 @@
               }
             }
           },
+          "jurisdiction": {
+            "type": "object",
+            "required": ["coordinates", "activityDate", "checkedOn", "providerStatus", "dimensions", "findings", "scopes"],
+            "properties": {
+              "coordinates": { "type": "object" },
+              "activityDate": { "type": "string", "format": "date" },
+              "checkedOn": { "type": "string", "format": "date" },
+              "providerStatus": { "enum": ["available", "unavailable"] },
+              "dimensions": {
+                "type": "object", "required": ["state", "region", "water", "mpa", "local"],
+                "additionalProperties": { "type": "object", "required": ["status", "labels", "reason"], "properties": { "status": { "enum": ["VERIFIED", "UNVERIFIED"] }, "labels": { "type": "array", "items": { "type": "string" } }, "reason": { "type": "string" } } }
+              },
+              "findings": { "type": "array", "items": { "type": "object", "required": ["id", "kind", "authority", "status", "sourceUrl", "retrievedAt", "precisionMeters"] } },
+              "scopes": { "type": "array", "items": { "type": "object", "required": ["id", "authority", "sourceUrl"] } }
+            }
+          },
           "opportunity": {
             "type": "object",
             "properties": {
@@ -1646,7 +1663,7 @@
             "required": ["kind"],
             "properties": {
               "kind": {
-                "enum": ["closed-season", "limit", "prohibition", "clearance"]
+                "enum": ["closed-season", "limit", "minimum-size", "prohibition", "clearance"]
               }
             }
           }

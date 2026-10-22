@@ -60,30 +60,33 @@ it("maps weather to selected coordinates, keeps unavailable products independent
   expect(r.access.access.status).toBe("unknown");
   expect(r.opportunity.suitability).toBe("not-assessed");
 });
-it("rejects activity coordinates that do not match the selected location before provider calls", async () => {
-  const offline = async () => {
-    throw Error("offline");
-  };
-  const weather = new NwsWeatherProvider(offline);
-  const spy = vi.spyOn(weather, "getForecast");
-  await expect(
-    getLocationDetail(
-      location,
-      {
-        species: "grunion",
-        method: "shore-angling",
-        date: "2026-10-21",
-        jurisdiction: "US-CA",
-        coordinates: { ...location.coordinates, latitude: 38 },
-      },
-      {
-        weather,
-        atmosphere: new NwsAtmosphereProvider(offline),
-        access: new CaliforniaCoastalProvider(offline),
-        tides: { get: offline },
-        regulations: [],
-      },
-    ),
-  ).rejects.toThrow("Activity coordinates must match the selected location");
-  expect(spy).not.toHaveBeenCalled();
-});
+it.each([38, 37.5000000001])(
+  "rejects distinct activity latitude %s before provider calls",
+  async (latitude) => {
+    const offline = async () => {
+      throw Error("offline");
+    };
+    const weather = new NwsWeatherProvider(offline);
+    const spy = vi.spyOn(weather, "getForecast");
+    await expect(
+      getLocationDetail(
+        location,
+        {
+          species: "grunion",
+          method: "shore-angling",
+          date: "2026-10-21",
+          jurisdiction: "US-CA",
+          coordinates: { ...location.coordinates, latitude },
+        },
+        {
+          weather,
+          atmosphere: new NwsAtmosphereProvider(offline),
+          access: new CaliforniaCoastalProvider(offline),
+          tides: { get: offline },
+          regulations: [],
+        },
+      ),
+    ).rejects.toThrow("Activity coordinates must match the selected location");
+    expect(spy).not.toHaveBeenCalled();
+  },
+);

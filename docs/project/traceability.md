@@ -738,3 +738,7 @@ Original environmental/regulatory/nationwide/mobile/sharing/recommendation/notif
 | REQ-ELIG-001 coordinate identity | get-location-detail; location-detail.test | Implemented; mismatch rejected before providers |
 | REQ-ELIG-002 access/regulatory exclusions | location-eligibility; domain tests; Explore/OpenAPI | Implemented; no positive permission |
 | REQ-ELIG-003 fail-closed recommendation/alert gate | location-eligibility.test | Implemented; alerts remain inactive |
+
+| REQ-GEO-001/002 | resolve-jurisdiction, California adapter and jurisdiction tests | Resolver tested; production legal geometry/precision unresolved |
+| REQ-SURF-001 | california-surfperch and surfperch/API tests | Research cases only; legal-date and geography blockers documented in jurisdiction-surfperch.md |
+| REQ-UI-GEO-001 | jurisdiction-panel and component tests | Implemented; actual browser unverified |
