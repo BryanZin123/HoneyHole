@@ -295,9 +295,14 @@ export function ExploreDiscovery() {
                   : detail.access.access.status}
               </h3>
               <p>
-                Fishing eligibility:{" "}
+                Regulatory assessment:{" "}
                 <strong>{detail.regulations.status}</strong>.{" "}
                 {detail.regulations.reason}
+              </p>
+              <p>
+                Recommendation eligibility:{" "}
+                <strong>{detail.opportunity.eligibility}</strong>.{" "}
+                {detail.opportunity.explanation}
               </p>
               <p>
                 Habitat: unknown. Suitability: not assessed. Confidence:

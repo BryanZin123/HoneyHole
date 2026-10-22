@@ -1,3 +1,5 @@
+import { assessLocationEligibility } from "../domain/location-eligibility";
+import { validateCoordinates } from "../domain/spatial";
 import {
   getRegulatoryAssessment,
   type RegulationProvider,
@@ -37,6 +39,14 @@ export async function getLocationDetail(
     checkedOn?: string;
   },
 ) {
+  validateCoordinates(location.coordinates);
+  validateCoordinates(activity.coordinates);
+  if (
+    activity.coordinates.latitude !== location.coordinates.latitude ||
+    activity.coordinates.longitude !== location.coordinates.longitude
+  ) {
+    throw new Error("Activity coordinates must match the selected location");
+  }
   const [weather, atmosphere, access, tides, regulatoryAssessment] =
     await Promise.all([
       ports.weather.getForecast(location.coordinates),
@@ -71,7 +81,10 @@ export async function getLocationDetail(
     opportunity: {
       suitability: "not-assessed",
       confidence: "insufficient",
-      eligibility: "UNVERIFIED",
+      ...assessLocationEligibility(
+        access.access.status,
+        regulatoryAssessment.status,
+      ),
     },
   };
 }

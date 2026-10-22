@@ -734,3 +734,7 @@ Final evidence: regulatory-tests.json (153 passed/0 failed), regulatory-lint/typ
 | VC-001 source persistence | Feature branch, CI, checkpoint records | See source-checkpoint.md and checkpoint-verification.md for actual commit/push evidence |
 
 Original environmental/regulatory/nationwide/mobile/sharing/recommendation/notification requirements retained. Private locations never become public through sharing eligibility.
+
+| REQ-ELIG-001 coordinate identity | get-location-detail; location-detail.test | Implemented; mismatch rejected before providers |
+| REQ-ELIG-002 access/regulatory exclusions | location-eligibility; domain tests; Explore/OpenAPI | Implemented; no positive permission |
+| REQ-ELIG-003 fail-closed recommendation/alert gate | location-eligibility.test | Implemented; alerts remain inactive |

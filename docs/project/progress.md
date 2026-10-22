@@ -43,3 +43,6 @@ See [regulatory-delivery.md](regulatory-delivery.md) and ADR 007. Preserved 126-
 
 ## Accounts and source checkpoint — October 21, 2026
 Accounts/Saved/preferences implemented; exact files and limitations in accounts-delivery.md. Baseline 153 passed, final 172 passed/0 failed; lint/typecheck/build passed; five production routes and isolated production HTTP restart/login/persistence workflow passed, including real Explore save. Browser BLOCKED. Overall PARTIALLY COMPLETE; local user workflow IMPLEMENTED — NOT FULLY VERIFIED in a browser. Source checkpoint on feature/honeyhole-foundation-checkpoint; actual Linux scratch path, Windows inaccessible. See source-checkpoint.md for independently verified commit/remote status. No alerts/public publishing/deployment. Regulatory coverage and CSP licensing remain limited.
+
+## October 21, 2026 — exclusion gate
+Continued synchronized checkpoint 3124743. Added same-location activity guard and explainable restricted-access/verified-prohibition exclusions. 180 automated tests, lint and typecheck passed. See eligibility-gate.md and accompanying logs for build/HTTP evidence and limitations. No new species regulation claimed; alerts inactive.

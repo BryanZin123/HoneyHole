@@ -1,0 +1,5 @@
+ Test Files  28 passed (28)
+      Tests  180 passed (180)
+   Start at  06:22:03
+   Duration  4.68s (environment 63%, tests 20%, setup 11%, import 4%, transform 2%, worker 1%)
+Full console log retained locally; summary extracted from executed Vitest results.

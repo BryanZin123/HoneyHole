@@ -1539,8 +1539,11 @@
                 "const": "insufficient"
               },
               "eligibility": {
-                "const": "UNVERIFIED"
-              }
+                "enum": ["UNVERIFIED", "EXCLUDED"]
+              },
+              "reasons": { "type": "array", "items": { "type": "string" } },
+              "explanation": { "type": "string" },
+              "alertEligible": { "const": false }
             }
           }
         }

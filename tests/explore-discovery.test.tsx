@@ -91,8 +91,9 @@ it("searches, selects a map pin and shows coordinates plus separate unknown elig
   );
   expect(await screen.findByText(/37.5, -122.5/)).toBeInTheDocument();
   expect(
-    screen.getByText("UNVERIFIED", { selector: "strong" }),
-  ).toBeInTheDocument();
+    screen.getAllByText("UNVERIFIED", { selector: "strong" }),
+  ).toHaveLength(2);
+  expect(screen.getByText(/No fishing recommendation established/)).toBeVisible();
   expect(screen.getByText("emergency: UNVERIFIED")).toBeInTheDocument();
   expect(
     screen.getByText(/No local tide transfer verified/),
