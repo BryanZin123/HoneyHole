@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("dashboard navigation and responsive layout", async ({
   page,
 }, testInfo) => {

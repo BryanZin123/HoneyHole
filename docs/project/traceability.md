@@ -750,3 +750,6 @@ Original environmental/regulatory/nationwide/mobile/sharing/recommendation/notif
 - REQ-ENV-DATE-001: selected-conditions domain and panel filter forecasts, observations and calculated events by California civil date, preserve provenance/freshness, show missing samples and unverified marine transfer. No scientific scoring or legal inference.
 - REQ-UI-GEO-001: Explore exposes spatial classification and separate conditions/eligibility. Component verified; browser UNVERIFIED.
 - Verification: 230 tests passed/0 failed; typecheck/lint/build passed; HTTP account/restart and route evidence in safety-conditions-verification.log. Authentication/private pins/preferences retained. CI/remote commit verified at delivery rather than inferred from local tests.
+
+## 2026-10-28 — Phase A browser requirements
+REQ-E2E-001 separate official Chromium CI install/job; REQ-E2E-002 temporary database, test-only provider fixtures and controlled restart; REQ-E2E-003 desktop/mobile navigation, private pin workflow, owner/origin controls and unavailable states. Six Playwright cases discovered. Local browser blocked, CI outcome required. Existing 230 deterministic tests and quality gates pass. Evidence: browser-phase-a.md and browser-phase-a-verification.log.

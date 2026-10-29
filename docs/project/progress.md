@@ -52,3 +52,6 @@ Continued a13a4d2 with provider-independent geographic scope resolution, conserv
 
 ## October 22, 2026 — safety regression and practical conditions
 Continued clean synchronized 90a8b3a. Confirmed and corrected prohibition precedence while retaining incomplete/conflicting findings. Added explicit spatial uncertainty policy, aggregate surfperch research-limit semantics and selected-date environmental view in Explore. 230 tests pass; typecheck/lint/build pass. See safety-conditions-delivery.md and safety-conditions-verification.log. No new verified surfperch legal coverage; exact operative history and production legal geography remain blocked. Browser unverified; recommendations/alerts inactive. Overall PARTIALLY COMPLETE.
+
+## 2026-10-28 — browser phase A
+Added isolated real-browser production workflow and independent GitHub Actions Chromium job. Local baseline/final 230 tests, typecheck/lint/build and HTTP persistence checks pass. Local browser blocked by invalid Chromium download; GitHub browser outcome must be checked for this commit. See browser-phase-a.md.

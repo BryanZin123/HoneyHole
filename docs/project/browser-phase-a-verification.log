@@ -1,0 +1,265 @@
+## type
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 typecheck
+> tsc --noEmit
+
+
+
+## lint
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 lint
+> eslint . --max-warnings 0
+
+
+
+## tests
+ Test Files  35 passed (35)
+      Tests  230 passed (230)
+   Duration  6.88s (environment 64%, tests 20%, setup 10%, import 4%, transform 2%, worker 1%)
+
+## build
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config took 10ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.6s
+  Running TypeScript ...
+  Finished TypeScript in 4.7s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/11) ...
+  Generating static pages using 8 workers (2/11) 
+  Generating static pages using 8 workers (5/11) 
+  Generating static pages using 8 workers (8/11) 
+✓ Generating static pages using 8 workers (11/11) in 252ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/conditions
+├ ƒ /api/v1/coastal-access
+├ ƒ /api/v1/conditions
+├ ƒ /api/v1/locations
+├ ƒ /api/v1/locations/[id]
+├ ƒ /api/v1/me
+├ ƒ /api/v1/pins
+├ ƒ /api/v1/pins/[id]
+├ ƒ /api/v1/preferences
+├ ○ /conditions
+├ ○ /explore
+└ ○ /saved
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+
+## accounts
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+
+
+## routes
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+
+
+## browser-install
+    at /workspace/scratch/972d008c416a/HoneyHole/node_modules/playwright-core/lib/utilsBundle.js:31441:18
+    at /workspace/scratch/972d008c416a/HoneyHole/node_modules/playwright-core/lib/utilsBundle.js:31967:9
+    at /workspace/scratch/972d008c416a/HoneyHole/node_modules/playwright-core/lib/utilsBundle.js:30864:11
+    at FSReqCallback.wrapper [as oncomplete] (node:fs:730:5)
+Failed to install browsers
+Error: Failed to download Chrome for Testing 156.0.8078.4 (playwright chromium v1248), caused by
+Error: Download failure, code=1
+    at ChildProcess.<anonymous> (/workspace/scratch/972d008c416a/HoneyHole/node_modules/playwright-core/lib/coreBundle.js:33774:32)
+    at ChildProcess.emit (node:events:514:28)
+    at ChildProcess._handle.onexit (node:internal/child_process:324:12)
+
+## browser
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 test:e2e
+> playwright test
+
+
+Running 6 tests using 1 worker
+
+(node:30) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout (2ms)
+(node:74) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions (2ms)
+(node:106) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [desktop] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete (2ms)
+(node:138) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout (2ms)
+(node:170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions (2ms)
+(node:202) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  6 [mobile] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete (2ms)
+
+
+  1) [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ─────
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-dashboard-navigation-and-responsive-layout-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/private-locations-private--8ffdc-tart-persistence-and-delete-desktop/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/private-locations-private--8ffdc-tart-persistence-and-delete-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/private-locations-private--8ffdc-tart-persistence-and-delete-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ──────
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-dashboard-navigation-and-responsive-layout-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/foundation-provider-errors-bcad3-ever-become-fake-conditions-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/private-locations-private--8ffdc-tart-persistence-and-delete-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/private-locations-private--8ffdc-tart-persistence-and-delete-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/private-locations-private--8ffdc-tart-persistence-and-delete-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ──────
+    [desktop] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+    [desktop] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete 
+    [mobile] › tests/e2e/foundation.spec.ts:2:5 › dashboard navigation and responsive layout ───────
+    [mobile] › tests/e2e/foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions 
+    [mobile] › tests/e2e/private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete 
