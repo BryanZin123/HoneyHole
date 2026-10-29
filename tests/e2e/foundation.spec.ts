@@ -54,9 +54,9 @@ test("provider errors stay visible and never become fake conditions", async ({
   );
   await page.goto("/conditions");
   await page.getByRole("button", { name: "Get conditions" }).click();
-  await expect(page.getByRole("alert")).toContainText(
-    "NOAA temporarily unavailable",
-  );
+  await expect(
+    page.getByRole("alert").filter({ hasText: "NOAA temporarily unavailable" }),
+  ).toContainText("NOAA temporarily unavailable");
   await expect(
     page.getByRole("button", { name: "Get conditions" }),
   ).toBeEnabled();
