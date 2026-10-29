@@ -51,3 +51,6 @@ Repository changes preserved across the interrupted session. Re-fetched origin: 
 - tests/habitat-application.test.ts
 - tests/habitat-panel.test.tsx
 - tests/habitat.test.ts
+
+### Chromium regression correction — 2026-10-29
+Run 40897954030: quality gates passed; Chromium 6 passed, 2 failed. The new habitat test used an ambiguous location button (list and map marker) and an exact label that included native select option text. Scope selection to the map and match the species combobox label prefix. No application or authorization logic changed. The corrected run must pass before browser verification is complete.

@@ -5,7 +5,8 @@ test("barred surfperch evidence does not convert a park entrance into habitat or
   await page.goto("/explore");
   await page.getByRole("button", { name: "Find shoreline locations" }).click();
   await page
-    .getByRole("button", { name: "Synthetic Browser Fixture SB", exact: true })
+    .getByRole("region", { name: "California shoreline map" })
+    .locator('[title="Synthetic Browser Fixture SB"]')
     .click();
   await expect(page.getByText(/No reviewed habitat profile/)).toBeVisible();
   const response = page.waitForResponse(
@@ -14,7 +15,7 @@ test("barred surfperch evidence does not convert a park entrance into habitat or
       r.url().includes("species=barred"),
   );
   await page
-    .getByLabel("Target species", { exact: true })
+    .getByRole("combobox", { name: /^Target species/ })
     .selectOption("barred surfperch");
   const detail = await (await response).json();
   expect(detail.habitat.association.status).toBe("documented");
@@ -43,7 +44,7 @@ test("barred surfperch evidence does not convert a park entrance into habitat or
     page.getByRole("region", { name: "Selected-date environmental evidence" }),
   ).toBeVisible();
   await page
-    .getByLabel("Target species", { exact: true })
+    .getByRole("combobox", { name: /^Target species/ })
     .selectOption("redtail surfperch");
   await expect(page.getByText(/No reviewed habitat profile/)).toBeVisible();
 });
