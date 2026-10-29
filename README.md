@@ -31,7 +31,7 @@ node scripts/accounts-smoke.mjs
 npm audit --omit=dev --audit-level=high
 ```
 
-The account smoke test creates an isolated temporary database, starts/stops its own production server on port 3111, checks authentication/authorization, restarts the server, verifies saved-data persistence and cleans up only its own fixture directory. Tests use synthetic `example.test` accounts. No external service is needed unless `--live-explore` is supplied. Latest checked suite: 172 passed, 0 failed; lint/typecheck/build passed. GitHub CI runs deterministic checks on feature pushes and pull requests; its remote result must be checked separately.
+The account smoke test creates an isolated temporary database, starts/stops its own production server on port 3111, checks authentication/authorization, restarts the server, verifies saved-data persistence and cleans up only its own fixture directory. Tests use synthetic `example.test` accounts. No external service is needed unless `--live-explore` is supplied. Latest checked unit/component/integration suite: 255 passed, 0 failed; lint/typecheck/build passed. GitHub CI runs deterministic checks on feature pushes and pull requests; its remote result must be checked separately.
 
 Optional live checks after building:
 
@@ -44,7 +44,7 @@ node scripts/accounts-smoke.mjs --live-explore
 
 On Node 24 behind a permitted environment HTTP proxy, prefix live commands with `NODE_USE_ENV_PROXY=1`. Live checks intentionally fail when required providers are unavailable. Source-content checks do not automatically renew legal evidence.
 
-For a compatible browser environment: install Chromium with `npx playwright install --with-deps chromium`, build, then `npm run test:e2e`. Existing browser tests check foundation navigation. Full account/Explore browser workflow remains unverified: Chromium absent and Firefox page creation failed in the current host sandbox. Do not disable security controls. Manual workflow: register → Explore → save privately → Saved → edit → sign out → sign back in → confirm persistence → delete. API/component tests verify these behaviors independently.
+For a compatible browser environment: install Chromium with `npx playwright install --with-deps chromium`, build, then `npm run test:e2e`. A separate GitHub Actions Chromium job runs desktop/mobile navigation, provider-error handling, registration/login, real Explore marker selection, private pin save/edit/delete, second-user isolation, and persistence after a controlled application restart. A test-only preload supplies synthetic discovery data and provider outages; no live provider availability is required. Tests initialize and remove their own temporary database and authentication secret. There is no application test-mode bypass. Reports/traces are retained by CI for seven days; generated reports are excluded from Git and lint. Phase A passed six browser cases in [run 40824472722](https://github.com/BryanZin123/HoneyHole/actions/runs/40824472722). The habitat phase adds two cases; check its exact commit's CI result. Local Chromium download remains unavailable in the AI sandbox, which does not prevent browser verification on the supported runner.
 
 ## Implemented scope and limits
 
@@ -52,6 +52,7 @@ For a compatible browser environment: install Chromium with `npx playwright inst
 - Real NOAA tides/water-temperature handling and NWS weather/atmosphere with provenance, freshness policy and explicit missing data. Nearby tides are reference-only unless transfer relevance is verified.
 - State Beach entry discovery, county/radius searches, Leaflet/OSM map, independent CPAD public-access and advisory CDFW MPA evidence. State Parks commercial use needs prior approval; current adapter is for local/personal development. No public deployment.
 - Effective-dated California grunion closure/bag/possession slice: reviewed activity dates 2026-01-01 through 2026-10-21, review due 2026-10-28. Other dates/species and incomplete checks remain UNVERIFIED. No complete fishing permission or scientific recommendation is produced.
+- Barred surfperch descriptive habitat evidence, dated CDFW sources and separate point-level habitat status in Explore. Current park-entry data supplies no reviewed substrate/surf-zone observations; habitat remains missing and species presence unassessed. No numerical catch score or positive recommendation.
 - Better Auth + SQLite accounts, private owner-scoped pin CRUD, custom coordinates, favorites and preferences. Secure cookie flags follow HTTPS; local HTTP is loopback-only. No email recovery, public publication, social posting or notification delivery. Measurement preferences are persisted; environmental panels retain explicit normalized source units.
 - Private maps load third-party tiles only when requested; tile requests reveal the viewed area, not pin names/notes. Database is not encrypted at rest. Production needs HTTPS, durable storage/backups, verified-email/recovery delivery, appropriate abuse controls and cleared source licensing.
 

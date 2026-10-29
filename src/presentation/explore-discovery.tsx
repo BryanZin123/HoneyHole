@@ -1,4 +1,5 @@
 "use client";
+import { HabitatPanel } from "./habitat-panel";
 import { JurisdictionPanel } from "./jurisdiction-panel";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback } from "react";
@@ -307,8 +308,8 @@ export function ExploreDiscovery() {
                 {detail.opportunity.explanation}
               </p>
               <p>
-                Habitat: unknown. Suitability: not assessed. Confidence:
-                insufficient.
+                Species suitability and environmental safety have not been
+                assessed.
               </p>
               <ul>
                 {detail.access.access.evidence.records.map((r) => (
@@ -388,6 +389,7 @@ export function ExploreDiscovery() {
                 licensing, local rules, MPA boundaries and emergency
                 restrictions are not comprehensively verified.
               </p>
+              <HabitatPanel assessment={detail.habitat} />
               <JurisdictionPanel assessment={detail.jurisdiction} />
               <h3>Regulatory questions</h3>
               <ul>

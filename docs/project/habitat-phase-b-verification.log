@@ -1,0 +1,104 @@
+Verification repeated on 2026-10-29 after session recovery; browser execution delegated to supported GitHub Actions runner.
+
+## tests
+ Test Files  39 passed (39)
+      Tests  255 passed (255)
+   Duration  7.13s (environment 65%, tests 18%, setup 11%, import 4%, transform 2%, worker 1%)
+
+## typecheck
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 typecheck
+> tsc --noEmit
+
+
+
+## lint
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 lint
+> eslint . --max-warnings 0
+
+
+
+## build
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> honeyhole@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config took 11ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.5s
+  Running TypeScript ...
+  Finished TypeScript in 5.2s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/11) ...
+  Generating static pages using 8 workers (2/11) 
+  Generating static pages using 8 workers (5/11) 
+  Generating static pages using 8 workers (8/11) 
+✓ Generating static pages using 8 workers (11/11) in 289ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/conditions
+├ ƒ /api/v1/coastal-access
+├ ƒ /api/v1/conditions
+├ ƒ /api/v1/locations
+├ ƒ /api/v1/locations/[id]
+├ ƒ /api/v1/me
+├ ƒ /api/v1/pins
+├ ƒ /api/v1/pins/[id]
+├ ƒ /api/v1/preferences
+├ ○ /conditions
+├ ○ /explore
+└ ○ /saved
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+
+## accounts
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+
+
+## routes
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+
+
+## browser-list
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+Listing tests:
+  [desktop] › foundation.spec.ts:2:5 › dashboard navigation and responsive layout
+  [desktop] › foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions
+  [desktop] › habitat.spec.ts:2:5 › barred surfperch evidence does not convert a park entrance into habitat or a recommendation
+  [desktop] › private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete
+  [mobile] › foundation.spec.ts:2:5 › dashboard navigation and responsive layout
+  [mobile] › foundation.spec.ts:43:5 › provider errors stay visible and never become fake conditions
+  [mobile] › habitat.spec.ts:2:5 › barred surfperch evidence does not convert a park entrance into habitat or a recommendation
+  [mobile] › private-locations.spec.ts:27:5 › private Explore save, edit, owner isolation, logout, restart persistence and delete
+Total: 8 tests in 3 files

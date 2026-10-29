@@ -1,3 +1,4 @@
+import { CaliforniaHabitatEvidence } from "../../../../../infrastructure/california-habitat";
 import { CaliforniaJurisdictionProvider } from "../../../../../infrastructure/california-jurisdiction";
 import { CaliforniaRegulationProvider } from "../../../../../infrastructure/california-effective-rules";
 import { StateParksDiscovery } from "../../../../../infrastructure/state-parks-discovery";
@@ -49,6 +50,7 @@ export async function GET(
           jurisdiction: "US-CA",
         },
         {
+          habitat: new CaliforniaHabitatEvidence(),
           weather: new NwsWeatherProvider(),
           atmosphere: new NwsAtmosphereProvider(),
           access: new CaliforniaCoastalProvider(),

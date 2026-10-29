@@ -753,3 +753,7 @@ Original environmental/regulatory/nationwide/mobile/sharing/recommendation/notif
 
 ## 2026-10-28 — Phase A browser requirements
 REQ-E2E-001 separate official Chromium CI install/job; REQ-E2E-002 temporary database, test-only provider fixtures and controlled restart; REQ-E2E-003 desktop/mobile navigation, private pin workflow, owner/origin controls and unavailable states. Six Playwright cases discovered. Local browser blocked, CI outcome required. Existing 230 deterministic tests and quality gates pass. Evidence: browser-phase-a.md and browser-phase-a-verification.log.
+
+## 2026-10-28 — habitat evidence and browser outcome
+REQ-E2E-001/002/003: COMPLETE — VERIFIED for six Chromium assertions at c863f41426349baf33b52f67b119f46f1a95b6aa / Actions 40824472722 (initial selector failures corrected; source and test history preserved).
+REQ-HAB-001 species-specific documented associations, dated sources and descriptive distribution; REQ-HAB-002 supported/missing/incompatible attribute evidence with identity/date/conflict checks; REQ-HAB-003 independent provider failure handling and API schema; REQ-HAB-UI-001 Explore evidence separation; REQ-HAB-SAFE-001 supported habitat cannot override exclusion or enable alerts. Tests: habitat*.test.* and e2e/habitat.spec.ts; report habitat-phase-b.md. Production location habitat remains missing, not implied by park entrances. No numeric scientific weights or new legal permission. 255 deterministic tests pass; phase-specific CI browser result required.

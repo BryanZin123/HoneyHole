@@ -1358,7 +1358,8 @@
       "LocationDetail": {
         "type": "object",
         "required": [
-          "location",
+          "habitat",
+        "location",
           "activity",
           "weather",
           "atmosphere",
@@ -1369,6 +1370,7 @@
           "jurisdiction"
         ],
         "properties": {
+          "habitat": { "$ref": "#/components/schemas/HabitatAssessment" },
           "location": {
             "$ref": "#/components/schemas/ShoreLocation"
           },
@@ -1669,7 +1671,213 @@
           }
         }
       },
-      "SavedPin": {
+      "HabitatAssessment": {
+      "type": "object",
+      "required": [
+        "status",
+        "association",
+        "locationEvidence",
+        "speciesPresence",
+        "explanation",
+        "providerStatus"
+      ],
+      "properties": {
+        "status": {
+          "const": "unknown"
+        },
+        "speciesPresence": {
+          "const": "not-assessed"
+        },
+        "providerStatus": {
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "explanation": {
+          "type": "string"
+        },
+        "association": {
+          "type": "object",
+          "required": [
+            "status",
+            "profile"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "documented",
+                "not-reviewed"
+              ]
+            },
+            "profile": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "commonName",
+                    "scientificName",
+                    "facts",
+                    "sources",
+                    "limitations"
+                  ],
+                  "properties": {
+                    "commonName": {
+                      "type": "string"
+                    },
+                    "scientificName": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "statement",
+                          "sourceIds"
+                        ],
+                        "properties": {
+                          "statement": {
+                            "type": "string"
+                          },
+                          "sourceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "title",
+                          "url",
+                          "attribution",
+                          "published",
+                          "reviewedOn",
+                          "geographicScope",
+                          "limitations"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "attribution": {
+                            "type": "string"
+                          },
+                          "geographicScope": {
+                            "type": "string"
+                          },
+                          "limitations": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "published": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reviewedOn": {
+                            "type": "string",
+                            "format": "date"
+                          }
+                        }
+                      }
+                    },
+                    "limitations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "locationEvidence": {
+          "type": "object",
+          "required": [
+            "status",
+            "attributes"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "supported",
+                "missing",
+                "incompatible"
+              ]
+            },
+            "attributes": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "attribute",
+                  "status",
+                  "value",
+                  "evidence",
+                  "reason"
+                ],
+                "properties": {
+                  "attribute": {
+                    "enum": [
+                      "substrate",
+                      "zone"
+                    ]
+                  },
+                  "status": {
+                    "enum": [
+                      "supported",
+                      "missing",
+                      "incompatible"
+                    ]
+                  },
+                  "value": {
+                    "enum": [
+                      "sand",
+                      "rock",
+                      "surf-zone",
+                      "inland",
+                      "unknown"
+                    ]
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "SavedPin": {
         "type": "object",
         "additionalProperties": false,
         "required": [

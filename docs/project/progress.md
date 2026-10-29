@@ -55,3 +55,6 @@ Continued clean synchronized 90a8b3a. Confirmed and corrected prohibition preced
 
 ## 2026-10-28 — browser phase A
 Added isolated real-browser production workflow and independent GitHub Actions Chromium job. Local baseline/final 230 tests, typecheck/lint/build and HTTP persistence checks pass. Local browser blocked by invalid Chromium download; GitHub browser outcome must be checked for this commit. See browser-phase-a.md.
+
+## 2026-10-28 — Phase A verified; barred habitat phase B
+Browser gap closed for six desktop/mobile Chromium workflows at c863f41, Actions run 40824472722. Initial 4-pass/2-fail selector result preserved and corrected; no production defect hidden. Added non-scoring barred surfperch evidence with dated sources and explicit missing location habitat; no regulatory/alert activation. Full 255 tests, typecheck and lint pass. Phase B build/persistence/CI details: habitat-phase-b.md and habitat-phase-b-verification.log. Overall PARTIALLY COMPLETE; production location habitat, current legal coverage, licensing and scientifically validated recommendations remain outstanding.

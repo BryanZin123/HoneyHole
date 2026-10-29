@@ -1,4 +1,8 @@
 import {
+  getHabitatAssessment,
+  type HabitatEvidenceProvider,
+} from "./get-habitat-assessment";
+import {
   resolveJurisdiction,
   type JurisdictionProvider,
 } from "./resolve-jurisdiction";
@@ -42,6 +46,7 @@ export async function getLocationDetail(
     regulationProvider?: RegulationProvider;
     regulatoryScopes?: RegulatoryContext["scopes"];
     checkedOn?: string;
+    habitat?: HabitatEvidenceProvider;
     locationAccuracyMeters?: number;
     jurisdiction?: (access: CoastalAssessment) => JurisdictionProvider;
   },
@@ -86,7 +91,16 @@ export async function getLocationDetail(
     atmosphere,
     access,
     tides,
-    habitat: { status: "unknown" },
+    habitat: await getHabitatAssessment(
+      {
+        locationId: location.id,
+        coordinates: location.coordinates,
+        species: activity.species,
+        date: activity.date,
+        checkedOn,
+      },
+      ports.habitat,
+    ),
     regulations: {
       ...regulatoryAssessment,
       records: ports.regulations,
