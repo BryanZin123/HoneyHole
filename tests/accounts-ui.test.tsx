@@ -157,3 +157,37 @@ it("Saved supports create, edit and deletion without loading external map tiles 
     await screen.findByText(/No saved Honey Holes yet/),
   ).toBeInTheDocument();
 });
+
+it("keeps a stable notes label when editing an existing nonempty private note", async () => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (url: unknown) =>
+      Response.json(
+        String(url).includes("preferences")
+          ? null
+          : [
+              {
+                id: "notes-pin",
+                name: "Notes fixture",
+                latitude: 37.5,
+                longitude: -122.5,
+                notes: "Existing private note",
+                sourceId: null,
+                privacy: "PRIVATE",
+                sharingEligible: false,
+              },
+            ],
+      ),
+    ),
+  );
+  render(<SavedPlaces />);
+  fireEvent.click(
+    await screen.findByRole("button", {
+      name: "Edit Notes fixture",
+    }),
+  );
+  const notes = screen.getByLabelText("Private notes", { exact: true });
+  expect(notes).toHaveValue("Existing private note");
+  fireEvent.change(notes, { target: { value: "Edited private note" } });
+  expect(notes).toHaveValue("Edited private note");
+});

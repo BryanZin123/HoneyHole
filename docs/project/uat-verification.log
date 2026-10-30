@@ -13,3 +13,5 @@ PASS /saved: HTTP 200 and expected content
 Local Chromium unavailable; not classified as passed. Remote CI pending synchronization.
 USGS actual data and full metadata requests: HTTP 403; zero geographic records processed.
 No Windows execution.
+First CI run 41080302569: verify passed (315 tests, build/typecheck/lint, production audit zero vulnerabilities, accounts persistence); Chromium 12 passed and 2 failed at prefilled notes exact-label lookup. Separate-tab/keyboard cases passed both viewports. Fixed notes label using explicit htmlFor/id outside textarea. Added component test (already passes in jsdom; real-browser failures supply RED evidence). Full dependency audit: one moderate fast-uri development dependency issue, not fixed in this milestone.
+Follow-up local full suite: 316 passed, 0 failed. Notes test file: 5 passed. Typecheck initially caught an unsupported Testing Library test option; removed it, then typecheck passed. Lint passed. Follow-up clean build, persistence and unchanged Chromium assertions are required in CI before completion.

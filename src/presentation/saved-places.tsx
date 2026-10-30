@@ -292,14 +292,13 @@ export function SavedPlaces() {
                 defaultValue={editing?.longitude ?? ""}
               />
             </label>
-            <label>
-              Private notes
-              <textarea
-                name="notes"
-                maxLength={2000}
-                defaultValue={editing?.notes ?? ""}
-              />
-            </label>
+            <label htmlFor="private-pin-notes">Private notes</label>
+            <textarea
+              id="private-pin-notes"
+              name="notes"
+              maxLength={2000}
+              defaultValue={editing?.notes ?? ""}
+            />
             <label>
               <input
                 name="sharingEligible"

@@ -31,7 +31,7 @@ node scripts/accounts-smoke.mjs
 npm audit --omit=dev --audit-level=high
 ```
 
-The account smoke test creates an isolated temporary database, starts/stops its own production server on port 3111, checks authentication/authorization, restarts the server, verifies saved-data persistence and cleans up only its own fixture directory. Tests use synthetic `example.test` accounts. No external service is needed unless `--live-explore` is supplied. Latest checked unit/component/integration suite: 315 passed, 0 failed; lint/typecheck/build passed. GitHub CI runs deterministic checks on feature pushes and pull requests; its remote result must be checked separately.
+The account smoke test creates an isolated temporary database, starts/stops its own production server on port 3111, checks authentication/authorization, restarts the server, verifies saved-data persistence and cleans up only its own fixture directory. Tests use synthetic `example.test` accounts. No external service is needed unless `--live-explore` is supplied. Latest checked unit/component/integration suite: 316 passed, 0 failed; lint/typecheck/build passed. GitHub CI runs deterministic checks on feature pushes and pull requests; its remote result must be checked separately.
 
 Optional live checks after building:
 
