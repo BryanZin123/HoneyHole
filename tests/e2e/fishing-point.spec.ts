@@ -117,16 +117,45 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
   } finally {
     await other.close();
   }
+  await page.goto("/account");
+  await page.getByRole("button", { name: "Sign out", exact: true }).click();
+  await expect(page.getByText("Signed out.", { exact: true })).toBeVisible();
+  expect((await page.request.get(`/api/v1/pins/${id}`)).status()).toBe(401);
   await app.restart();
+  await page.goto("/account");
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page
+    .getByRole("button", { name: "Sign in securely", exact: true })
+    .click();
+  await expect(
+    page.getByText(`Signed in as Point test (${email}).`, { exact: true }),
+  ).toBeVisible();
   await page.goto("/saved");
   await expect(
     page.getByText("My selected fishing point", { exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", {
+      name: "Edit My selected fishing point",
+      exact: true,
+    })
+    .click();
+  await page
+    .getByLabel("Location name", { exact: true })
+    .fill("Private fishing point edited");
+  await page
+    .getByLabel("Private notes", { exact: true })
+    .fill("Synthetic acceptance notes");
+  await page.getByRole("button", { name: "Save pin changes" }).click();
+  await expect(
+    page.getByText("Synthetic acceptance notes", { exact: true }),
   ).toBeVisible();
   const saved = await (await page.request.get(`/api/v1/pins/${id}`)).json();
   expect(saved).toMatchObject({ latitude, longitude, sourceId: null });
   await page
     .getByRole("button", {
-      name: "Delete My selected fishing point",
+      name: "Delete Private fishing point edited",
       exact: true,
     })
     .click();
@@ -134,4 +163,68 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
     .getByRole("button", { name: "Confirm delete", exact: true })
     .click();
   await expect(page.getByText(/No saved Honey Holes yet/)).toBeVisible();
+});
+
+test("keyboard fishing point survives separate-tab registration without environmental consent", async ({
+  page,
+  context,
+}, info) => {
+  await page.goto("/explore");
+  await page.getByRole("button", { name: "Find shoreline locations" }).click();
+  const map = page.getByRole("region", { name: "California shoreline map" });
+  await expect(
+    map.locator('[title="Synthetic Browser Fixture SB"]'),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Choose a fishing point on the map" })
+    .click();
+  await map.focus();
+  await map.press("Enter");
+  const panel = page.getByRole("region", { name: "Your fishing point" });
+  await expect(panel).toBeVisible();
+  const coordinates = await panel
+    .getByLabel("Fishing-point coordinates")
+    .textContent();
+  await panel
+    .getByRole("button", { name: "Save fishing point privately" })
+    .click();
+  await expect(
+    panel.getByRole("button", { name: "Save fishing point privately" }),
+  ).toBeEnabled();
+  const opened = context.waitForEvent("page");
+  await panel.getByRole("link", { name: "Sign in in another tab" }).click();
+  const account = await opened;
+  await account.getByRole("button", { name: "Register", exact: true }).click();
+  await account.getByLabel("Display name").fill("Acceptance user");
+  await account
+    .getByLabel("Email", { exact: true })
+    .fill(`acceptance-${info.project.name}@example.test`);
+  await account
+    .getByLabel("Password", { exact: true })
+    .fill("synthetic-acceptance-password-9!");
+  await account
+    .getByRole("button", { name: "Create account", exact: true })
+    .click();
+  await expect(account.getByText(/Signed in as Acceptance user/)).toBeVisible();
+  await page.bringToFront();
+  await expect(panel.getByLabel("Fishing-point coordinates")).toHaveText(
+    coordinates!,
+  );
+  await expect(panel.getByRole("checkbox")).not.toBeChecked();
+  await panel
+    .getByRole("button", { name: "Save fishing point privately" })
+    .click();
+  await expect(
+    panel.getByRole("button", { name: "Fishing point saved", exact: true }),
+  ).toBeDisabled();
+  const pins = await (await page.request.get("/api/v1/pins")).json();
+  expect(pins).toHaveLength(1);
+  const [latitude, longitude] = coordinates!.split(",").map(Number);
+  expect(pins[0]).toMatchObject({
+    latitude,
+    longitude,
+    sourceId: null,
+    privacy: "PRIVATE",
+    sharingEligible: false,
+  });
 });

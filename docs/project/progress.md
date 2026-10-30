@@ -64,3 +64,7 @@ Preserved synchronized 49d52f5. Reviewed Beach Sand Deposits, Coastal Conditions
 
 ## 2026-10-29 — actual fishing points and ds3115 features
 Continued synchronized 7ddfe49. Added intentional Explore point selection, separate identity/consent controls and private saving through existing owner-protected storage. ds3115 CC BY 4.0 evaluated and real fixed-envelope query returned 255 features (ESI 2002/2006); ordered code combinations and distances retained, never assigned as verified point habitat. New private POST with no coordinate-bearing CDFW query; NWS/NOAA work requires explicit consent. Baseline 283, local final 312 tests passed; typecheck/lint passed. Full evidence/files/limitations in fishing-point-shoreline.md and shoreline-point-verification.log. Chromium/remote status must be checked after push. No main merge, deployment, recommendations or alerts.
+
+## 2026-10-30 — User acceptance readiness
+
+Added separate-tab authentication preserving unsaved fishing points, pending/success save protection, and intentional keyboard map-center selection. Extended private-point browser acceptance through restart, logout/login and editing. Windows guide is source-checked, not Windows-tested. USGS release identified but actual data/full metadata inaccessible (HTTP 403); zero records processed, no speculative adapter/panel. See uat-readiness.md and usgs-shoreline-change-evaluation.md. Regulatory, privacy, consent and recommendation safeguards remain unchanged. Quality results are recorded in uat-verification.log; remote CI must be checked after synchronization.

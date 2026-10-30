@@ -1,0 +1,7 @@
+# User acceptance readiness — 2026-10-30
+
+Requirements UAT-01: retain unsaved point while authenticating; UAT-02: prevent duplicate saves during pending/success states; UAT-03: keyboard map selection; UAT-04: selected-point logout/login/restart/edit/delete; UAT-05: source-checked Windows instructions; DATA-USGS-01: evaluate actual release suitability without inventing records.
+
+Implementation: FishingPointPanel separate-tab authentication, explicit unsaved-state warning, pending/saved button state and retry after errors; ExploreMap Enter selects its actual center only in intentional selection mode, with arrow-key instructions. Historical context labeling distinguishes source age. Coordinates are not rounded or snapped. API contracts, regulatory exclusions, environmental consent, private ownership and disabled recommendations/alerts are unchanged.
+
+Verification: tests/fishing-point-usability.test.tsx covers separate-tab link, duplicate prevention and unauthorized retry; tests/e2e/fishing-point.spec.ts covers desktop/mobile keyboard selection, separate-tab registration, consent declined, exact private coordinates, restart/logout/login/edit/delete and second-owner denial. Existing regression suites remain required. Human acceptance and actual Windows execution are not claimed. See windows-local-development.md and usgs-shoreline-change-evaluation.md. CI evidence will be reported against the synchronized commit; no pending CI is described as passed.

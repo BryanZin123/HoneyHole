@@ -773,3 +773,12 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 - REQ-SHORE-002: original ordered multi-codes, source fields/IDs, uncertain/mixed/conflicting geometries, mapped distance, no applicability threshold. Tests shoreline-context.test.ts. Current location habitat and legal eligibility remain UNVERIFIED.
 - REQ-SHORE-UI-001: source-supported mapped segment types, mapping date/uncertainty, barred association, consented environmental conditions, unknown legal access and disabled recommendations separate in Explore. Desktop/mobile Chromium assertions added; actual CI required.
 - Verification: local suite 312 passed; typecheck/lint passed; build/persistence/browser/remote outcome recorded at delivery. All previous regulatory exclusions/private accounts/preferences retained. Original remaining product requirements not removed.
+
+## User acceptance and updated shoreline evidence (2026-10-30)
+
+| Requirement | Implementation / evidence | Verification |
+| --- | --- | --- |
+| UAT-01/02 | fishing-point-panel.tsx: separate-tab account flow, save state and retry | fishing-point-usability.test.tsx; fishing-point.spec.ts |
+| UAT-03/04 | explore-map.tsx intentional keyboard selection; private point lifecycle | desktop/mobile fishing-point.spec.ts; existing owner-isolation suites |
+| UAT-05 | docs/windows-local-development.md | repository script review; Windows execution unverified |
+| DATA-USGS-01 | usgs-shoreline-change-evaluation.md | public-domain release identified; actual records/full metadata HTTP 403; pilot BLOCKED |

@@ -208,8 +208,9 @@ export function ExploreDiscovery() {
           </button>
           {picking && (
             <p role="status">
-              Click or tap the map to choose your fishing coordinate. Entrance
-              pins remain separate.
+              Click or tap the map to choose your fishing coordinate. Keyboard:
+              focus the map, use arrow keys to pan, then Enter to select its
+              center. Entrance pins remain separate.
             </p>
           )}
           <Map

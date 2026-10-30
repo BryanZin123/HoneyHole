@@ -47,6 +47,14 @@ export function ExploreMap({
           longitude: event.latlng.lng,
         });
       });
+    if (picking && onFishingPoint)
+      map.on("keydown", (event) => {
+        if (event.originalEvent.key === "Enter") {
+          event.originalEvent.preventDefault();
+          const center = map.getCenter();
+          onFishingPoint({ latitude: center.lat, longitude: center.lng });
+        }
+      });
     if (fishingPoint)
       L.circleMarker([fishingPoint.latitude, fishingPoint.longitude], {
         radius: 9,

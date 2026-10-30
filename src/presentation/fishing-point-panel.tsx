@@ -14,7 +14,9 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
     [result, setResult] = useState<Result | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [message, setMessage] = useState("");
+    [message, setMessage] = useState(""),
+    [saving, setSaving] = useState(false),
+    [saved, setSaved] = useState(false);
   const active = useRef<AbortController | null>(null);
   useEffect(() => () => active.current?.abort(), []);
   async function load(environmentConsent: boolean) {
@@ -51,6 +53,8 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
     }
   }
   async function save() {
+    if (saving || saved) return;
+    setSaving(true);
     setMessage("");
     try {
       const r = await fetch("/api/v1/pins", {
@@ -66,6 +70,7 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
             "User-selected fishing point; access, legality and habitat unverified.",
         }),
       });
+      if (r.ok) setSaved(true);
       setMessage(
         r.ok
           ? "Fishing point saved privately."
@@ -75,6 +80,8 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
       );
     } catch {
       setMessage("Saving is unavailable.");
+    } finally {
+      setSaving(false);
     }
   }
   return (
@@ -132,16 +139,32 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
       <button disabled={!consent || busy || !date} onClick={() => load(true)}>
         Load conditions for this point
       </button>
-      <button onClick={save}>Save fishing point privately</button>
+      <button disabled={saving || saved} onClick={save}>
+        {saved
+          ? "Fishing point saved"
+          : saving
+            ? "Saving fishing point…"
+            : "Save fishing point privately"}
+      </button>
       <Link href="/saved">View private saved points</Link> ·{" "}
-      <Link href="/account">Account</Link>
+      <Link href="/account" target="_blank" rel="noopener noreferrer">
+        Sign in in another tab
+      </Link>
+      <p>
+        Keep this tab open while signing in, then return here to save the same
+        point. Unsaved points are not retained if you close or reload this tab.
+        You can decline environmental sharing and still view shoreline context
+        or save privately.
+      </p>
       {busy && <p role="status">Loading point evidence…</p>}
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
       {result && (
         <>
           <section aria-label="Mapped shoreline types">
-            <h3>Mapped shoreline types · {result.shoreline.status}</h3>
+            <h3>
+              Historical mapped shoreline types · {result.shoreline.status}
+            </h3>
             <p>
               Point classification: UNVERIFIED. These are mapped segments in the
               pilot area, ordered by computed distance, not classifications

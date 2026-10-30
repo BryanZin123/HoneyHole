@@ -1,0 +1,15 @@
+2026-10-30 Linux acceptance verification
+Baseline: 312 tests passed. RED: 3 new usability tests failed as intended; GREEN: 3 passed.
+Full suite: 315 passed, 0 failed, 46 files.
+Typecheck: exit 0. Lint: exit 0. Production webpack build: exit 0. Clean default production build and Chromium verification run separately in GitHub CI.
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+Local Chromium unavailable; not classified as passed. Remote CI pending synchronization.
+USGS actual data and full metadata requests: HTTP 403; zero geographic records processed.
+No Windows execution.
