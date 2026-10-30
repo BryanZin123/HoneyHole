@@ -782,3 +782,11 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 | UAT-03/04 | explore-map.tsx intentional keyboard selection; private point lifecycle | desktop/mobile fishing-point.spec.ts; existing owner-isolation suites |
 | UAT-05 | docs/windows-local-development.md | repository script review; Windows execution unverified |
 | DATA-USGS-01 | usgs-shoreline-change-evaluation.md | public-domain release identified; actual records/full metadata HTTP 403; pilot BLOCKED |
+
+## Restored local acceptance and maintenance (2026-10-30)
+
+| Requirement | Implementation | Verification |
+| --- | --- | --- |
+| LOCAL-01 | windows-local-development.md reuses Honey Hole Recovery, preserves storage/credentials, fast-forward only | actual scripts reviewed; Windows human acceptance UNVERIFIED |
+| DEP-01 | package-lock.json fast-uri 3.1.9 within AJV range | detailed audit before/after; complete regression and CI gates |
+| USGS-ACQ-01 | usgs-manual-acquisition.md original-file/provenance/manual procedure | zero records; acquisition BLOCKED; no speculative adapter/panel |

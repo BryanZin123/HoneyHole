@@ -68,3 +68,9 @@ Continued synchronized 7ddfe49. Added intentional Explore point selection, separ
 ## 2026-10-30 — User acceptance readiness
 
 Added separate-tab authentication preserving unsaved fishing points, pending/success save protection, and intentional keyboard map-center selection. Extended private-point browser acceptance through restart, logout/login and editing. Windows guide is source-checked, not Windows-tested. USGS release identified but actual data/full metadata inaccessible (HTTP 403); zero records processed, no speculative adapter/panel. See uat-readiness.md and usgs-shoreline-change-evaluation.md. Regulatory, privacy, consent and recommendation safeguards remain unchanged. Quality results are recorded in uat-verification.log; remote CI must be checked after synchronization.
+
+## 2026-10-30 — Restored Windows checkout and dependency maintenance
+
+Windows guide now uses the owner's existing `C:\Users\bzinn\Desktop\Honey Hole Recovery`, with no second clone, clean-tree/branch checks and fast-forward-only synchronization. Missing existing data/configuration/secret is a stop condition, not an instruction to generate replacements. Actual Windows acceptance remains unverified.
+
+Reviewed AJV's fast-uri 3.1.8 dependency and all four audit advisories; targeted compatible update to 3.1.9 changes only its lockfile entry. Full audit now reports zero vulnerabilities. USGS official alternative access yielded no actual records; manual acquisition and validation gate documented in usgs-manual-acquisition.md. No application/API behavior or safeguards changed. See dependency-review-2026-10-30.md and maintenance-verification.log for verification evidence.

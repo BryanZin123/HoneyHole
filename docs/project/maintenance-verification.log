@@ -1,0 +1,15 @@
+2026-10-30 Linux maintenance verification
+Starting HEAD ceda178ac6e053fd9c262361bbfdd5b19a9cc574; clean tree, matching fetched feature branch.
+Targeted lockfile diff: fast-uri 3.1.8 -> 3.1.9 only. Full and production npm audits: zero vulnerabilities.
+Full suite: 316 passed, 0 failed, 46 test files. Typecheck and lint passed.
+Clean production build: removed generated .next output, npm run build (default Turbopack) completed exit 0.
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+Real desktop/mobile Chromium: supported GitHub runner verification pending commit; no local browser success claimed.
+No Windows access/testing; no USGS data records obtained.
