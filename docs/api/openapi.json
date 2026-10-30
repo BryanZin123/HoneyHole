@@ -1367,9 +1367,11 @@
           "tides",
           "regulations",
           "opportunity",
-          "jurisdiction"
+          "jurisdiction",
+          "mappedContext"
         ],
         "properties": {
+          "mappedContext": { "$ref": "#/components/schemas/MappedContext" },
           "habitat": { "$ref": "#/components/schemas/HabitatAssessment" },
           "location": {
             "$ref": "#/components/schemas/ShoreLocation"
@@ -1666,6 +1668,183 @@
             "properties": {
               "kind": {
                 "enum": ["closed-season", "limit", "aggregate-limit", "minimum-size", "prohibition", "clearance"]
+              }
+            }
+          }
+        }
+      },
+      "MappedContext": {
+        "type": "object",
+        "required": [
+          "status",
+          "dataset",
+          "assessment"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "context-only",
+              "unavailable",
+              "outside-pilot"
+            ]
+          },
+          "dataset": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "id",
+                  "title",
+                  "attribution",
+                  "sourceUrl",
+                  "license",
+                  "licenseUrl",
+                  "publishedOn",
+                  "reviewedOn",
+                  "observedOn",
+                  "retrievedAt",
+                  "basis",
+                  "scope",
+                  "limitations",
+                  "service"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "cdfw-ds3091"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "attribution": {
+                    "type": "string"
+                  },
+                  "sourceUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "license": {
+                    "const": "CC BY 4.0"
+                  },
+                  "licenseUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "publishedOn": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "reviewedOn": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "observedOn": {
+                    "type": "null"
+                  },
+                  "retrievedAt": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time"
+                  },
+                  "basis": {
+                    "const": "predicted"
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "service": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "itemId",
+                          "crs",
+                          "resolutionMeters"
+                        ],
+                        "properties": {
+                          "itemId": {
+                            "type": "string"
+                          },
+                          "crs": {
+                            "type": "string"
+                          },
+                          "resolutionMeters": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "assessment": {
+            "type": "object",
+            "required": [
+              "status",
+              "point",
+              "features",
+              "conflicting",
+              "reasons"
+            ],
+            "properties": {
+              "status": {
+                "const": "UNVERIFIED"
+              },
+              "point": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "coordinates",
+                  "kind",
+                  "accuracyMeters"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "coordinates": {
+                    "$ref": "#/components/schemas/Coordinates"
+                  },
+                  "kind": {
+                    "const": "park-entry"
+                  },
+                  "accuracyMeters": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  }
+                }
+              },
+              "features": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "conflicting": {
+                "const": false
+              },
+              "reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }

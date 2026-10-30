@@ -1,3 +1,4 @@
+import { CdfwMappedContext } from "../../../../../infrastructure/cdfw-mapped-context";
 import { CaliforniaHabitatEvidence } from "../../../../../infrastructure/california-habitat";
 import { CaliforniaJurisdictionProvider } from "../../../../../infrastructure/california-jurisdiction";
 import { CaliforniaRegulationProvider } from "../../../../../infrastructure/california-effective-rules";
@@ -51,6 +52,7 @@ export async function GET(
         },
         {
           habitat: new CaliforniaHabitatEvidence(),
+          mappedContext: new CdfwMappedContext(),
           weather: new NwsWeatherProvider(),
           atmosphere: new NwsAtmosphereProvider(),
           access: new CaliforniaCoastalProvider(),

@@ -1,4 +1,5 @@
 "use client";
+import { MappedContextPanel } from "./mapped-context-panel";
 import { HabitatPanel } from "./habitat-panel";
 import { JurisdictionPanel } from "./jurisdiction-panel";
 import dynamic from "next/dynamic";
@@ -390,6 +391,7 @@ export function ExploreDiscovery() {
                 restrictions are not comprehensively verified.
               </p>
               <HabitatPanel assessment={detail.habitat} />
+              <MappedContextPanel context={detail.mappedContext} />
               <JurisdictionPanel assessment={detail.jurisdiction} />
               <h3>Regulatory questions</h3>
               <ul>

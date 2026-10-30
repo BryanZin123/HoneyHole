@@ -1,0 +1,24 @@
+2026-10-29 — local verification, starting commit 49d52f5b248ab14dfdc2e403ca4e281b0be1e4a0
+Baseline npm test: 255 passed / 0 failed, 39 files.
+RED mapped-habitat: missing module (1 suite failed before implementation).
+RED cdfw-mapped-context: missing module (1 suite failed before implementation).
+Focused GREEN: 26 passed / 0 failed.
+Full final npm test: 283 passed / 0 failed, 42 files.
+npm run typecheck: exit 0.
+npm run lint: exit 0.
+Clean npm run build (previous .next preserved separately): exit 0.
+node scripts/accounts-smoke.mjs: exit 0.
+  PASS five production pages.
+  PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections.
+  PASS application restart, sign back in and persisted pins/preferences.
+  PASS delete and persistence/API contract checks.
+node scripts/smoke.mjs: exit 0; /, /conditions, /explore, /saved HTTP 200 and expected content.
+Playwright --list: 10 cases, desktop/mobile Chromium; discovery is not execution.
+Real browser execution required through separate GitHub Actions job after push.
+Live node --import tsx scripts/mapped-context-smoke.ts: exit 0; CDFW ds3091 metadata received 2026-10-29T15:34:21.275Z.
+  context-only; item 40dc0b4522b94bcf95910801e322be0a; EPSG:3310; 10 m cell; Image,TilesOnly.
+  observation dates null; zero features sampled; habitat applicability UNVERIFIED.
+  Initial new-script top-level await/CJS error corrected with async main before successful rerun.
+CNRA service item information: both licenseInfo empty; layer metadata supplied no license/accuracy/observation range.
+No live NOAA/NWS/CSP availability claim in this milestone; deterministic fixtures do not verify those services.
+No Windows synchronization; no main merge; no deployment; no recommendation or alert activation.

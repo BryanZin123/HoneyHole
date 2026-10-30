@@ -57,6 +57,12 @@ it("API exposes reviewed barred habitat separately from unavailable weather and 
     alertEligible: false,
     suitability: "not-assessed",
   });
+  expect(body.mappedContext.assessment.point.kind).toBe("park-entry");
+  expect(body.mappedContext.status).toBe("unavailable");
+  expect(body.mappedContext.assessment.features).toEqual([]);
+  body.mappedContext.assessment.status = "SUPPORTED";
+  expect(validate(body)).toBe(false);
+  body.mappedContext.assessment.status = "UNVERIFIED";
   body.habitat.locationEvidence.status = "recommended";
   expect(validate(body)).toBe(false);
 });

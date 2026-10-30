@@ -1,4 +1,8 @@
 import {
+  getMappedContext,
+  type MappedContextProvider,
+} from "./get-mapped-context";
+import {
   getHabitatAssessment,
   type HabitatEvidenceProvider,
 } from "./get-habitat-assessment";
@@ -47,6 +51,7 @@ export async function getLocationDetail(
     regulatoryScopes?: RegulatoryContext["scopes"];
     checkedOn?: string;
     habitat?: HabitatEvidenceProvider;
+    mappedContext?: MappedContextProvider;
     locationAccuracyMeters?: number;
     jurisdiction?: (access: CoastalAssessment) => JurisdictionProvider;
   },
@@ -91,6 +96,16 @@ export async function getLocationDetail(
     atmosphere,
     access,
     tides,
+    mappedContext: await getMappedContext(
+      {
+        id: location.id,
+        coordinates: location.coordinates,
+        kind: "park-entry",
+        accuracyMeters: ports.locationAccuracyMeters ?? null,
+      },
+      activity.date,
+      ports.mappedContext,
+    ),
     habitat: await getHabitatAssessment(
       {
         locationId: location.id,

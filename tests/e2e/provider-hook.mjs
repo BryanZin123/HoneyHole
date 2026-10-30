@@ -21,6 +21,17 @@ globalThis.fetch = async (input, init) => {
       ],
     });
   if (url === parks + "?f=json") return Response.json({});
+  if (
+    url ===
+    "https://tiledimageservices2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds3091_cru/ImageServer?f=json"
+  )
+    return Response.json({
+      serviceItemId: "40dc0b4522b94bcf95910801e322be0a",
+      spatialReference: { wkid: 3310 },
+      pixelSizeX: 10,
+      pixelSizeY: 10,
+      capabilities: "Image,TilesOnly",
+    });
   if (new URL(url).hostname === "127.0.0.1") return originalFetch(input, init);
   throw new Error(
     "Deterministic E2E provider outage; outbound provider calls disabled.",
