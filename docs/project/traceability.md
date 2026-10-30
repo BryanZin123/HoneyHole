@@ -765,3 +765,11 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 - REQ-HAB-GEO-UI-001: Explore mapped context with attribution/license/publication/unknown observation dates and no positive habitat or recommendation. Component/API/browser regression tests extended.
 - REQ-E2E-001/002/003 baseline confirmed at 49d52f5 / run 40899388870, 8 Chromium executions passed. New desktop/mobile context and outage assertions require the current commit's actual CI result.
 - Local baseline 255 passed; implementation suite 283 passed. Build/persistence/remote/CI verification recorded at delivery. Public discovery licensing, live feature applicability, verified legal coverage and recommendation/notification dependencies remain unresolved.
+
+## 2026-10-29 — selected fishing point and mapped shoreline classifications
+- REQ-POINT-001: intentional map click/tap, exact unsnapped coordinate, user source separate from entrance/station/feature. Existing identity exclusions retained.
+- REQ-POINT-PRIV-001: same-origin bounded POST, private/no-store; fixed CDFW envelope without point; separate explicit NWS/NOAA consent; existing private owner-scoped pin persistence, sourceId null. Tests fishing-point*.test.ts and e2e/fishing-point.spec.ts.
+- REQ-SHORE-001: ds3115 explicit CC BY 4.0, source publication/mapping years, CRS and query limits reviewed. Live feature query 255 records, not metadata-only. Report fishing-point-shoreline.md; optional scripts/shoreline-live-smoke.ts separate from CI.
+- REQ-SHORE-002: original ordered multi-codes, source fields/IDs, uncertain/mixed/conflicting geometries, mapped distance, no applicability threshold. Tests shoreline-context.test.ts. Current location habitat and legal eligibility remain UNVERIFIED.
+- REQ-SHORE-UI-001: source-supported mapped segment types, mapping date/uncertainty, barred association, consented environmental conditions, unknown legal access and disabled recommendations separate in Explore. Desktop/mobile Chromium assertions added; actual CI required.
+- Verification: local suite 312 passed; typecheck/lint passed; build/persistence/browser/remote outcome recorded at delivery. All previous regulatory exclusions/private accounts/preferences retained. Original remaining product requirements not removed.

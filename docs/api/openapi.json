@@ -5,6 +5,49 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/v1/fishing-point-context": {
+      "post": {
+        "summary": "Private fishing-point contextual assessment; fixed CDFW envelope, explicit consent for NWS/NOAA environmental lookups",
+        "description": "Same-origin JSON POST. No coordinate query parameters, persistence or source-backed access inheritance. Response is private, no-store. Distances order context only; no proximity threshold assigns habitat. CDFW ds3115, CC BY 4.0: https://filelib.wildlife.ca.gov/public/BDB/GIS/BIOS/metadata/ds3115.html",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FishingPointRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Context only; never legal clearance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FishingPointResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid coordinate, date, field or consent"
+          },
+          "403": {
+            "description": "Origin rejected"
+          },
+          "413": {
+            "description": "Request exceeds 16000 bytes"
+          },
+          "415": {
+            "description": "JSON required"
+          },
+          "502": {
+            "description": "Evidence unavailable"
+          }
+        }
+      }
+    },
     "/api/v1/conditions": {
       "get": {
         "operationId": "getConditions",
@@ -674,6 +717,294 @@
   },
   "components": {
     "schemas": {
+      "FishingPointRequest": {
+        "type": "object",
+        "required": [
+          "coordinates",
+          "date",
+          "environmentConsent"
+        ],
+        "properties": {
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "environmentConsent": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FishingPointResult": {
+        "type": "object",
+        "required": [
+          "point",
+          "date",
+          "shoreline",
+          "habitat",
+          "environmentConsent",
+          "environment",
+          "access",
+          "regulatoryEligibility",
+          "recommendation",
+          "alertEligible"
+        ],
+        "properties": {
+          "point": {
+            "type": "object",
+            "required": [
+              "kind",
+              "source",
+              "coordinates"
+            ],
+            "properties": {
+              "kind": {
+                "const": "fishing-point"
+              },
+              "source": {
+                "const": "user-selected"
+              },
+              "coordinates": {
+                "$ref": "#/components/schemas/Coordinates"
+              }
+            }
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "shoreline": {
+            "type": "object",
+            "required": [
+              "status",
+              "retrievedAt",
+              "features",
+              "conflictingGeometry",
+              "pointClassification"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "available",
+                  "empty",
+                  "unavailable",
+                  "outside-pilot"
+                ]
+              },
+              "retrievedAt": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "line",
+                    "shoreCode",
+                    "source",
+                    "sourceYear",
+                    "description",
+                    "orderedSourceTypes",
+                    "codes",
+                    "codeConflict",
+                    "distanceMeters",
+                    "positionalAccuracyMeters"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "type": "string"
+                    },
+                    "shoreCode": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sourceYear": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "orderedSourceTypes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "name"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "codes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "category"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "enum": [
+                              "unresolved",
+                              "fine-medium-sand",
+                              "coarse-sand",
+                              "mixed-sand-gravel",
+                              "rocky",
+                              "engineered",
+                              "other"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "codeConflict": {
+                      "type": "boolean"
+                    },
+                    "distanceMeters": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "positionalAccuracyMeters": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              "conflictingGeometry": {
+                "type": "boolean"
+              },
+              "pointClassification": {
+                "const": "UNVERIFIED"
+              }
+            }
+          },
+          "habitat": {
+            "$ref": "#/components/schemas/HabitatAssessment"
+          },
+          "environmentConsent": {
+            "type": "boolean"
+          },
+          "environment": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "weather",
+                  "atmosphere",
+                  "tides"
+                ],
+                "properties": {
+                  "weather": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  },
+                  "atmosphere": {
+                    "$ref": "#/components/schemas/Atmosphere"
+                  },
+                  "tides": {
+                    "type": "object",
+                    "required": [
+                      "status",
+                      "transferRelevance",
+                      "distanceKm",
+                      "conditions",
+                      "reason"
+                    ],
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "available",
+                          "unavailable"
+                        ]
+                      },
+                      "transferRelevance": {
+                        "const": "UNVERIFIED"
+                      },
+                      "distanceKm": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "conditions": {
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "access": {
+            "const": "UNVERIFIED"
+          },
+          "regulatoryEligibility": {
+            "const": "UNVERIFIED"
+          },
+          "recommendation": {
+            "const": "unavailable"
+          },
+          "alertEligible": {
+            "const": false
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "environmentConsent": {
+                  "const": false
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "environment": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      },
       "Coordinates": {
         "type": "object",
         "required": ["latitude", "longitude"],

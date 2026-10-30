@@ -29,7 +29,7 @@ const headers = {
 };
 const json = (value: unknown, status = 200) =>
   Response.json(value, { status, headers });
-async function body(request: Request) {
+export async function body(request: Request) {
   if (
     !(request.headers.get("content-type") ?? "").startsWith("application/json")
   )

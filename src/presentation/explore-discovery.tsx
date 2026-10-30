@@ -1,4 +1,6 @@
 "use client";
+import { FishingPointPanel } from "./fishing-point-panel";
+import type { Coordinates } from "../domain/geography";
 import { MappedContextPanel } from "./mapped-context-panel";
 import { HabitatPanel } from "./habitat-panel";
 import { JurisdictionPanel } from "./jurisdiction-panel";
@@ -15,6 +17,12 @@ const Map = dynamic(() => import("./explore-map").then((m) => m.ExploreMap), {
 });
 type Detail = Awaited<ReturnType<typeof getLocationDetail>>;
 export function ExploreDiscovery() {
+  const [fishingPoint, setFishingPoint] = useState<Coordinates | null>(null);
+  const [picking, setPicking] = useState(false);
+  const choosePoint = useCallback((p: Coordinates) => {
+    setFishingPoint(p);
+    setPicking(false);
+  }, []);
   const [locations, setLocations] = useState<ShoreLocation[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<Detail | null>(null);
@@ -187,7 +195,32 @@ export function ExploreDiscovery() {
             ))}
           </ul>
         </div>
-        <Map locations={locations} selectedId={selectedId} onSelect={select} />
+        <div>
+          <p>
+            Basemap tiles are supplied by OpenStreetMap and reveal the viewed
+            map area. Selecting a point adds a local marker; its exact
+            coordinate is not sent to the tile provider.
+          </p>
+          <button aria-pressed={picking} onClick={() => setPicking(!picking)}>
+            {picking
+              ? "Cancel fishing-point selection"
+              : "Choose a fishing point on the map"}
+          </button>
+          {picking && (
+            <p role="status">
+              Click or tap the map to choose your fishing coordinate. Entrance
+              pins remain separate.
+            </p>
+          )}
+          <Map
+            locations={locations}
+            selectedId={selectedId}
+            onSelect={select}
+            picking={picking}
+            fishingPoint={fishingPoint}
+            onFishingPoint={choosePoint}
+          />
+        </div>
       </div>
       <p className="source-note">
         Source:{" "}
@@ -202,9 +235,19 @@ export function ExploreDiscovery() {
         Coverage is limited to State Beach entry records in coastal counties.
         Check the park website for current access and closures.
       </p>
+      {fishingPoint && (
+        <FishingPointPanel
+          key={`${fishingPoint.latitude},${fishingPoint.longitude}`}
+          point={fishingPoint}
+        />
+      )}
       {selectedId && (
         <section className="location-detail" aria-live="polite">
-          <h2>Selected location</h2>
+          <h2>Selected access point</h2>
+          <p>
+            Evidence below is for the park entrance only, not your separately
+            selected fishing point.
+          </p>
           <div className="coastal-form">
             <label>
               Target species

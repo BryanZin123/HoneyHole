@@ -1,0 +1,21 @@
+2026-10-29 Pacific — local execution evidence
+Base 7ddfe4995a5d3eee8ca840633564c28a520cc0ba matched origin after fetch; clean starting tree.
+Baseline: 283 automated tests passed.
+RED shoreline-context module tests failed before module creation (missing import).
+Focused GREEN: 25 passed. Final expanded suite: 312 passed, 0 failed, 45 files.
+Typecheck: exit 0. Lint: exit 0.
+Clean production build: exit 0 (previous .next preserved separately).
+Production account smoke: exit 0.
+ PASS five production pages.
+ PASS registration/private CRUD/preferences/owner isolation/logout/cookie/JSON safeguards.
+ PASS controlled application restart/login/persisted pins and preferences.
+ PASS delete and persistence/API contracts.
+Production route smoke: /, /conditions, /explore, /saved HTTP 200 with expected content.
+Playwright discovery: 12 cases, desktop/mobile Chromium, 4 files; not a claim of executed browser assertions.
+Real Chromium execution required through GitHub Actions after checkpoint push.
+Live CDFW ds3115 feature adapter: status available; 255 features; retrieved 2026-10-30T03:49:57.307Z.
+Original sources: ESI 2002 and ESI 2006. Engineering probe only (37.5,-122.5), not a recommended fishing spot.
+Examples: feature 11704 code 3A at computed 76.72767870262129 m; 11708 code 2A at 80.81872027774406 m; 11813 code 3A/2A at 167.72024295514228 m.
+No distance threshold or assignment of those classes to the point. Positional uncertainty and present-day habitat remain unverified.
+Live NOAA/NWS availability not re-verified this milestone; browser provider outages use deterministic fixtures.
+No Windows update, main merge, public deployment, positive recommendations or alert activation.

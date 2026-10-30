@@ -2,15 +2,22 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import type { Coordinates } from "../domain/geography";
 import type { ShoreLocation } from "../domain/discovery";
 export function ExploreMap({
   locations,
   selectedId,
   onSelect,
   label = "California shoreline map",
+  picking = false,
+  fishingPoint,
+  onFishingPoint,
 }: {
   locations: Pick<ShoreLocation, "id" | "name" | "coordinates">[];
   label?: string;
+  picking?: boolean;
+  fishingPoint?: Coordinates | null;
+  onFishingPoint?: (point: Coordinates) => void;
   selectedId: string | null;
   onSelect: (id: string) => void;
 }) {
@@ -33,6 +40,21 @@ export function ExploreMap({
     )
       .on("tileerror", () => setTileError(true))
       .addTo(map);
+    if (picking && onFishingPoint)
+      map.on("click", (event: L.LeafletMouseEvent) => {
+        onFishingPoint({
+          latitude: event.latlng.lat,
+          longitude: event.latlng.lng,
+        });
+      });
+    if (fishingPoint)
+      L.circleMarker([fishingPoint.latitude, fishingPoint.longitude], {
+        radius: 9,
+        color: "#9c2675",
+        fillOpacity: 1,
+      })
+        .addTo(map)
+        .bindTooltip("Your fishing point — user selected");
     const icon = L.divIcon({
       className: "shore-marker",
       html: '<span aria-hidden="true">●</span>',
@@ -69,7 +91,7 @@ export function ExploreMap({
     return () => {
       map.remove();
     };
-  }, [locations, selectedId, onSelect]);
+  }, [locations, selectedId, onSelect, picking, fishingPoint, onFishingPoint]);
   return (
     <div>
       <div

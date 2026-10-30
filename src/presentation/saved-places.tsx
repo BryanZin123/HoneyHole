@@ -16,9 +16,7 @@ const empty: PinInput = {
   sharingEligible: false,
   sourceId: null,
 };
-async function readSavedData(
-  signal?: AbortSignal,
-): Promise<{
+async function readSavedData(signal?: AbortSignal): Promise<{
   pins: SavedPin[];
   preferences: Preferences | null;
   unauthorized: boolean;
@@ -197,6 +195,11 @@ export function SavedPlaces() {
                 </button>
                 <p>
                   {p.latitude}, {p.longitude} · PRIVATE
+                </p>
+                <p>
+                  {p.sourceId
+                    ? "Source: park entrance reference"
+                    : "Source: user-entered coordinates; access and legality unverified"}
                 </p>
                 <p>{p.notes}</p>
                 <p>

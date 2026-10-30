@@ -6,10 +6,12 @@ type Detail = Awaited<ReturnType<typeof getLocationDetail>>;
 export function SelectedConditionsPanel({
   detail,
 }: {
-  detail: Pick<
-    Detail,
-    "location" | "activity" | "weather" | "atmosphere" | "tides"
-  >;
+  detail: Pick<Detail, "weather" | "atmosphere" | "tides"> & {
+    location: { coordinates: Detail["location"]["coordinates"] } & Partial<
+      Detail["location"]
+    >;
+    activity: { date: string } & Partial<Detail["activity"]>;
+  };
 }) {
   const view = selectConditions({
     point: detail.location.coordinates,
