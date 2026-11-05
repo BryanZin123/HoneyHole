@@ -50,7 +50,7 @@ it("maps weather to selected coordinates, keeps unavailable products independent
     },
   );
   expect(spy).toHaveBeenCalledWith(location.coordinates);
-  expect(tides.get).toHaveBeenCalledWith(location.coordinates);
+  expect(tides.get).toHaveBeenCalledWith(location.coordinates, "2026-10-21");
   expect(r.location.name).toBe("Fixture SB");
   expect(r.weather.status).toBe("unavailable");
   expect(r.regulations.status).toBe("UNVERIFIED");

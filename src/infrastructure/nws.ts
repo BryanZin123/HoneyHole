@@ -120,8 +120,10 @@ export class NwsWeatherProvider implements WeatherProvider {
         throw new Error("Missing time zone");
       new Intl.DateTimeFormat("en-US", { timeZone: discovery.timeZone });
       base.timeZone = discovery.timeZone;
+      if (discovery.type === "marine")
+        throw new ProviderFailure("coastal-marine-hourly-unsupported");
       if (typeof discovery.forecastHourly !== "string")
-        throw new Error("No hourly coverage");
+        throw new ProviderFailure("hourly-coverage-unavailable");
       const url = new URL(discovery.forecastHourly);
       if (
         url.origin !== "https://api.weather.gov" ||
@@ -226,7 +228,10 @@ export class NwsWeatherProvider implements WeatherProvider {
             : "invalid-provider-data",
         periods: [],
         reason:
-          "NWS hourly forecast is unavailable or failed validation. Coastal coverage may be incomplete.",
+          error instanceof ProviderFailure &&
+          error.code === "coastal-marine-hourly-unsupported"
+            ? "NWS documents coastal marine API forecasts in grid data only. Review available grid fields; hourly absence is not unfavorable weather."
+            : "NWS hourly forecast is unavailable or failed validation. Coastal coverage may be incomplete.",
       };
     }
   }

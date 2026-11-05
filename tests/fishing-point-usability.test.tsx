@@ -24,7 +24,11 @@ it("opens sign-in separately so the unsaved coordinate remains in its original t
 it("prevents repeat saves while pending and after successful private save", async () => {
   let finish!: (r: Response) => void;
   const f = vi.fn(() => new Promise<Response>((r) => (finish = r)));
-  vi.stubGlobal("fetch", f);
+  vi.stubGlobal("fetch", (url: string, ...args: unknown[]) =>
+    url === "/api/v1/me"
+      ? Promise.resolve(Response.json({}, { status: 401 }))
+      : (f as (...a: unknown[]) => unknown)(url, ...args),
+  );
   render(<FishingPointPanel point={point} />);
   const save = screen.getByRole("button", {
     name: "Save fishing point privately",
@@ -45,7 +49,11 @@ it("allows retry after sign-in without discarding the point or consenting to pro
     .fn()
     .mockResolvedValueOnce(Response.json({ error: "Sign in" }, { status: 401 }))
     .mockResolvedValueOnce(Response.json({ id: "synthetic" }, { status: 201 }));
-  vi.stubGlobal("fetch", f);
+  vi.stubGlobal("fetch", (url: string, ...args: unknown[]) =>
+    url === "/api/v1/me"
+      ? Promise.resolve(Response.json({}, { status: 401 }))
+      : (f as (...a: unknown[]) => unknown)(url, ...args),
+  );
   render(<FishingPointPanel point={point} />);
   fireEvent.click(
     screen.getByRole("button", { name: "Save fishing point privately" }),
@@ -60,4 +68,22 @@ it("allows retry after sign-in without discarding the point or consenting to pro
   );
   await screen.findByRole("button", { name: "Fishing point saved" });
   expect(f.mock.calls.every((c) => c[0] === "/api/v1/pins")).toBe(true);
+});
+
+it("hides sign-in for an authenticated owner and preserves intentional species selection", async () => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => Response.json({ user: { id: "synthetic" } })),
+  );
+  render(<FishingPointPanel point={point} />);
+  await waitFor(() =>
+    expect(
+      screen.queryByRole("link", { name: "Sign in in another tab" }),
+    ).not.toBeInTheDocument(),
+  );
+  fireEvent.change(screen.getByLabelText("Target species"), {
+    target: { value: "unsupported" },
+  });
+  expect(screen.getByLabelText("Target species")).toHaveValue("unsupported");
+  expect(screen.getByRole("checkbox")).not.toBeChecked();
 });

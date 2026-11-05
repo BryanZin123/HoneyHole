@@ -12,12 +12,15 @@ export class CdfwShorelineProvider {
     private readonly fetcher: typeof fetch = fetch,
     private readonly now: () => Date = () => new Date(),
   ) {}
-  async get(): Promise<ShorelineResult> {
+  async get(region?: "monterey-bay"): Promise<ShorelineResult> {
     try {
       const query = new URLSearchParams({
         f: "geojson",
         where: "1=1",
-        geometry: "-122.65,37.35,-122.35,37.65",
+        geometry:
+          region === "monterey-bay"
+            ? "-122.05,36.65,-121.75,36.95"
+            : "-122.65,37.35,-122.35,37.65",
         geometryType: "esriGeometryEnvelope",
         inSR: "4326",
         spatialRel: "esriSpatialRelIntersects",

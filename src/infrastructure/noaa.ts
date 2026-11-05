@@ -1,3 +1,4 @@
+import { californiaDayWindow } from "../domain/california-day";
 import type { MarineProvider } from "../application/get-marine-conditions";
 import type {
   MarineConditions,
@@ -52,11 +53,20 @@ export class NoaaMarineProvider implements MarineProvider {
     if (!response.ok) throw new Error("NOAA request failed.");
     return record(await response.json());
   }
-  async getConditions(stationId: string): Promise<MarineConditions> {
+  async getConditions(
+    stationId: string,
+    date?: string,
+  ): Promise<MarineConditions> {
     if (!/^\d{7}$/.test(stationId))
       throw new Error("Enter a seven-digit NOAA station ID.");
     const now = this.now();
     const retrievedAt = now.toISOString();
+    const window = date
+      ? californiaDayWindow(date)
+      : {
+          start: retrievedAt,
+          end: new Date(now.getTime() + 86400000).toISOString(),
+        };
     const metadata = await this.request(
       `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`,
     );
@@ -102,9 +112,15 @@ export class NoaaMarineProvider implements MarineProvider {
     const tideUrl = url("predictions");
     tideUrl.searchParams.set(
       "begin_date",
-      retrievedAt.slice(0, 16).replace("T", " "),
+      window.start.slice(0, 16).replace("T", " "),
     );
-    tideUrl.searchParams.set("range", "24");
+    tideUrl.searchParams.set(
+      "end_date",
+      new Date(Date.parse(window.end) - 60000)
+        .toISOString()
+        .slice(0, 16)
+        .replace("T", " "),
+    );
     tideUrl.searchParams.set("interval", "hilo");
     tideUrl.searchParams.set("datum", "MLLW");
     const product = async (
@@ -135,8 +151,8 @@ export class NoaaMarineProvider implements MarineProvider {
             if (item.type !== "H" && item.type !== "L")
               throw new Error("Invalid tide phase.");
             if (
-              Date.parse(validAt) < now.getTime() ||
-              Date.parse(validAt) > now.getTime() + 24 * 60 * 60 * 1000
+              Date.parse(validAt) < Date.parse(window.start) ||
+              Date.parse(validAt) >= Date.parse(window.end)
             )
               throw new Error("Prediction outside requested window.");
             return {

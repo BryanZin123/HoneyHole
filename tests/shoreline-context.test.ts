@@ -172,3 +172,12 @@ it("multiline distance uses all parts without snapping", () => {
   );
   expect(r).toBeCloseTo(0, 5);
 });
+
+it("uses only the bounded public Monterey envelope, never a private fishing coordinate", async () => {
+  const f = vi.fn<typeof fetch>(async () => Response.json(fixture));
+  const r = await new CdfwShorelineProvider(f).get("monterey-bay");
+  expect(r.status).toBe("available");
+  const url = new URL(String(f.mock.calls[0]?.[0]));
+  expect(url.searchParams.get("geometry")).toBe("-122.05,36.65,-121.75,36.95");
+  expect(url.toString()).not.toContain("36.8");
+});

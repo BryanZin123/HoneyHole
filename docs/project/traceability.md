@@ -790,3 +790,14 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 | LOCAL-01 | windows-local-development.md reuses Honey Hole Recovery, preserves storage/credentials, fast-forward only | actual scripts reviewed; Windows human acceptance UNVERIFIED |
 | DEP-01 | package-lock.json fast-uri 3.1.9 within AJV range | detailed audit before/after; complete regression and CI gates |
 | USGS-ACQ-01 | usgs-manual-acquisition.md original-file/provenance/manual procedure | zero records; acquisition BLOCKED; no speculative adapter/panel |
+
+## Fishing decision support (2026-11-04)
+
+| Requirement | Implementation | Verification |
+| --- | --- | --- |
+| PLAN-01 species identity | fishing-point input/API and panel selector; omitted/unsupported unassessed | fishing-point and usability tests; Chromium unsupported target workflow |
+| PLAN-02 date-correct tides | california-day.ts, NOAA request window, date propagation and local display | DST window/query tests, location-detail tests |
+| PLAN-03 Monterey context | bounded ds3115 regional adapter; exact point identity retained | live 172-feature normalization; boundary tests |
+| PLAN-04 provider availability | NWS marine capability reason; no land-cell substitution | live marine discovery/hourly 404/grid 200; NWS test |
+| PLAN-05 summary/auth/privacy | planning summary, optional details, account status refresh | summary states, private owner/restart suite, desktop/mobile workflows |
+| PLAN-06 nearby/science | fishing-planning-milestone.md design and evidence review | descriptive only; no validated prediction model or hazard clearance |

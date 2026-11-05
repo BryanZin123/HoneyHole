@@ -14,7 +14,7 @@ export function POST(request: Request) {
       habitat: new CaliforniaHabitatEvidence(),
       weather: new NwsWeatherProvider(),
       atmosphere: new NwsAtmosphereProvider(),
-      tides: { get: nearbyTideReference },
+      tides: { get: (point, date) => nearbyTideReference(point, fetch, date) },
     },
   );
 }

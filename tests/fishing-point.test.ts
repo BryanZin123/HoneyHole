@@ -169,3 +169,23 @@ it("distant and overlapping conflicting segments remain context without assignme
   expect(r.habitat.locationEvidence.status).toBe("missing");
   expect(r.alertEligible).toBe(false);
 });
+
+it("uses explicit species identity and leaves unsupported/omitted targets unassessed", async () => {
+  for (const species of [undefined, "unsupported", "barred surfperch"]) {
+    const r = await getFishingPoint({ ...input, species }, ports());
+    expect(r.species).toBe(species ?? "unassessed");
+    expect(r.habitat.association.status).toBe(
+      species === "barred surfperch" ? "documented" : "not-reviewed",
+    );
+  }
+});
+it("queries a fixed Monterey envelope for the synthetic point and forwards the selected date only after consent", async () => {
+  const p = ports();
+  const coordinates = { latitude: 36.8, longitude: -121.85 };
+  await getFishingPoint(
+    { ...input, coordinates, date: "2026-11-01", environmentConsent: true },
+    p,
+  );
+  expect(p.shoreline.get).toHaveBeenCalledWith("monterey-bay");
+  expect(p.tides.get).toHaveBeenCalledWith(coordinates, "2026-11-01");
+});

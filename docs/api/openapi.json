@@ -725,6 +725,7 @@
           "environmentConsent"
         ],
         "properties": {
+          "species": {"type": "string", "maxLength": 80, "description": "Optional explicit target; omitted or unsupported targets remain unassessed."},
           "coordinates": {
             "$ref": "#/components/schemas/Coordinates"
           },
@@ -753,6 +754,7 @@
           "alertEligible"
         ],
         "properties": {
+          "species": {"type": "string"},
           "point": {
             "type": "object",
             "required": [

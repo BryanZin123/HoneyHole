@@ -30,7 +30,10 @@ import {
   type RegulationRecord,
 } from "../domain/regulations";
 export interface TideReferencePort {
-  get(point: Coordinates): Promise<{
+  get(
+    point: Coordinates,
+    date?: string,
+  ): Promise<{
     status: string;
     transferRelevance: "UNVERIFIED";
     distanceKm: number | null;
@@ -71,7 +74,7 @@ export async function getLocationDetail(
     ports.weather.getForecast(location.coordinates),
     ports.atmosphere.getAtmosphere(location.coordinates),
     assessCoastalAccess(location.coordinates, ports.access),
-    ports.tides.get(location.coordinates),
+    ports.tides.get(location.coordinates, activity.date),
   ]);
   const jurisdiction = await resolveJurisdiction(
     location.coordinates,

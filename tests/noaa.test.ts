@@ -156,3 +156,21 @@ describe("NOAA adapter contracts (isolated fixtures, not live evidence)", () => 
     expect(calls).toHaveLength(0);
   });
 });
+
+it.each([
+  ["2026-03-08", "2026-03-08 08:00", "2026-03-09 06:59"],
+  ["2026-11-01", "2026-11-01 07:00", "2026-11-02 07:59"],
+] as const)(
+  "queries the selected DST day %s instead of retrieval time",
+  async (date, start, end) => {
+    const { provider, calls } = fixture(temperature, {
+      predictions: [{ t: start, v: "1", type: "H" }],
+    });
+    const r = await provider.getConditions("9414290", date);
+    const u = new URL(calls.find((x) => x.includes("product=predictions"))!);
+    expect(u.searchParams.get("begin_date")).toBe(start);
+    expect(u.searchParams.get("end_date")).toBe(end);
+    expect(r.tides.status).toBe("available");
+    expect(r.tides.measurements[0].validAt.startsWith(date)).toBe(true);
+  },
+);

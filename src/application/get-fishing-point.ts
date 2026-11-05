@@ -16,6 +16,7 @@ import {
 export interface FishingPointInput {
   coordinates: Coordinates;
   date: string;
+  species?: string;
   environmentConsent: boolean;
 }
 export function validateFishingPointInput(value: unknown): FishingPointInput {
@@ -24,9 +25,12 @@ export function validateFishingPointInput(value: unknown): FishingPointInput {
   const v = value as FishingPointInput;
   if (
     Object.keys(v).some(
-      (k) => !["coordinates", "date", "environmentConsent"].includes(k),
+      (k) =>
+        !["coordinates", "date", "environmentConsent", "species"].includes(k),
     ) ||
     typeof v.environmentConsent !== "boolean" ||
+    (v.species !== undefined &&
+      (typeof v.species !== "string" || v.species.length > 80)) ||
     !validDate(v.date) ||
     !v.coordinates ||
     Object.keys(v.coordinates).some(
@@ -38,7 +42,7 @@ export function validateFishingPointInput(value: unknown): FishingPointInput {
   return v;
 }
 export interface FishingPointPorts {
-  shoreline: { get(): Promise<ShorelineResult> };
+  shoreline: { get(region?: "monterey-bay"): Promise<ShorelineResult> };
   weather: WeatherProvider;
   atmosphere: AtmosphereProvider;
   tides: TideReferencePort;
@@ -58,7 +62,10 @@ export async function getFishingPoint(
   const inside = inShorelinePilot(coordinates);
   if (inside) {
     try {
-      shoreline = await ports.shoreline.get();
+      shoreline =
+        coordinates.latitude < 37
+          ? await ports.shoreline.get("monterey-bay")
+          : await ports.shoreline.get();
     } catch {
       shoreline = { status: "unavailable", features: [], retrievedAt: null };
     }
@@ -90,7 +97,7 @@ export async function getFishingPoint(
       const [weather, atmosphere, tides] = await Promise.all([
         ports.weather.getForecast(coordinates),
         ports.atmosphere.getAtmosphere(coordinates),
-        ports.tides.get(coordinates),
+        ports.tides.get(coordinates, input.date),
       ]);
       environment = { weather, atmosphere, tides };
     } catch {
@@ -107,6 +114,7 @@ export async function getFishingPoint(
       coordinates,
     },
     date: input.date,
+    species: input.species ?? "unassessed",
     shoreline: {
       status: inside ? shoreline.status : "outside-pilot",
       retrievedAt: shoreline.retrievedAt,
@@ -118,7 +126,7 @@ export async function getFishingPoint(
       {
         locationId: "user-selected",
         coordinates,
-        species: "barred surfperch",
+        species: input.species ?? "unassessed",
         date: input.date,
         checkedOn,
       },

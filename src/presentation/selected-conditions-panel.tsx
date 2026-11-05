@@ -70,8 +70,12 @@ export function SelectedConditionsPanel({
                 <ul>
                   {view.marine![key].measurements.map((m, i) => (
                     <li key={i}>
-                      {m.phase} {m.value} {m.unit} {m.datum} · {m.validAt} ·{" "}
-                      {m.kind}
+                      {m.phase} {m.value} {m.unit} {m.datum} ·{" "}
+                      {new Date(m.validAt).toLocaleString("en-US", {
+                        timeZone: "America/Los_Angeles",
+                        timeZoneName: "short",
+                      })}{" "}
+                      · {m.kind}
                     </li>
                   ))}
                 </ul>

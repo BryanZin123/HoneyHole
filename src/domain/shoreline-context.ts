@@ -81,9 +81,13 @@ export interface ShorelineResult {
 export function inShorelinePilot(p: Coordinates) {
   validateCoordinates(p);
   return (
-    p.latitude >= 37.35 &&
-    p.latitude <= 37.65 &&
-    p.longitude >= -122.65 &&
-    p.longitude <= -122.35
+    (p.latitude >= 37.35 &&
+      p.latitude <= 37.65 &&
+      p.longitude >= -122.65 &&
+      p.longitude <= -122.35) ||
+    (p.latitude >= 36.65 &&
+      p.latitude <= 36.95 &&
+      p.longitude >= -122.05 &&
+      p.longitude <= -121.75)
   );
 }

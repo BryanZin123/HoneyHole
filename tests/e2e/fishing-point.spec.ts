@@ -37,6 +37,10 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
   const panel = page.getByRole("region", { name: "Your fishing point" });
   await expect(panel).toBeVisible();
   expect(pointCalls).toBe(0);
+  await panel.getByLabel("Target species").selectOption("barred surfperch");
+  await expect(
+    panel.getByRole("link", { name: "Sign in in another tab" }),
+  ).toHaveCount(0);
   const coordinateText = await panel
     .getByLabel("Fishing-point coordinates")
     .textContent();
@@ -60,6 +64,12 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
   expect(detail.point.coordinates).toEqual({ latitude, longitude });
   expect(detail.regulatoryEligibility).toBe("UNVERIFIED");
   expect(detail.alertEligible).toBe(false);
+  await expect(
+    panel.getByRole("region", { name: "Fishing planning summary" }),
+  ).toContainText("INSUFFICIENT INFORMATION");
+  await panel
+    .getByText("Detailed sources and environmental evidence", { exact: true })
+    .click();
   const context = panel.getByRole("region", { name: "Mapped shoreline types" });
   await expect(
     context.getByText("Feature 900001 · 6B/3A", { exact: true }),
@@ -227,4 +237,42 @@ test("keyboard fishing point survives separate-tab registration without environm
     privacy: "PRIVATE",
     sharingEligible: false,
   });
+});
+
+test("planning summary keeps an unsupported target unassessed and details optional", async ({
+  page,
+}) => {
+  await page.goto("/explore");
+  await page.getByRole("button", { name: "Find shoreline locations" }).click();
+  const map = page.getByRole("region", { name: "California shoreline map" });
+  await expect(
+    map.locator('[title="Synthetic Browser Fixture SB"]'),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Choose a fishing point on the map" })
+    .click();
+  await map.focus();
+  await map.press("Enter");
+  const panel = page.getByRole("region", { name: "Your fishing point" });
+  await panel.getByLabel("Target species").selectOption("unsupported");
+  await panel.getByLabel("Fishing-point date").fill("2026-11-01");
+  await panel
+    .getByRole("button", { name: "Load mapped shoreline context" })
+    .click();
+  const summary = panel.getByRole("region", {
+    name: "Fishing planning summary",
+  });
+  await expect(summary).toContainText("INSUFFICIENT INFORMATION");
+  await expect(summary).toContainText("2026-11-01");
+  await expect(summary).toContainText("Unassessed");
+  await expect(summary).toContainText("Missing data does not mean unfavorable");
+  await expect(
+    panel.getByRole("region", { name: "Mapped shoreline types" }),
+  ).not.toBeVisible();
+  await panel
+    .getByText("Detailed sources and environmental evidence", { exact: true })
+    .click();
+  await expect(
+    panel.getByRole("region", { name: "Mapped shoreline types" }),
+  ).toBeVisible();
 });

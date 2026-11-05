@@ -5,11 +5,32 @@ import type { Coordinates } from "../domain/geography";
 import type { getFishingPoint } from "../application/get-fishing-point";
 import { HabitatPanel } from "./habitat-panel";
 import { SelectedConditionsPanel } from "./selected-conditions-panel";
+import { FishingPlanningSummary } from "./fishing-planning-summary";
 type Result = Awaited<ReturnType<typeof getFishingPoint>>;
 export function FishingPointPanel({ point }: { point: Coordinates }) {
   const [date, setDate] = useState(() =>
     new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }),
   );
+  const [species, setSpecies] = useState("unassessed");
+  const [signedIn, setSignedIn] = useState(false);
+  const [evidenceExpanded, setEvidenceExpanded] = useState(false);
+  useEffect(() => {
+    let live = true;
+    const check = () =>
+      fetch("/api/v1/me", { cache: "no-store" })
+        .then((r) => {
+          if (live) setSignedIn(r.ok);
+        })
+        .catch(() => {
+          if (live) setSignedIn(false);
+        });
+    void check();
+    window.addEventListener("focus", check);
+    return () => {
+      live = false;
+      window.removeEventListener("focus", check);
+    };
+  }, []);
   const [consent, setConsent] = useState(false),
     [result, setResult] = useState<Result | null>(null),
     [error, setError] = useState(""),
@@ -30,7 +51,12 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
       const response = await fetch("/api/v1/fishing-point-context", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ coordinates: point, date, environmentConsent }),
+        body: JSON.stringify({
+          coordinates: point,
+          date,
+          species,
+          environmentConsent,
+        }),
         signal: controller.signal,
         cache: "no-store",
       });
@@ -39,7 +65,8 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
       if (
         value.point.coordinates.latitude !== point.latitude ||
         value.point.coordinates.longitude !== point.longitude ||
-        value.date !== date
+        value.date !== date ||
+        value.species !== species
       )
         throw Error("Identity mismatch");
       if (!controller.signal.aborted) setResult(value);
@@ -70,7 +97,11 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
             "User-selected fishing point; access, legality and habitat unverified.",
         }),
       });
-      if (r.ok) setSaved(true);
+      if (r.ok) {
+        setSaved(true);
+        setSignedIn(true);
+      }
+      if (r.status === 401) setSignedIn(false);
       setMessage(
         r.ok
           ? "Fishing point saved privately."
@@ -99,6 +130,22 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
         findings do not apply to this coordinate. Recommendation: unavailable;
         notifications disabled.
       </p>
+      <label>
+        Target species
+        <select
+          value={species}
+          onChange={(e) => {
+            active.current?.abort();
+            setBusy(false);
+            setSpecies(e.target.value);
+            setResult(null);
+          }}
+        >
+          <option value="unassessed">Choose a target / unassessed</option>
+          <option value="barred surfperch">Barred surfperch</option>
+          <option value="unsupported">Other target — unassessed</option>
+        </select>
+      </label>
       <label>
         Fishing-point date
         <input
@@ -147,163 +194,180 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
             : "Save fishing point privately"}
       </button>
       <Link href="/saved">View private saved points</Link> ·{" "}
-      <Link href="/account" target="_blank" rel="noopener noreferrer">
-        Sign in in another tab
-      </Link>
+      {signedIn ? (
+        <span>
+          Signed in ·{" "}
+          <Link href="/account" target="_blank" rel="noopener noreferrer">
+            Account
+          </Link>
+        </span>
+      ) : (
+        <Link href="/account" target="_blank" rel="noopener noreferrer">
+          Sign in in another tab
+        </Link>
+      )}
       <p>
-        Keep this tab open while signing in, then return here to save the same
-        point. Unsaved points are not retained if you close or reload this tab.
-        You can decline environmental sharing and still view shoreline context
-        or save privately.
+        {!signedIn &&
+          "Keep this tab open while signing in, then return here to save the same point. "}
+        Unsaved points are not retained if you close or reload this tab. You can
+        decline environmental sharing and still view shoreline context or save
+        privately.
       </p>
       {busy && <p role="status">Loading point evidence…</p>}
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
       {result && (
         <>
-          <section aria-label="Mapped shoreline types">
-            <h3>
-              Historical mapped shoreline types · {result.shoreline.status}
-            </h3>
-            <p>
-              Point classification: UNVERIFIED. These are mapped segments in the
-              pilot area, ordered by computed distance, not classifications
-              assigned to your point. No nearest-distance threshold establishes
-              applicability.
-            </p>
-            <p>
-              Dataset: CDFW ds3115, NOAA ESI. Published 2023-07-06; original
-              source years appear per segment. Retrieved{" "}
-              {result.shoreline.retrievedAt ?? "unavailable"}. Source scale
-              varies; NOAA describes a 50-foot minimum mapping unit, not
-              positional accuracy. Positional uncertainty and current conditions
-              are unknown.
-            </p>
-            <p>
-              Historical mapped shorelines are not current surf zones or safe
-              routes. Do not use ESI for navigation. No fish presence, access,
-              fishing permission or catch probability is established.
-            </p>
-            <p>
-              <a
-                href="https://filelib.wildlife.ca.gov/public/BDB/GIS/BIOS/metadata/ds3115.html"
-                target="_blank"
-                rel="noreferrer"
-              >
-                CDFW ds3115 metadata and attribution
-              </a>{" "}
-              ·{" "}
-              <a
-                href="https://creativecommons.org/licenses/by/4.0/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                CC BY 4.0
-              </a>{" "}
-              ·{" "}
-              <a
-                href="https://shoreline.noaa.gov/esi.html"
-                target="_blank"
-                rel="noreferrer"
-              >
-                NOAA mapping limitations
-              </a>
-            </p>
-            <p>
-              NOAA and CDFW; BIOS Shoreline Types — R7 [ds3115]. HoneyHole
-              calculates distances and groups codes for display; original codes
-              and descriptions are retained. No endorsement or data accuracy
-              warranty.
-            </p>
-            {result.shoreline.status === "outside-pilot" && (
+          <FishingPlanningSummary result={result} />
+          <details
+            open={evidenceExpanded}
+            onToggle={(e) => setEvidenceExpanded(e.currentTarget.open)}
+          >
+            <summary>Detailed sources and environmental evidence</summary>
+            <section aria-label="Mapped shoreline types">
+              <h3>
+                Historical mapped shoreline types · {result.shoreline.status}
+              </h3>
               <p>
-                Outside the Half Moon Bay-area pilot envelope; no dataset query
-                was made.
+                Point classification: UNVERIFIED. These are mapped segments in
+                the pilot area, ordered by computed distance, not
+                classifications assigned to your point. No nearest-distance
+                threshold establishes applicability.
               </p>
-            )}
-            {result.shoreline.status === "unavailable" && (
               <p>
-                Shoreline features could not be retrieved completely. No
-                substitute classifications supplied.
+                Dataset: CDFW ds3115, NOAA ESI. Published 2023-07-06; original
+                source years appear per segment. Retrieved{" "}
+                {result.shoreline.retrievedAt ?? "unavailable"}. Source scale
+                varies; NOAA describes a 50-foot minimum mapping unit, not
+                positional accuracy. Positional uncertainty and current
+                conditions are unknown.
               </p>
-            )}
-            {result.shoreline.status === "empty" && (
               <p>
-                No mapped features were returned. This does not establish
-                absence of a shoreline.
+                Historical mapped shorelines are not current surf zones or safe
+                routes. Do not use ESI for navigation. No fish presence, access,
+                fishing permission or catch probability is established.
               </p>
-            )}
-            {result.shoreline.conflictingGeometry && (
               <p>
-                Overlapping source geometry carries different classifications;
-                no classification takes precedence.
+                <a
+                  href="https://filelib.wildlife.ca.gov/public/BDB/GIS/BIOS/metadata/ds3115.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CDFW ds3115 metadata and attribution
+                </a>{" "}
+                ·{" "}
+                <a
+                  href="https://creativecommons.org/licenses/by/4.0/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CC BY 4.0
+                </a>{" "}
+                ·{" "}
+                <a
+                  href="https://shoreline.noaa.gov/esi.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  NOAA mapping limitations
+                </a>
               </p>
-            )}
-            <p>
-              {result.shoreline.features.length} mapped features returned.
-              Multiple and overlapping segments remain separate.
-            </p>
-            <ol>
-              {result.shoreline.features.slice(0, 8).map((f) => (
-                <li key={f.id}>
-                  <strong>
-                    Feature {f.id} · {f.shoreCode || "unresolved code"}
-                  </strong>{" "}
-                  · approximately {Math.round(f.distanceMeters)} m from the
-                  mapped line. Source: {f.source ?? "unknown"}; year:{" "}
-                  {f.sourceYear ?? "unknown"}; feature type:{" "}
-                  {f.line || "unknown"}.
-                  <p>{f.description || "Source description missing"}</p>
-                  <p>
-                    Landward → seaward:{" "}
-                    {f.codes
-                      .map((c) => `${c.code || "missing"} (${c.category})`)
-                      .join(" → ")}
-                  </p>
-                  <p>
-                    Original types:{" "}
-                    {f.orderedSourceTypes
-                      .map((t) => `${t.code}: ${t.name}`)
-                      .join(" → ") || "missing"}
-                  </p>
-                  {f.codeConflict && (
+              <p>
+                NOAA and CDFW; BIOS Shoreline Types — R7 [ds3115]. HoneyHole
+                calculates distances and groups codes for display; original
+                codes and descriptions are retained. No endorsement or data
+                accuracy warranty.
+              </p>
+              {result.shoreline.status === "outside-pilot" && (
+                <p>
+                  Outside the Half Moon Bay and Monterey Bay pilot envelopes; no
+                  dataset query was made.
+                </p>
+              )}
+              {result.shoreline.status === "unavailable" && (
+                <p>
+                  Shoreline features could not be retrieved completely. No
+                  substitute classifications supplied.
+                </p>
+              )}
+              {result.shoreline.status === "empty" && (
+                <p>
+                  No mapped features were returned. This does not establish
+                  absence of a shoreline.
+                </p>
+              )}
+              {result.shoreline.conflictingGeometry && (
+                <p>
+                  Overlapping source geometry carries different classifications;
+                  no classification takes precedence.
+                </p>
+              )}
+              <p>
+                {result.shoreline.features.length} mapped features returned.
+                Multiple and overlapping segments remain separate.
+              </p>
+              <ol>
+                {result.shoreline.features.slice(0, 8).map((f) => (
+                  <li key={f.id}>
+                    <strong>
+                      Feature {f.id} · {f.shoreCode || "unresolved code"}
+                    </strong>{" "}
+                    · approximately {Math.round(f.distanceMeters)} m from the
+                    mapped line. Source: {f.source ?? "unknown"}; year:{" "}
+                    {f.sourceYear ?? "unknown"}; feature type:{" "}
+                    {f.line || "unknown"}.
+                    <p>{f.description || "Source description missing"}</p>
                     <p>
-                      Source code fields disagree; interpretation unresolved.
+                      Landward → seaward:{" "}
+                      {f.codes
+                        .map((c) => `${c.code || "missing"} (${c.category})`)
+                        .join(" → ")}
                     </p>
-                  )}
-                  <a
-                    href={`https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds3115_fnu/FeatureServer/0/${f.id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Source feature {f.id}
-                  </a>
-                </li>
-              ))}
-            </ol>
-            {result.shoreline.features.length > 8 && (
+                    <p>
+                      Original types:{" "}
+                      {f.orderedSourceTypes
+                        .map((t) => `${t.code}: ${t.name}`)
+                        .join(" → ") || "missing"}
+                    </p>
+                    {f.codeConflict && (
+                      <p>
+                        Source code fields disagree; interpretation unresolved.
+                      </p>
+                    )}
+                    <a
+                      href={`https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds3115_fnu/FeatureServer/0/${f.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Source feature {f.id}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              {result.shoreline.features.length > 8 && (
+                <p>
+                  Showing the first eight by mapped distance within the fixed
+                  pilot envelope; this is not a fishing-location ranking or a
+                  complete California search.
+                </p>
+              )}
+            </section>
+            <HabitatPanel assessment={result.habitat} />
+            {consent && result.environment ? (
+              <SelectedConditionsPanel
+                detail={{
+                  ...result.environment,
+                  location: { coordinates: point },
+                  activity: { date: result.date },
+                }}
+              />
+            ) : (
               <p>
-                Showing the first eight by mapped distance within the fixed
-                pilot envelope; this is not a fishing-location ranking or a
-                complete California search.
+                Fishing-point environmental conditions have not been loaded.
+                Access-point conditions are separate.
               </p>
             )}
-          </section>
-          <HabitatPanel assessment={result.habitat} />
-          {consent && result.environment ? (
-            <SelectedConditionsPanel
-              detail={{
-                ...result.environment,
-                location: { coordinates: point },
-                activity: { date: result.date },
-              }}
-            />
-          ) : (
-            <p>
-              Fishing-point environmental conditions have not been loaded.
-              Access-point conditions are separate.
-            </p>
-          )}
+          </details>
         </>
       )}
     </section>

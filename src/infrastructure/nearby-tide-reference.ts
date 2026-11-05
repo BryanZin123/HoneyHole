@@ -12,6 +12,7 @@ export interface TideReference {
 export async function nearbyTideReference(
   point: Coordinates,
   fetcher: typeof fetch = fetch,
+  date?: string,
 ): Promise<TideReference> {
   const base: TideReference = {
     status: "unavailable",
@@ -59,6 +60,7 @@ export async function nearbyTideReference(
     if (!s) return base;
     const conditions = await new NoaaMarineProvider(fetcher).getConditions(
       s.id,
+      date,
     );
     if (conditions.station.state !== "CA") return base;
     const distance = distanceKm(point, {

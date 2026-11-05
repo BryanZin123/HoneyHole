@@ -56,7 +56,9 @@ export async function GET(
           weather: new NwsWeatherProvider(),
           atmosphere: new NwsAtmosphereProvider(),
           access: new CaliforniaCoastalProvider(),
-          tides: { get: nearbyTideReference },
+          tides: {
+            get: (point, date) => nearbyTideReference(point, fetch, date),
+          },
           regulations: californiaRegulationRecords,
           regulationProvider: new CaliforniaRegulationProvider(),
           jurisdiction: (access) =>

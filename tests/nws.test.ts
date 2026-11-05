@@ -313,3 +313,13 @@ it("rejects a valid forecast for an unrelated grid cell", async () => {
     ).errorCode,
   ).toBe("location-mismatch");
 });
+
+it("explains documented coastal marine hourly absence without fabricating a land forecast", async () => {
+  const { provider, fetcher } = fixture(period, "2026-10-18T17:30:00Z", {
+    properties: { ...points.properties, type: "marine" },
+  });
+  const r = await provider.getForecast(coordinates);
+  expect(r.errorCode).toBe("coastal-marine-hourly-unsupported");
+  expect(r.periods).toEqual([]);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});

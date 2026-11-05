@@ -1,0 +1,18 @@
+2026-11-04 planning verification (Linux)
+Starting commit 152a8579f183ec1a69e2028e1dd5addef509e84f, clean fetched branch.
+RED: new planning/day tests initially failed to import absent implementations; GREEN: 8 passed.
+Full final suite: 332 passed, 0 failed, 47 files (baseline 316). Typecheck and lint exit 0.
+Initial incremental Turbopack build failed opening generated persistence cache; generated .next removed. Final clean webpack production build exit 0. CI clean default build remains required.
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+Real browser verification pending synchronized commit; no local Chromium pass claimed.
+Live CDFW: HTTP 200, 172 features normalized, ESI 2006:161 / ESI 2002:11. Closest returned line ~5435.618m; exact point classification UNVERIFIED.
+Live NWS: marine discovery HTTP 200, hourly HTTP 404, grid HTTP 200. No validation bypass.
+Live NOAA nearby-station probe: unavailable; no station/tide data verified. DST selected-date requests tested with deterministic fixtures.
+No Windows access. No precise owner coordinate in committed fixtures or reports.
