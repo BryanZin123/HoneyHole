@@ -30,7 +30,6 @@ export function ExploreDiscovery() {
   const [detailError, setDetailError] = useState("");
   const [loading, setLoading] = useState(false);
   const [county, setCounty] = useState("San Mateo");
-  const [mode, setMode] = useState("county");
   const [method, setMethod] = useState("shore-angling");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState(() =>
@@ -52,15 +51,7 @@ export function ExploreDiscovery() {
     setError("");
     setSelectedId(null);
     setLocations([]);
-    const form = new FormData(event.currentTarget);
-    const query =
-      mode === "county"
-        ? new URLSearchParams({ county })
-        : new URLSearchParams({
-            latitude: String(form.get("latitude")),
-            longitude: String(form.get("longitude")),
-            radiusKm: String(form.get("radiusKm")),
-          });
+    const query = new URLSearchParams({ county });
     try {
       const response = await fetch("/api/v1/locations?" + query, {
         signal: AbortSignal.timeout(15000),
@@ -121,58 +112,13 @@ export function ExploreDiscovery() {
       </p>
       <form onSubmit={search} className="coastal-form">
         <label>
-          Search by
-          <select value={mode} onChange={(e) => setMode(e.target.value)}>
-            <option value="county">Coastal county</option>
-            <option value="coordinate">Coordinates and distance</option>
+          Coastal county
+          <select value={county} onChange={(e) => setCounty(e.target.value)}>
+            {coastalCounties.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
           </select>
         </label>
-        {mode === "county" ? (
-          <label>
-            Coastal county
-            <select value={county} onChange={(e) => setCounty(e.target.value)}>
-              {coastalCounties.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-          </label>
-        ) : (
-          <>
-            <label>
-              Latitude
-              <input
-                name="latitude"
-                type="number"
-                min="32"
-                max="42.1"
-                step="any"
-                required
-              />
-            </label>
-            <label>
-              Longitude
-              <input
-                name="longitude"
-                type="number"
-                min="-125"
-                max="-114"
-                step="any"
-                required
-              />
-            </label>
-            <label>
-              Radius (km)
-              <input
-                name="radiusKm"
-                type="number"
-                min="1"
-                max="50"
-                defaultValue="25"
-                required
-              />
-            </label>
-          </>
-        )}
         <button className="button" disabled={loading}>
           {loading ? "Searching…" : "Find shoreline locations"}
         </button>

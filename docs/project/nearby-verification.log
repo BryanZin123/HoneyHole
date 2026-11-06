@@ -1,0 +1,14 @@
+2026-11-06 nearby discovery verification (Linux)
+Starting branch feature/honeyhole-foundation-checkpoint, HEAD and fetched branch 9cbf07ebdbdbaea7ffd7583684ef3ea908722dfd, clean.
+Initial nearby contract tests failed because endpoint absent, then 6 passed after implementation. Final full suite: 349 passed, 0 failed, 49 files. Typecheck, lint, clean default Next production build passed.
+PASS five production pages
+PASS registration, private CRUD, preferences, owner isolation, logout and cookie/JSON protections
+PASS application restart, sign back in and persisted pins/preferences
+PASS delete and persistence/API contract checks
+PASS /: HTTP 200 and expected content
+PASS /conditions: HTTP 200 and expected content
+PASS /explore: HTTP 200 and expected content
+PASS /saved: HTTP 200 and expected content
+Full dependency audit: 8 moderate development-tree findings; production-only audit: 0 vulnerabilities. No forced dependency changes.
+Live Monterey search: fixed CSP catalog and metadata HTTP 200, 63 records before local filter, 3 in 10 km at 36.8000, -121.8000. No live clearance, catch prediction or Windows testing claimed.
+Chromium runs on separate GitHub runner; final result must be verified against pushed SHA.

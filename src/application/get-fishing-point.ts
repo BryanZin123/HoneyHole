@@ -2,10 +2,9 @@ import type { Coordinates } from "../domain/geography";
 import { validateCoordinates } from "../domain/spatial";
 import { validDate } from "../domain/effective-regulations";
 import {
-  inShorelinePilot,
-  shorelineDistance,
-  type ShorelineResult,
-} from "../domain/shoreline-context";
+  getShorelineContext,
+  type ShorelinePort,
+} from "./get-shoreline-context";
 import type { WeatherProvider } from "./weather-provider";
 import type { AtmosphereProvider } from "./atmosphere-provider";
 import type { TideReferencePort } from "./get-location-detail";
@@ -42,7 +41,7 @@ export function validateFishingPointInput(value: unknown): FishingPointInput {
   return v;
 }
 export interface FishingPointPorts {
-  shoreline: { get(region?: "monterey-bay"): Promise<ShorelineResult> };
+  shoreline: ShorelinePort;
   weather: WeatherProvider;
   atmosphere: AtmosphereProvider;
   tides: TideReferencePort;
@@ -54,39 +53,7 @@ export async function getFishingPoint(
 ) {
   validateFishingPointInput(input);
   const coordinates = { ...input.coordinates };
-  let shoreline: ShorelineResult = {
-    status: "empty",
-    features: [],
-    retrievedAt: null,
-  };
-  const inside = inShorelinePilot(coordinates);
-  if (inside) {
-    try {
-      shoreline =
-        coordinates.latitude < 37
-          ? await ports.shoreline.get("monterey-bay")
-          : await ports.shoreline.get();
-    } catch {
-      shoreline = { status: "unavailable", features: [], retrievedAt: null };
-    }
-  }
-  const geometries = new Map<string, string>();
-  let conflictingGeometry = false;
-  const features = shoreline.features
-    .map(({ geometry, ...feature }) => {
-      const key = JSON.stringify(geometry);
-      if (geometries.has(key) && geometries.get(key) !== feature.shoreCode)
-        conflictingGeometry = true;
-      geometries.set(key, feature.shoreCode);
-      return {
-        ...feature,
-        distanceMeters: shorelineDistance(coordinates, geometry),
-        positionalAccuracyMeters: null,
-      };
-    })
-    .sort(
-      (a, b) => a.distanceMeters - b.distanceMeters || a.id.localeCompare(b.id),
-    );
+  const shoreline = await getShorelineContext(coordinates, ports.shoreline);
   let environment: null | {
     weather: Awaited<ReturnType<WeatherProvider["getForecast"]>>;
     atmosphere: Awaited<ReturnType<AtmosphereProvider["getAtmosphere"]>>;
@@ -115,13 +82,7 @@ export async function getFishingPoint(
     },
     date: input.date,
     species: input.species ?? "unassessed",
-    shoreline: {
-      status: inside ? shoreline.status : "outside-pilot",
-      retrievedAt: shoreline.retrievedAt,
-      features,
-      conflictingGeometry,
-      pointClassification: "UNVERIFIED" as const,
-    },
+    shoreline,
     habitat: await getHabitatAssessment(
       {
         locationId: "user-selected",

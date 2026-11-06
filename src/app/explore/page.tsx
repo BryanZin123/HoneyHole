@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExploreDiscovery } from "../../presentation/explore-discovery";
 import { CoastalPanel } from "../../presentation/coastal-panel";
 export default function Explore() {
@@ -15,6 +16,11 @@ export default function Explore() {
           must be verified before a fishing location can be recommended.
         </p>
       </div>
+      <p>
+        <Link className="button" href="/explore/nearby">
+          Find fishing areas near me
+        </Link>
+      </p>
       <ExploreDiscovery />
       <details>
         <summary>Check another coordinate for access evidence</summary>

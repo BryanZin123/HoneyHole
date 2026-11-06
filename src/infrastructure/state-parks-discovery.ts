@@ -67,8 +67,9 @@ export class StateParksDiscovery implements ShoreDiscoveryProvider {
         stamp <= this.now().getTime()
           ? new Date(stamp).toISOString()
           : null;
+      let omitted = 0;
       const locations: ShoreLocation[] = [];
-      const seen = new Set<string>();
+      const seen = new Map<string, string>();
       for (const feature of body.features) {
         const p = feature.properties,
           c = feature.geometry?.coordinates;
@@ -76,17 +77,36 @@ export class StateParksDiscovery implements ShoreDiscoveryProvider {
           feature.geometry?.type !== "Point" ||
           !Array.isArray(c) ||
           typeof p?.PARK_NAME !== "string" ||
+          typeof p.County !== "string" ||
+          !Number.isSafeInteger(p.OBJECTID) ||
+          p.OBJECTID < 0
+        ) {
+          omitted++;
+          continue;
+        }
+        if (
           !p.PARK_NAME.endsWith(" SB") ||
-          !(coastalCounties as readonly string[]).includes(p.County) ||
-          !Number.isInteger(p.OBJECTID)
+          !(coastalCounties as readonly string[]).includes(p.County)
         )
           continue;
         const coordinates = { latitude: c[1], longitude: c[0] };
         try {
           validateCoordinates(coordinates);
         } catch {
+          omitted++;
           continue;
         }
+        const identity = JSON.stringify([
+          p.PARK_NAME,
+          p.County,
+          coordinates,
+          p.PARK_WEB_PG,
+        ]);
+        const prior = seen.get(String(p.OBJECTID));
+        if (prior && prior !== identity)
+          throw Error("Conflicting source identity");
+        if (prior) continue;
+        seen.set(String(p.OBJECTID), identity);
         if (query.county && p.County !== query.county) continue;
         if (
           query.center &&
@@ -104,8 +124,6 @@ export class StateParksDiscovery implements ShoreDiscoveryProvider {
             parkUrl = u.href;
           }
         } catch {}
-        if (seen.has(String(p.OBJECTID))) continue;
-        seen.add(String(p.OBJECTID));
         locations.push({
           id: String(p.OBJECTID),
           name: p.PARK_NAME,
@@ -127,7 +145,16 @@ export class StateParksDiscovery implements ShoreDiscoveryProvider {
             a.id.localeCompare(b.id)
           : a.name.localeCompare(b.name) || a.id.localeCompare(b.id),
       );
-      return { status: "available", locations, ...base };
+      return {
+        status: "available",
+        locations,
+        ...base,
+        ...(omitted
+          ? {
+              reason: `${omitted} source records lacked usable identity or coordinates; search coverage is incomplete.`,
+            }
+          : {}),
+      };
     } catch {
       return {
         status: "unavailable",

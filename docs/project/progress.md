@@ -78,3 +78,7 @@ Reviewed AJV's fast-uri 3.1.8 dependency and all four audit advisories; targeted
 ## 2026-11-04 — Fishing planning summary
 
 Implemented intentional target selection (unsupported targets unassessed), California date-specific station tides including DST, marine-hourly capability explanation, authenticated sign-in display, and concise summary with expandable sources. Monterey ds3115 public-envelope probe returned and normalized 172 actual features; closest mapped line to owner point ~5.44 km, so exact-point habitat stays unverified. Added source review and bounded nearby-area design in fishing-planning-milestone.md. No USGS retries, deployment, recommendation activation or legal/identity weakening. Human Windows installation/startup is owner-reported; this session has no Windows access.
+
+## 2026-11-06 — Nearby areas to investigate
+
+Added a private-body, radius-based nearby workflow using the existing public State Beach catalog, exact entrance identities, local rule screening and separate on-demand evidence consent. Three real records matched the bounded 10 km Monterey demonstration. Human-readable results distinguish unavailable evidence and exclusions; no device geolocation, saved-pin exposure, rankings or alerts. See nearby-areas.md for sources, demonstration, licensing, API behavior and dependency review. Verify actual remote CI independently of local results.

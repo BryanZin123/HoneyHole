@@ -5,6 +5,42 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/v1/nearby": {
+      "post": {
+        "summary": "Private center in JSON only; filters a fixed public State Beach catalog locally. No per-candidate external assessment.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NearbyPlan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Source-linked evidence only",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NearbyResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body"
+          },
+          "403": {
+            "description": "Origin rejected"
+          },
+          "502": {
+            "description": "Provider unavailable"
+          }
+        }
+      }
+    },
     "/api/v1/fishing-point-context": {
       "post": {
         "summary": "Private fishing-point contextual assessment; fixed CDFW envelope, explicit consent for NWS/NOAA environmental lookups",
@@ -228,6 +264,68 @@
       }
     },
     "/api/v1/locations/{id}": {
+      "post": {
+        "summary": "Load detailed evidence for a consented public entrance, never the search center.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntranceConsent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Source-linked evidence only",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LocationDetail"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "shoreline"
+                      ],
+                      "properties": {
+                        "shoreline": {
+                          "$ref": "#/components/schemas/FishingPointResult/properties/shoreline"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body"
+          },
+          "403": {
+            "description": "Origin rejected"
+          },
+          "502": {
+            "description": "Provider unavailable"
+          },
+          "409": {
+            "description": "Source coordinates changed before provider work"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
       "get": {
         "description": "Local/personal CSP source integration; commercial deployment requires permission. Source failures are explicit.",
         "parameters": [
@@ -717,6 +815,218 @@
   },
   "components": {
     "schemas": {
+      "NearbyPlan": {
+        "type": "object",
+        "required": [
+          "center",
+          "radiusKm",
+          "date",
+          "method",
+          "species",
+          "period",
+          "style"
+        ],
+        "properties": {
+          "center": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "radiusKm": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "method": {
+            "enum": [
+              "shore-angling",
+              "hand-gathering"
+            ]
+          },
+          "species": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "period": {
+            "enum": [
+              "whole day",
+              "morning",
+              "afternoon",
+              "evening"
+            ]
+          },
+          "style": {
+            "enum": [
+              "any",
+              "beach",
+              "pier",
+              "jetty",
+              "rocky shore"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "NearbyResult": {
+        "type": "object",
+        "required": [
+          "status",
+          "attribution",
+          "license",
+          "candidates"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "available",
+              "unavailable"
+            ]
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "kind",
+                "coordinates",
+                "distanceKm",
+                "county",
+                "sourceUrl",
+                "parkUrl",
+                "retrievedAt",
+                "datasetUpdatedAt",
+                "access",
+                "eligibility",
+                "reasons",
+                "regulatoryStatus",
+                "findings"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "kind": {
+                  "const": "park-entry"
+                },
+                "coordinates": {
+                  "$ref": "#/components/schemas/Coordinates"
+                },
+                "distanceKm": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "county": {
+                  "type": "string"
+                },
+                "sourceUrl": {
+                  "type": "string"
+                },
+                "parkUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "retrievedAt": {
+                  "type": "string"
+                },
+                "datasetUpdatedAt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "access": {
+                  "const": "unknown"
+                },
+                "eligibility": {
+                  "enum": [
+                    "UNVERIFIED",
+                    "EXCLUDED"
+                  ]
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "regulatoryStatus": {
+                  "type": "string"
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "reason",
+                      "status",
+                      "sourceUrl"
+                    ],
+                    "properties": {
+                      "reason": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "sourceUrl": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EntranceConsent": {
+        "type": "object",
+        "required": [
+          "date",
+          "method",
+          "species",
+          "coordinates",
+          "consent"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "method": {
+            "enum": [
+              "shore-angling",
+              "hand-gathering"
+            ]
+          },
+          "species": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "consent": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FishingPointRequest": {
         "type": "object",
         "required": [

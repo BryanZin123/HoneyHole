@@ -801,3 +801,12 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 | PLAN-04 provider availability | NWS marine capability reason; no land-cell substitution | live marine discovery/hourly 404/grid 200; NWS test |
 | PLAN-05 summary/auth/privacy | planning summary, optional details, account status refresh | summary states, private owner/restart suite, desktop/mobile workflows |
 | PLAN-06 nearby/science | fishing-planning-milestone.md design and evidence review | descriptive only; no validated prediction model or hazard clearance |
+
+## Nearby discovery (2026-11-06)
+
+| Requirement | Implementation | Verification |
+| --- | --- | --- |
+| NEAR-01 center, radius, plan and privacy | nearby POST + existing discovery adapter, explicit map opening, no device/saved-location reads | nearby.test.ts bounds, upstream request privacy and contract; nearby.spec.ts |
+| NEAR-02 candidate identity, exclusions and completeness | find-nearby local rule assessment, canonical CSP records, conflict/omission handling | geographic boundary, tie, stale rule and prohibition tests; live Monterey demonstration |
+| NEAR-03 per-entrance evidence | same-origin consented location POST, canonical-coordinate recheck, existing detailed evidence and shared mapped shoreline service | absent consent and 409 tests, nearby-ui.test.ts stale requests and exclusion separation |
+| NEAR-04 mobile/desktop, private persistence | real Chromium workflow and existing account/private-pin suites | GitHub Actions run checked against synchronized commit |
