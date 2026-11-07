@@ -82,3 +82,6 @@ Implemented intentional target selection (unsupported targets unassessed), Calif
 ## 2026-11-06 — Nearby areas to investigate
 
 Added a private-body, radius-based nearby workflow using the existing public State Beach catalog, exact entrance identities, local rule screening and separate on-demand evidence consent. Three real records matched the bounded 10 km Monterey demonstration. Human-readable results distinguish unavailable evidence and exclusions; no device geolocation, saved-pin exposure, rankings or alerts. See nearby-areas.md for sources, demonstration, licensing, API behavior and dependency review. Verify actual remote CI independently of local results.
+
+## 2026-11-07 — Official warnings for a consented entrance
+Implemented isolated NWS active-point provider, conservative temporal/geographic validation, bounded request spacing and readable nearby entrance warning display. Original public source identity is rechecked before providers; warnings never assess a private pin or search center. Full source policy, real Moss Landing probe and verification record: `coastal-warnings.md` and `coastal-warnings-verification.log`. CI outcome must be verified after this checkpoint; fixture tests are separate from live verification.

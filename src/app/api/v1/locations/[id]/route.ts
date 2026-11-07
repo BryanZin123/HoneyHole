@@ -1,3 +1,5 @@
+import { entranceWarnings } from "../../../../../application/entrance-warnings";
+import { NwsWarnings } from "../../../../../infrastructure/nws-warnings";
 import { body } from "../../../../../application/account-http";
 import { UserDataError } from "../../../../../domain/user-data";
 import type { Coordinates } from "../../../../../domain/geography";
@@ -15,6 +17,7 @@ import { CaliforniaCoastalProvider } from "../../../../../infrastructure/califor
 import { californiaRegulationRecords } from "../../../../../infrastructure/california-regulations";
 import { nearbyTideReference } from "../../../../../infrastructure/nearby-tide-reference";
 import { getLocationDetail } from "../../../../../application/get-location-detail";
+const loadWarnings = entranceWarnings(new NwsWarnings());
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -145,6 +148,7 @@ async function assess(id: string, p: URLSearchParams, expected?: Coordinates) {
       expected
         ? {
             ...detail,
+            warnings: await loadWarnings(location.coordinates, date),
             shoreline: await getShorelineContext(
               location.coordinates,
               new CdfwShorelineProvider(),

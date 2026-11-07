@@ -1,4 +1,7 @@
 "use client";
+
+import { CoastalWarnings } from "./coastal-warnings";
+import type { WarningEvidence } from "../application/warning-provider";
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
@@ -19,6 +22,7 @@ const AreaMap = dynamic(
 );
 type Candidate = NearbyResult["candidates"][number];
 type Detail = Awaited<ReturnType<typeof getLocationDetail>> & {
+  warnings?: WarningEvidence;
   shoreline: Awaited<ReturnType<typeof getShorelineContext>>;
 };
 function datedSummary(d: Detail) {
@@ -403,8 +407,9 @@ export function NearbyAreas() {
                 }
               }}
             />{" "}
-            I agree to request NOAA/NWS/GIS evidence for this public entrance.
-            Providers may receive its coordinates, never my search center.
+            I agree to request NOAA/NWS/GIS evidence, including official
+            warnings, for this public entrance. Providers may receive its
+            coordinates, never my search center.
           </label>
           <button
             disabled={!consented || loading || !!detail}
@@ -425,9 +430,8 @@ export function NearbyAreas() {
               <p>
                 Habitat association: {detail.habitat.association.status}; exact
                 entrance habitat: {detail.habitat.locationEvidence.status}.
-                Coastal warnings not assessed. Check current official warnings;
-                no safety clearance.
               </p>
+              <CoastalWarnings evidence={detail.warnings} />
               <details>
                 <summary>Sources and dated entrance conditions</summary>
                 <p>

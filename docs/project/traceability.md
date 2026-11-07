@@ -810,3 +810,9 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 | NEAR-02 candidate identity, exclusions and completeness | find-nearby local rule assessment, canonical CSP records, conflict/omission handling | geographic boundary, tie, stale rule and prohibition tests; live Monterey demonstration |
 | NEAR-03 per-entrance evidence | same-origin consented location POST, canonical-coordinate recheck, existing detailed evidence and shared mapped shoreline service | absent consent and 409 tests, nearby-ui.test.ts stale requests and exclusion separation |
 | NEAR-04 mobile/desktop, private persistence | real Chromium workflow and existing account/private-pin suites | GitHub Actions run checked against synchronized commit |
+
+## Official entrance warnings (2026-11-07)
+- WARN-01: `warning-provider.ts`, `nws-warnings.ts`: source/geometry/time/status validation, provenance, unavailable and empty separation; `warnings.test.ts`.
+- WARN-02: `entrance-warnings.ts`, consented location POST: exact canonical entrance only, 30-second bounded throttle, no discovery fan-out; existing nearby privacy/identity tests and new throttle tests.
+- WARN-03: `coastal-warnings.tsx`, nearby view: California time, partial date overlap, official instructions, expandable metadata and no safety clearance; component and desktop/mobile nearby browser tests.
+- WARN-04: live Moss Landing probe and limits: `coastal-warnings.md`. Public deployment, alerts and positive recommendations remain disabled; legal exclusion logic unchanged.

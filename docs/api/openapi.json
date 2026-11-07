@@ -289,12 +289,13 @@
                     {
                       "type": "object",
                       "required": [
-                        "shoreline"
+                        "shoreline", "warnings"
                       ],
                       "properties": {
                         "shoreline": {
                           "$ref": "#/components/schemas/FishingPointResult/properties/shoreline"
-                        }
+                        },
+                        "warnings": { "$ref": "#/components/schemas/WarningEvidence" }
                       }
                     }
                   ]
@@ -815,6 +816,146 @@
   },
   "components": {
     "schemas": {
+      "WarningEvidence": {
+  "type": "object",
+  "required": [
+    "status",
+    "coordinates",
+    "sourceUrl",
+    "retrievedAt",
+    "updatedAt",
+    "alerts",
+    "reason"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "available",
+        "empty",
+        "unknown"
+      ]
+    },
+    "coordinates": {
+      "$ref": "#/components/schemas/Coordinates"
+    },
+    "sourceUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "retrievedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceUrl",
+          "event",
+          "sender",
+          "severity",
+          "urgency",
+          "certainty",
+          "area",
+          "sent",
+          "effective",
+          "onset",
+          "expires",
+          "ends",
+          "instruction",
+          "applicability",
+          "period",
+          "zones"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "sender": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "urgency": {
+            "type": "string"
+          },
+          "certainty": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          },
+          "sent": {
+            "type": "string"
+          },
+          "effective": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string"
+          },
+          "onset": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ends": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "instruction": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "applicability": {
+            "enum": [
+              "polygon",
+              "NWS point/zone",
+              "unknown"
+            ]
+          },
+          "period": {
+            "enum": [
+              "overlap",
+              "outside",
+              "unknown"
+            ]
+          },
+          "zones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+},
+
       "NearbyPlan": {
         "type": "object",
         "required": [

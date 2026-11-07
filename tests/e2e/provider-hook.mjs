@@ -5,6 +5,45 @@ const parks =
   "https://services2.arcgis.com/AhxrK3F6WM8ECvDi/arcgis/rest/services/ParkEntryPoints/FeatureServer/2";
 globalThis.fetch = async (input, init) => {
   const url = String(input instanceof Request ? input.url : input);
+  if (url.startsWith("https://api.weather.gov/alerts/active?point=")) {
+    const now = Date.now(),
+      iso = (delta) => new Date(now + delta).toISOString();
+    return Response.json(
+      {
+        type: "FeatureCollection",
+        updated: iso(0),
+        features: [
+          {
+            type: "Feature",
+            id: "https://api.weather.gov/alerts/urn:test:browser",
+            geometry: null,
+            properties: {
+              id: "urn:test:browser",
+              event: "High Surf Advisory",
+              senderName: "Synthetic NWS fixture",
+              status: "Actual",
+              messageType: "Alert",
+              severity: "Moderate",
+              urgency: "Expected",
+              certainty: "Likely",
+              areaDesc: "Synthetic coastal zone",
+              geocode: { UGC: ["CAZ509"] },
+              affectedZones: ["https://api.weather.gov/zones/forecast/CAZ509"],
+              references: [],
+              sent: iso(-60000),
+              effective: iso(-60000),
+              onset: iso(-60000),
+              expires: iso(3600000),
+              ends: null,
+              instruction:
+                "Fixture instruction: stay away from breaking waves.",
+            },
+          },
+        ],
+      },
+      { headers: { Date: new Date().toUTCString() } },
+    );
+  }
   if (url.startsWith(parks + "/query?"))
     return Response.json({
       type: "FeatureCollection",

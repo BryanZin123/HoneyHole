@@ -34,7 +34,11 @@ test("private nearby search, map center, consented entrance evidence and empty r
   expect(calls.some((x) => x.includes("/api/v1/locations/"))).toBe(false);
   await panel.getByRole("checkbox").check();
   await panel.getByRole("button", { name: "Load entrance evidence" }).click();
-  await expect(panel.getByText(/Coastal warnings not assessed/)).toBeVisible();
+  await expect(
+    panel.getByRole("heading", { name: "High Surf Advisory" }),
+  ).toBeVisible();
+  await expect(panel.getByText(/NWS severity: Moderate/)).toBeVisible();
+  await expect(panel.getByText(/Fixture instruction: stay away/)).toBeVisible();
   expect(
     calls.some((x) => /37\.512345|122\.512345|\/api\/v1\/pins/.test(x)),
   ).toBe(false);
@@ -44,3 +48,48 @@ test("private nearby search, map center, consented entrance evidence and empty r
     page.getByText(/No matching State Beach entrances/),
   ).toBeVisible();
 });
+for (const state of ["empty", "unknown"]) {
+  test(`entrance warning ${state} remains distinct from safety on desktop/mobile`, async ({
+    page,
+  }) => {
+    await page.route("**/api/v1/locations/991", async (route) => {
+      const response = await route.fetch();
+      const detail = await response.json();
+      detail.warnings = {
+        ...detail.warnings,
+        status: state,
+        alerts: [],
+        reason:
+          state === "empty"
+            ? "No active NWS alerts were returned for this published entrance coordinate at the time checked. Other hazards may exist. This is not a safety clearance."
+            : "NWS returned HTTP 503; no warning assessment is available.",
+      };
+      await route.fulfill({ response, json: detail });
+    });
+    await page.goto("/explore/nearby");
+    await page.getByLabel("Center latitude").fill("37.512345");
+    await page.getByLabel("Center longitude").fill("-122.512345");
+    await page.getByRole("button", { name: "Search nearby areas" }).click();
+    await page
+      .getByRole("button", { name: /Synthetic Browser Fixture SB/ })
+      .click();
+    const panel = page.getByRole("region", {
+      name: "Selected entrance evidence",
+    });
+    await panel.getByRole("checkbox").check();
+    await panel.getByRole("button", { name: "Load entrance evidence" }).click();
+    const warnings = panel.getByRole("region", {
+      name: "Official coastal warnings",
+    });
+    await expect(
+      warnings.getByText(
+        state === "empty"
+          ? /No active NWS alerts were returned/
+          : /NWS returned HTTP 503/,
+      ),
+    ).toBeVisible();
+    await expect(
+      warnings.getByText(/Future hazard status beyond published validity/),
+    ).toBeVisible();
+  });
+}
