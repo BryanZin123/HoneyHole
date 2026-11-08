@@ -1,6 +1,6 @@
 "use client";
 
-import { CoastalWarnings } from "./coastal-warnings";
+import { RefreshCoastalWarnings } from "./refresh-coastal-warnings";
 import type { WarningEvidence } from "../application/warning-provider";
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
@@ -431,7 +431,14 @@ export function NearbyAreas() {
                 Habitat association: {detail.habitat.association.status}; exact
                 entrance habitat: {detail.habitat.locationEvidence.status}.
               </p>
-              <CoastalWarnings evidence={detail.warnings} />
+              <RefreshCoastalWarnings
+                key={`${current.id}:${plan!.date}:${current.coordinates.latitude}:${current.coordinates.longitude}`}
+                initial={detail.warnings}
+                id={current.id}
+                coordinates={current.coordinates}
+                date={plan!.date}
+                consented={consented}
+              />
               <details>
                 <summary>Sources and dated entrance conditions</summary>
                 <p>

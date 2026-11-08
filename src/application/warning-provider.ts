@@ -19,6 +19,11 @@ export type CoastalWarning = {
   zones: string[];
 };
 export type WarningEvidence = {
+  refresh?: {
+    delivery: "fresh" | "reused" | "deferred";
+    attemptedAt: string;
+    nextAllowedAt: string;
+  };
   status: "available" | "empty" | "unknown";
   coordinates: Coordinates;
   sourceUrl: string;

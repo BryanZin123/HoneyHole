@@ -816,3 +816,8 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 - WARN-02: `entrance-warnings.ts`, consented location POST: exact canonical entrance only, 30-second bounded throttle, no discovery fan-out; existing nearby privacy/identity tests and new throttle tests.
 - WARN-03: `coastal-warnings.tsx`, nearby view: California time, partial date overlap, official instructions, expandable metadata and no safety clearance; component and desktop/mobile nearby browser tests.
 - WARN-04: live Moss Landing probe and limits: `coastal-warnings.md`. Public deployment, alerts and positive recommendations remain disabled; legal exclusion logic unchanged.
+
+## Independent warning refresh (2026-11-08)
+- WARN-05: `refresh-entrance-warnings.ts`, location warnings POST: same-origin consent and canonical identity before warning-only request; `warning-refresh.test.ts`.
+- WARN-06: `entrance-warnings.ts`, `entrance-warning-service.ts`: shared process gate, concurrent requests, original cached timestamps, date-sensitive cache; unit and real server desktop/mobile tests.
+- WARN-07: `refresh-coastal-warnings.tsx`: explicit refresh, failure history, withdrawn consent/stale response protection, ID differences and unchanged environmental assessment; component/Chromium tests. No scheduled retries, private storage or recommendation activation.

@@ -85,3 +85,6 @@ Added a private-body, radius-based nearby workflow using the existing public Sta
 
 ## 2026-11-07 — Official warnings for a consented entrance
 Implemented isolated NWS active-point provider, conservative temporal/geographic validation, bounded request spacing and readable nearby entrance warning display. Original public source identity is rechecked before providers; warnings never assess a private pin or search center. Full source policy, real Moss Landing probe and verification record: `coastal-warnings.md` and `coastal-warnings-verification.log`. CI outcome must be verified after this checkpoint; fixture tests are separate from live verification.
+
+## 2026-11-08 — Independent official-warning refresh
+Added consented single-entrance warning-only POST and UI action, shared process-level spacing across both routes, original cached timestamps, dated historical failure snapshots and alert-ID comparisons. Existing NWS parser and regulatory/ownership logic unchanged. Audit, behavior, limitations and verification: `warning-refresh.md`, `warning-refresh-verification.log`. Browser CI completion is reported after synchronization.

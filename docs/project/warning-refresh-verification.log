@@ -1,0 +1,14 @@
+2026-11-08, Linux workspace /workspace/scratch/972d008c416a/HoneyHole.
+Fetched feature/honeyhole-foundation-checkpoint; local/remote starting SHA c6fceff1c6064c273653124ee93135ac66e82b73; clean working tree.
+Baseline npm test: 380 passed.
+Initial new test RED: missing refresh-entrance-warnings module. Implemented handler/throttle, then GREEN.
+During development: one ambiguous component selector and one overly narrow test mock type failed; corrected selectors/types without weakening assertions or production safeguards.
+Final npm test: 400 passed, 0 failed, 53 test files.
+Final npm run typecheck: exit 0.
+Final npm run lint: exit 0.
+Clean production npm run build: exit 0.
+node scripts/accounts-smoke.mjs: PASS five production pages, registration/private CRUD/preferences, owner isolation, logout/cookie/JSON checks, restart/sign-in persistence, deletion/API contracts.
+node scripts/smoke.mjs: PASS /, /conditions, /explore, /saved (HTTP 200 and expected content).
+Local Chromium not executed (browser not installed); actual GitHub browser job is required after synchronization. New desktop/mobile workflow checks shared server throttle, real 30-second spacing, cached timestamps, refresh-only requests and failure-history display.
+No new live NWS probe; deterministic browser/provider fixtures are not live provider verification.
+No dependency or lockfile changes; NWS parser unchanged. No Windows modification, main merge, deployment, recommendation or notification activation.

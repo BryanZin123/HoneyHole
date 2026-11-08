@@ -5,6 +5,77 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/v1/locations/{id}/warnings": {
+  "post": {
+    "summary": "Consented warning-only refresh for a canonical published entrance. No other assessment providers.",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[0-9]{1,10}$"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": [
+              "coordinates",
+              "date",
+              "consent"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "coordinates": {
+                "$ref": "#/components/schemas/Coordinates"
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "consent": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Existing WarningEvidence with refresh delivery metadata. Unknown evidence is not a safety clearance.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarningEvidence"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid consent/date/coordinates or URL query"
+      },
+      "403": {
+        "description": "Origin rejected"
+      },
+      "404": {
+        "description": "Canonical entrance unavailable"
+      },
+      "409": {
+        "description": "Source identity changed"
+      },
+      "502": {
+        "description": "Source verification unavailable"
+      }
+    }
+  }
+},
     "/api/v1/nearby": {
       "post": {
         "summary": "Private center in JSON only; filters a fixed public State Beach catalog locally. No per-candidate external assessment.",
@@ -828,6 +899,31 @@
     "reason"
   ],
   "properties": {
+ "refresh": {
+  "type": "object",
+  "required": [
+    "delivery",
+    "attemptedAt",
+    "nextAllowedAt"
+  ],
+  "properties": {
+    "delivery": {
+      "enum": [
+        "fresh",
+        "reused",
+        "deferred"
+      ]
+    },
+    "attemptedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nextAllowedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+},
     "status": {
       "enum": [
         "available",

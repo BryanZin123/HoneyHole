@@ -6,7 +6,13 @@ function local(value: string) {
     timeStyle: "short",
   }).format(new Date(value));
 }
-export function CoastalWarnings({ evidence }: { evidence?: WarningEvidence }) {
+export function CoastalWarnings({
+  evidence,
+  historical = false,
+}: {
+  evidence?: WarningEvidence;
+  historical?: boolean;
+}) {
   return (
     <section aria-label="Official coastal warnings">
       <h3>Official coastal warnings</h3>
@@ -17,7 +23,14 @@ export function CoastalWarnings({ evidence }: { evidence?: WarningEvidence }) {
       {evidence && (
         <>
           <p>
-            Checked {local(evidence.retrievedAt)} California time. Assessment:{" "}
+            {historical
+              ? "Historical snapshot — not confirmed active now. Recorded"
+              : evidence.refresh?.delivery === "deferred"
+                ? "Attempted (NWS not queried)"
+                : evidence.status === "unknown"
+                  ? "Assessment attempted"
+                  : "Checked"}{" "}
+            {local(evidence.retrievedAt)} California time. Assessment:{" "}
             {evidence.status}.
           </p>
           {evidence.alerts.map((a) => (
@@ -29,7 +42,9 @@ export function CoastalWarnings({ evidence }: { evidence?: WarningEvidence }) {
               <p>
                 {a.applicability === "unknown"
                   ? "Geographic applicability unresolved."
-                  : `Active product reported as of the time checked for this entrance (${a.applicability}).`}
+                  : historical
+                    ? "Historical product; current activity is unknown."
+                    : `Active product reported as of the time checked for this entrance (${a.applicability}).`}
               </p>
               <p>
                 Effective {local(a.effective)}; expires {local(a.expires)}{" "}
