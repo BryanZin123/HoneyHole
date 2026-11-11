@@ -310,3 +310,10 @@ it("compares independent snapshots and point evidence without transferring eithe
   expect(result[0].summary.rows[0].text).toContain(entrance.retrievedAt);
   expect(result[0].summary.rows[0].sources).toContain(entrance.sourceUrl);
 });
+it("preserves original environmental retrieval timestamps in the shared projection", () => {
+  const s = summary();
+  const row = s.rows.find((r) => r.id === "environment")!;
+  expect(row.text).toContain(detail.weather.retrievedAt);
+  expect(row.text).toContain(detail.atmosphere.grid.retrievedAt);
+  expect(row.text).toContain("Pressure observed");
+});

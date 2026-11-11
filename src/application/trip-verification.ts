@@ -184,9 +184,12 @@ export function tripVerification({
         ? "No usable current warning snapshot."
         : !warningMatches
           ? "Warning coordinates do not match this entrance."
-          : `${w.status === "empty" ? "No active NWS alerts returned in this snapshot" : w.status === "unknown" ? w.reason : w.alerts.map((a) => `${a.event}: ${a.period === "overlap" ? "partial selected-date overlap" : a.period === "outside" ? "outside selected date" : "date applicability unknown"}`).join("; ")}. Retrieved ${w.retrievedAt}; ${w.refresh?.delivery ?? "delivery metadata unavailable"}. County/zone applicability is not precise shoreline observation. ${warningHistorical || outdated ? "Historical evidence only; not confirmed active now." : ""}`,
+          : `${w.status === "empty" ? "No active NWS alerts returned in this snapshot" : w.status === "unknown" ? w.reason : w.alerts.map((a) => `${a.event}: ${a.period === "overlap" ? "partial selected-date overlap" : a.period === "outside" ? "outside selected date" : "date applicability unknown"}; effective ${a.effective}, expires ${a.expires}, ends ${a.ends ?? "not supplied"}`).join("; ")}. Retrieved ${w.retrievedAt}; ${w.refresh?.delivery ?? "delivery metadata unavailable"}. County/zone applicability is not precise shoreline observation. ${warningHistorical || outdated ? "Historical evidence only; not confirmed active now." : ""}`,
     next: "Use Refresh official warnings below with consent. Future hazard status outside published validity remains unknown; absent warnings are not safety clearance.",
-    sources: [w?.sourceUrl ?? "https://www.weather.gov/mtr/"],
+    sources: [
+      w?.sourceUrl ?? "https://www.weather.gov/mtr/",
+      ...(warningMatches ? w.alerts.map((a) => a.sourceUrl) : []),
+    ],
   });
   const pm =
     point &&
@@ -257,7 +260,7 @@ export function tripVerification({
           ? "SOURCE FAILURE"
           : "MISSING",
     text: view
-      ? `Selected-day products: ${available?.join(", ") || "none"}. Hourly source: ${d!.weather.status}; grid source: ${d!.atmosphere.grid.status}. ${d!.weather.reason ?? ""} Station references have unverified transfer to the entrance. Observations are not future forecasts.`
+      ? `Selected-day products: ${available?.join(", ") || "none"}. Hourly source: ${d!.weather.status}, retrieved ${d!.weather.retrievedAt}; grid source: ${d!.atmosphere.grid.status}, retrieved ${d!.atmosphere.grid.retrievedAt}. Pressure observed ${d!.atmosphere.pressure.observedAt ?? "unknown"}, retrieved ${d!.atmosphere.pressure.retrievedAt}. Tide reference retrieved ${d!.tides.conditions?.tides.retrievedAt ?? "unavailable"}. ${d!.weather.reason ?? ""} Station references have unverified transfer to the entrance. Observations are not future forecasts.`
       : "No matching selected-date environmental assessment is loaded.",
     next: "Review dated products in the details below. If the trip is outside forecast coverage, return nearer the date. Missing/unreachable products are not unfavorable fishing conditions.",
     sources: d?.weather

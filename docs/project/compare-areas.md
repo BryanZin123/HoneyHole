@@ -23,3 +23,5 @@ Existing API, authentication, owner-isolation and restart-persistence checks are
 No new provider, dependency, permanent storage, regulation rule, species, score, recommendation, monitoring, notification or deployment.
 State Parks commercial licensing remains unresolved. Current closures, comprehensive legal eligibility, present habitat, fish presence and catch predictions remain unverified. Evidence timestamps are evaluated when rendered; no automatic polling. Next bounded milestone: independently sourced dated park-closure evidence, with spatial/date applicability and explicit unknown states.
 Windows checkout was not accessed or modified.
+
+Final evidence-detail review added original hourly/grid/pressure/tide retrieval times and NWS effective/expiration/end times and product links to the reused projection. Regression suite: 432 passed. First commit c95e4d8a0d71cf2c561198f4aee71e514ed54496 synchronized; run 43061395083 verify job passed; browser still installing at review time. Final follow-up commit requires its own completed CI result.
