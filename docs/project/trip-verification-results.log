@@ -3,7 +3,7 @@ Starting feature branch fetched, clean and matched 431720dac113d294ad1b3dc9691fc
 Baseline: 400 tests passed.
 Initial new projection test: RED missing module; then GREEN.
 During test fixture development, an unsupported method field sent to the existing fishing-point validator was rejected as designed; corrected fixture input (no validator changes).
-Final full automated suite: 421 passed, 0 failed, 55 files.
+Final full automated suite: 422 passed, 0 failed, 55 files.
 Typecheck: exit 0. Lint: exit 0.
 Clean production build: exit 0.
 Production account smoke: PASS five pages, registration/private CRUD/preferences, owner isolation, logout/cookie/JSON protections, restart/sign-in/pin/preferences persistence, deletion and API contracts.
@@ -11,3 +11,4 @@ Production routes: PASS /, /conditions, /explore, /saved (HTTP 200 and expected 
 Separate live Moss Landing 7071 assessment: HTTP 200; dated findings in trip-verification.md. No current closure or fishing permission established.
 Local Chromium not run; no installed local browser. GitHub Chromium must complete after synchronization; deterministic fixtures do not establish live data availability.
 No API contract, dependencies, account storage, NWS parser, warning throttle or regulatory evaluator changed. No Windows modification or public deployment.
+Final review regression: discovery-stage exclusion initially failed (UNVERIFIED); fixed projection to retain EXCLUDED with absent/incomplete detail. Full gates rerun before corrective commit.

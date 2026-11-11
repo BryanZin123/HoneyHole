@@ -34,7 +34,7 @@ export type TripInput = {
     | "parkUrl"
     | "retrievedAt"
     | "datasetUpdatedAt"
-  >;
+  > & { eligibility?: "EXCLUDED" | "UNVERIFIED" };
   plan: { date: string; species: string; method: string };
   detail?: TripDetail;
   warnings?: WarningEvidence;
@@ -69,6 +69,7 @@ export function tripVerification({
       d.activity.species === p.species &&
       d.activity.method === p.method);
   const excluded =
+    e.eligibility === "EXCLUDED" ||
     !matches ||
     d?.opportunity.eligibility === "EXCLUDED" ||
     d?.access.access.status === "restricted" ||

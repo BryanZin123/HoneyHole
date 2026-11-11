@@ -230,3 +230,13 @@ it("opening sources or providing acknowledgment cannot grant eligibility", () =>
   expect(tripVerification(input).eligibility).toBe("UNVERIFIED");
   expect(tripVerification(input).recommendation).toBe("unavailable");
 });
+it("retains discovery exclusion before and after an incomplete detail assessment", () => {
+  const excludedEntrance = { ...entrance, eligibility: "EXCLUDED" as const };
+  expect(
+    tripVerification({ entrance: excludedEntrance, plan, now }).eligibility,
+  ).toBe("EXCLUDED");
+  expect(
+    tripVerification({ entrance: excludedEntrance, plan, detail, now })
+      .eligibility,
+  ).toBe("EXCLUDED");
+});
