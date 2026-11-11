@@ -35,7 +35,7 @@ export type TripInput = {
     | "retrievedAt"
     | "datasetUpdatedAt"
   > & { eligibility?: "EXCLUDED" | "UNVERIFIED" };
-  plan: { date: string; species: string; method: string };
+  plan: { date: string; species: string; method: string; period?: string };
   detail?: TripDetail;
   warnings?: WarningEvidence;
   warningHistorical?: boolean;
@@ -70,10 +70,10 @@ export function tripVerification({
       d.activity.method === p.method);
   const excluded =
     e.eligibility === "EXCLUDED" ||
-    !matches ||
-    d?.opportunity.eligibility === "EXCLUDED" ||
-    d?.access.access.status === "restricted" ||
-    d?.regulations.status === "VERIFIED_PROHIBITED";
+    (matches &&
+      (d?.opportunity.eligibility === "EXCLUDED" ||
+        d?.access.access.status === "restricted" ||
+        d?.regulations.status === "VERIFIED_PROHIBITED"));
   const rows: TripRow[] = [
     {
       id: "identity",
@@ -179,7 +179,7 @@ export function tripVerification({
                 ? "OUTDATED"
                 : "AVAILABLE",
     text: warningFailed
-      ? "Refresh unsuccessful; the latest warning assessment is unknown. See the dated historical snapshot below, if available."
+      ? `Refresh unsuccessful; the latest warning assessment is unknown. ${w ? "Historical snapshot retrieved " + w.retrievedAt + "; not confirmed active now." : "See the dated historical snapshot below, if available."}`
       : !w
         ? "No usable current warning snapshot."
         : !warningMatches
@@ -270,7 +270,11 @@ export function tripVerification({
       : [],
   });
   return {
-    eligibility: excluded ? ("EXCLUDED" as const) : ("UNVERIFIED" as const),
+    eligibility: excluded
+      ? ("EXCLUDED" as const)
+      : !matches
+        ? ("NOT COMPARABLE" as const)
+        : ("UNVERIFIED" as const),
     rows,
     recommendation: "unavailable" as const,
   };

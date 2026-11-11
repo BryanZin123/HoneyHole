@@ -151,7 +151,7 @@ it.each(["species", "date", "method"] as const)(
     const d = structuredClone(detail);
     d.activity[key] = "different";
     const s = summary(d);
-    expect(s.eligibility).toBe("EXCLUDED");
+    expect(s.eligibility).toBe("NOT COMPARABLE");
     expect(s.rows.find((r) => r.id === "identity")?.status).toBe("CONFLICTING");
   },
 );
@@ -239,4 +239,74 @@ it("retains discovery exclusion before and after an incomplete detail assessment
     tripVerification({ entrance: excludedEntrance, plan, detail, now })
       .eligibility,
   ).toBe("EXCLUDED");
+});
+import { compareTrips } from "../src/application/compare-trips";
+it("keeps an upstream exclusion even when later identity conflicts", () => {
+  const d = structuredClone(detail);
+  d.location.id = "wrong";
+  const s = tripVerification({
+    entrance: { ...entrance, eligibility: "EXCLUDED" },
+    plan,
+    detail: d,
+    now,
+  });
+  expect(s.eligibility).toBe("EXCLUDED");
+  expect(s.rows[0].status).toBe("CONFLICTING");
+});
+it.each(["id", "coordinates"])(
+  "rejects changed source %s without inventing a prohibition",
+  (field) => {
+    const d = structuredClone(detail);
+    if (field === "id") d.location.id = "wrong";
+    else d.location.coordinates.latitude += 0.001;
+    expect(summary(d).eligibility).toBe("NOT COMPARABLE");
+  },
+);
+it("compares independent snapshots and point evidence without transferring either", () => {
+  const b = {
+    ...entrance,
+    id: "2",
+    name: "Second fixture",
+    coordinates: { latitude: 36.9, longitude: -121.9 },
+  };
+  const result = compareTrips([
+    {
+      entrance,
+      plan,
+      detail,
+      point: pointDetail.point.coordinates,
+      pointDetail,
+      warnings: warning,
+      now,
+    },
+    {
+      entrance: b,
+      plan,
+      warnings: {
+        ...warning,
+        coordinates: b.coordinates,
+        retrievedAt: "2020-01-01T00:00:00Z",
+      },
+      now,
+    },
+  ]);
+  expect(result[0].evidenceLoaded).toBe(true);
+  expect(result[1].evidenceLoaded).toBe(false);
+  expect(result[0].summary.rows.find((r) => r.id === "warnings")?.status).toBe(
+    "AVAILABLE",
+  );
+  expect(result[1].summary.rows.find((r) => r.id === "warnings")?.status).toBe(
+    "OUTDATED",
+  );
+  expect(result[1].summary.rows.find((r) => r.id === "habitat")?.text).toMatch(
+    /not yet assessed/,
+  );
+  expect(
+    result.every(
+      (s) =>
+        s.summary.rows.find((r) => r.id === "closures")?.status === "UNKNOWN",
+    ),
+  ).toBe(true);
+  expect(result[0].summary.rows[0].text).toContain(entrance.retrievedAt);
+  expect(result[0].summary.rows[0].sources).toContain(entrance.sourceUrl);
 });

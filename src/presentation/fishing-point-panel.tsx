@@ -12,20 +12,25 @@ export function FishingPointPanel({
   initialDate,
   initialSpecies,
   onEvidence,
+  initialResult,
 }: {
   point: Coordinates;
   initialDate?: string;
+  initialResult?: Result | null;
   initialSpecies?: string;
   onEvidence?: (value: Result | null) => void;
 }) {
   const [date, setDate] = useState(
     () =>
+      initialResult?.date ??
       initialDate ??
       new Date().toLocaleDateString("en-CA", {
         timeZone: "America/Los_Angeles",
       }),
   );
-  const [species, setSpecies] = useState(initialSpecies || "unassessed");
+  const [species, setSpecies] = useState(
+    initialResult?.species || initialSpecies || "unassessed",
+  );
   const [signedIn, setSignedIn] = useState(false);
   const [evidenceExpanded, setEvidenceExpanded] = useState(false);
   useEffect(() => {
@@ -46,7 +51,7 @@ export function FishingPointPanel({
     };
   }, []);
   const [consent, setConsent] = useState(false),
-    [result, setResult] = useState<Result | null>(null),
+    [result, setResult] = useState<Result | null>(initialResult ?? null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(""),

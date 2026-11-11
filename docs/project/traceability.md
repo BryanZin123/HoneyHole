@@ -828,3 +828,12 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 - TRIP-03: nearby intentional point selection reuses ExploreMap/FishingPointPanel, initial trip date/species, independent point result and privacy consent; no entrance conclusions transferred; desktop/mobile Chromium coverage.
 - TRIP-04: existing exclusion precedence, source/activity identity mismatch, stale legal reviews, unknown current closures and historical habitat remain conservative; domain and existing API/account/persistence tests.
 - TRIP-05: actual bounded Moss Landing demonstration recorded separately from synthetic fixtures; no safety, legal or catch claims; State Parks commercial use unresolved.
+
+## Two-area comparison — CMP-01 through CMP-06 (2026-11-11)
+See compare-areas.md for audit, implementation, limitations and deterministic demonstration.
+- CMP-01: exactly two source IDs/common plan: application/compare-trips.ts and tests/compare-trips.test.ts.
+- CMP-02/03: per-entrance consent and retained evidence; seven-row responsive comparison: presentation/nearby-areas.tsx, compare-trips.tsx; tests/e2e/compare.spec.ts.
+- CMP-04: independent warning snapshot restoration and failed-refresh history: refresh-coastal-warnings.tsx; existing warning tests plus new desktop/mobile workflow.
+- CMP-05: deliberate fishing-point state and independently assessed result remain keyed to their entrance; no saved-pin reuse.
+- CMP-06: identity conflicts NOT COMPARABLE, verified upstream exclusions retained: trip-verification.ts and tests/trip-verification.test.ts.
+- No provider API, legal rule or dependency changes. Final CI/browser verification must be read from the resulting commit's Actions run, not inferred from deterministic unit results.

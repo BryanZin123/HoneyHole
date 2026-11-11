@@ -1,5 +1,7 @@
 "use client";
 
+import { CompareTrips } from "./compare-trips";
+import type { WarningSnapshot } from "./refresh-coastal-warnings";
 import { FishingPointPanel } from "./fishing-point-panel";
 import { TripVerification } from "./trip-verification";
 import type { PointDetail } from "../application/trip-verification";
@@ -50,14 +52,16 @@ function datedSummary(d: Detail) {
   return `Available for ${d.activity.date}: ${items.join(", ") || "no usable products"}. Station references are not verified conditions at the entrance.`;
 }
 export function NearbyAreas() {
-  const [fishingPoint, setFishingPoint] = useState<Coordinates | null>(null);
-  const [pointDetail, setPointDetail] = useState<PointDetail | null>(null);
+  const [points, setPoints] = useState<Record<string, Coordinates>>({});
+  const [pointDetails, setPointDetails] = useState<
+    Record<string, PointDetail | null>
+  >({});
+  const [consents, setConsents] = useState<Record<string, boolean>>({});
+  const [snapshots, setSnapshots] = useState<Record<string, WarningSnapshot>>(
+    {},
+  );
+  const [comparison, setComparison] = useState<string[]>([]);
   const [pickingFishing, setPickingFishing] = useState(false);
-  const chooseFishing = useCallback((p: Coordinates) => {
-    setFishingPoint(p);
-    setPointDetail(null);
-    setPickingFishing(false);
-  }, []);
   const [lat, setLat] = useState(""),
     [lon, setLon] = useState(""),
     [map, setMap] = useState(false),
@@ -65,11 +69,37 @@ export function NearbyAreas() {
     [result, setResult] = useState<NearbyResult | null>(null),
     [plan, setPlan] = useState<NearbyPlan | null>(null),
     [selected, setSelected] = useState<string | null>(null),
-    [consented, setConsented] = useState(false),
     [details, setDetails] = useState<Record<string, Detail>>({}),
     [busy, setBusy] = useState(false),
     [loading, setLoading] = useState(false),
     [error, setError] = useState("");
+  const fishingPoint = selected ? (points[selected] ?? null) : null;
+  const pointDetail = selected ? (pointDetails[selected] ?? null) : null;
+  const consented = selected ? (consents[selected] ?? false) : false;
+  const setConsented = (value: boolean) => {
+    if (selected) setConsents((s) => ({ ...s, [selected]: value }));
+  };
+  const setPointDetail = useCallback(
+    (value: PointDetail | null) => {
+      if (selected) setPointDetails((s) => ({ ...s, [selected]: value }));
+    },
+    [selected],
+  );
+  const setSnapshot = useCallback(
+    (value: WarningSnapshot) => {
+      if (selected) setSnapshots((s) => ({ ...s, [selected]: value }));
+    },
+    [selected],
+  );
+  const chooseFishing = useCallback(
+    (p: Coordinates) => {
+      if (!selected) return;
+      setPoints((s) => ({ ...s, [selected]: p }));
+      setPointDetails((s) => ({ ...s, [selected]: null }));
+      setPickingFishing(false);
+    },
+    [selected],
+  );
   const searchReq = useRef<AbortController | null>(null),
     evidenceReq = useRef<AbortController | null>(null);
   useEffect(
@@ -82,14 +112,16 @@ export function NearbyAreas() {
   const invalidate = useCallback(() => {
     searchReq.current?.abort();
     evidenceReq.current?.abort();
-    setFishingPoint(null);
-    setPointDetail(null);
+    setPoints({});
+    setPointDetails({});
+    setSnapshots({});
+    setConsents({});
+    setComparison([]);
     setPickingFishing(false);
     setResult(null);
     setDetails({});
     setPlan(null);
     setSelected(null);
-    setConsented(false);
     setBusy(false);
     setLoading(false);
     setError("");
@@ -105,11 +137,9 @@ export function NearbyAreas() {
   );
   const select = useCallback((id: string) => {
     evidenceReq.current?.abort();
-    setFishingPoint(null);
-    setPointDetail(null);
+
     setPickingFishing(false);
     setSelected(id);
-    setConsented(false);
     setLoading(false);
     setError("");
   }, []);
@@ -208,6 +238,16 @@ export function NearbyAreas() {
         <button onClick={() => select(c.id)} aria-pressed={selected === c.id}>
           {c.name}
         </button>
+        {comparison.length === 1 && comparison[0] !== c.id && (
+          <button
+            onClick={() => {
+              setComparison([comparison[0], c.id]);
+              select(c.id);
+            }}
+          >
+            Compare {c.name}
+          </button>
+        )}
         <p>
           {c.distanceKm.toFixed(2)} km straight-line · {c.county} County · State
           Beach entrance #{c.id}
@@ -403,9 +443,42 @@ export function NearbyAreas() {
           )}
         </>
       )}
+      {comparison.length === 1 && (
+        <p role="status">
+          Choose a different entrance using its Compare button. No evidence is
+          loaded automatically.
+        </p>
+      )}
+      {comparison.length === 2 && plan && (
+        <CompareTrips
+          areas={comparison.map((id) => {
+            const entrance = candidates.find((c) => c.id === id)!;
+            const snapshot = snapshots[id];
+            return {
+              entrance,
+              plan,
+              detail: details[id],
+              warnings: snapshot
+                ? (snapshot.current ?? snapshot.historical)
+                : details[id]?.warnings,
+              warningHistorical: snapshot?.historicalOnly,
+              warningFailed: snapshot?.message.startsWith(
+                "Unknown — refresh unsuccessful",
+              ),
+              point: points[id],
+              pointDetail: pointDetails[id],
+            };
+          })}
+          onReview={select}
+          onClose={() => setComparison([])}
+        />
+      )}
       {current && (
         <section aria-label="Selected entrance evidence">
           <h2>{current.name}: entrance evidence</h2>
+          <button onClick={() => setComparison([current.id])}>
+            Compare with another area
+          </button>
           <p>
             Published park entrance {current.id}: {current.coordinates.latitude}
             , {current.coordinates.longitude}.{" "}
@@ -494,6 +567,8 @@ export function NearbyAreas() {
               <RefreshCoastalWarnings
                 key={`${current.id}:${plan!.date}:${current.coordinates.latitude}:${current.coordinates.longitude}`}
                 initial={detail.warnings}
+                initialSnapshot={snapshots[current.id]}
+                onSnapshot={setSnapshot}
                 id={current.id}
                 coordinates={current.coordinates}
                 date={plan!.date}
@@ -552,6 +627,7 @@ export function NearbyAreas() {
               point={fishingPoint}
               initialDate={plan!.date}
               initialSpecies={plan!.species}
+              initialResult={pointDetails[current.id]}
               onEvidence={setPointDetail}
             />
           )}

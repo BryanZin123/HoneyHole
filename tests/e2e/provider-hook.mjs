@@ -57,6 +57,15 @@ globalThis.fetch = async (input, init) => {
           },
           geometry: { type: "Point", coordinates: [-122.5, 37.5] },
         },
+        {
+          type: "Feature",
+          properties: {
+            OBJECTID: 992,
+            PARK_NAME: "Synthetic Second Fixture SB",
+            County: "San Mateo",
+          },
+          geometry: { type: "Point", coordinates: [-122.5, 37.7] },
+        },
       ],
     });
   if (url === parks + "?f=json") return Response.json({});

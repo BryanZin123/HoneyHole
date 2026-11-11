@@ -91,3 +91,6 @@ Added consented single-entrance warning-only POST and UI action, shared process-
 
 ## 2026-11-10 — Fishing Trip Verification
 Added a read-only evidence projection and selected-entrance summary with seven categories, next actions and source links. Latest warning refresh state feeds the summary directly. Reused intentional map selection and independent fishing-point panel, preserving separate consent/identity and owner-protected saves. Existing exclusions remain authoritative; current closures remain unknown. Real Moss Landing example and limitations: `trip-verification.md`; local verification: `trip-verification-results.log`. Completed remote CI must be checked after synchronization.
+
+## 2026-11-11 — Two-area trip comparison
+Implemented CMP-01..06; audit and scope in compare-areas.md. Baseline 422 passed; implementation 431 passed. Typecheck/lint and clean production build passed; five-page HTTP workflow, registration/private CRUD/preferences/owner isolation/logout, restart persistence/delete/API contracts and four route smoke checks passed locally. Chromium unavailable locally; supported GitHub runner will execute the new comparison test on desktop/mobile alongside existing tests. No live-provider demonstration or Windows testing performed. Commit/remote CI outcomes are reported after verification; recommendations and deployment remain disabled.

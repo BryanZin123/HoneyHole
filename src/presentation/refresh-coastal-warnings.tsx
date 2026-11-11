@@ -9,6 +9,13 @@ const time = (s: string) =>
     dateStyle: "medium",
     timeStyle: "medium",
   }).format(new Date(s));
+export type WarningSnapshot = {
+  current?: WarningEvidence;
+  historical?: WarningEvidence;
+  message: string;
+  changes: string;
+  historicalOnly: boolean;
+};
 export function RefreshCoastalWarnings({
   initial,
   id,
@@ -16,8 +23,12 @@ export function RefreshCoastalWarnings({
   date,
   consented,
   renderSummary,
+  initialSnapshot,
+  onSnapshot,
 }: {
   initial?: WarningEvidence;
+  initialSnapshot?: WarningSnapshot;
+  onSnapshot?: (snapshot: WarningSnapshot) => void;
   id: string;
   coordinates: Coordinates;
   date: string;
@@ -28,14 +39,30 @@ export function RefreshCoastalWarnings({
     failed: boolean,
   ) => ReactNode;
 }) {
-  const [current, setCurrent] = useState(initial),
-    [historical, setHistorical] = useState<WarningEvidence>(),
-    [busy, setBusy] = useState(false),
-    [message, setMessage] = useState(""),
-    [changes, setChanges] = useState(""),
-    [historicalOnly, setHistoricalOnly] = useState(
-      initial?.refresh?.delivery === "reused",
-    );
+  const [snapshot, setSnapshot] = useState<WarningSnapshot>(
+    () =>
+      initialSnapshot ?? {
+        current: initial,
+        message: "",
+        changes: "",
+        historicalOnly: initial?.refresh?.delivery === "reused",
+      },
+  );
+  const { current, historical, message, changes, historicalOnly } = snapshot;
+  const [busy, setBusy] = useState(false);
+  const setCurrent = (value: WarningEvidence | undefined) =>
+    setSnapshot((s) => ({ ...s, current: value }));
+  const setHistorical = (value: WarningEvidence | undefined) =>
+    setSnapshot((s) => ({ ...s, historical: value }));
+  const setMessage = (value: string) =>
+    setSnapshot((s) => ({ ...s, message: value }));
+  const setChanges = (value: string) =>
+    setSnapshot((s) => ({ ...s, changes: value }));
+  const setHistoricalOnly = (value: boolean) =>
+    setSnapshot((s) => ({ ...s, historicalOnly: value }));
+  useEffect(() => {
+    onSnapshot?.(snapshot);
+  }, [snapshot, onSnapshot]);
   const request = useRef<AbortController | null>(null);
   useEffect(
     () => () => {
