@@ -7,11 +7,25 @@ import { HabitatPanel } from "./habitat-panel";
 import { SelectedConditionsPanel } from "./selected-conditions-panel";
 import { FishingPlanningSummary } from "./fishing-planning-summary";
 type Result = Awaited<ReturnType<typeof getFishingPoint>>;
-export function FishingPointPanel({ point }: { point: Coordinates }) {
-  const [date, setDate] = useState(() =>
-    new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }),
+export function FishingPointPanel({
+  point,
+  initialDate,
+  initialSpecies,
+  onEvidence,
+}: {
+  point: Coordinates;
+  initialDate?: string;
+  initialSpecies?: string;
+  onEvidence?: (value: Result | null) => void;
+}) {
+  const [date, setDate] = useState(
+    () =>
+      initialDate ??
+      new Date().toLocaleDateString("en-CA", {
+        timeZone: "America/Los_Angeles",
+      }),
   );
-  const [species, setSpecies] = useState("unassessed");
+  const [species, setSpecies] = useState(initialSpecies || "unassessed");
   const [signedIn, setSignedIn] = useState(false);
   const [evidenceExpanded, setEvidenceExpanded] = useState(false);
   useEffect(() => {
@@ -47,6 +61,7 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
     setBusy(true);
     setError("");
     setResult(null);
+    onEvidence?.(null);
     try {
       const response = await fetch("/api/v1/fishing-point-context", {
         method: "POST",
@@ -69,7 +84,10 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
         value.species !== species
       )
         throw Error("Identity mismatch");
-      if (!controller.signal.aborted) setResult(value);
+      if (!controller.signal.aborted) {
+        setResult(value);
+        onEvidence?.(value);
+      }
     } catch {
       if (!controller.signal.aborted)
         setError(
@@ -139,11 +157,20 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
             setBusy(false);
             setSpecies(e.target.value);
             setResult(null);
+            onEvidence?.(null);
           }}
         >
           <option value="unassessed">Choose a target / unassessed</option>
           <option value="barred surfperch">Barred surfperch</option>
           <option value="unsupported">Other target — unassessed</option>
+          {initialSpecies &&
+            !["barred surfperch", "unassessed", "unsupported"].includes(
+              initialSpecies,
+            ) && (
+              <option value={initialSpecies}>
+                {initialSpecies} — unassessed habitat
+              </option>
+            )}
         </select>
       </label>
       <label>
@@ -156,6 +183,7 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
             setBusy(false);
             setDate(e.target.value);
             setResult(null);
+            onEvidence?.(null);
           }}
         />
       </label>
@@ -177,6 +205,7 @@ export function FishingPointPanel({ point }: { point: Coordinates }) {
               active.current?.abort();
               setBusy(false);
               setResult(null);
+              onEvidence?.(null);
             }
           }}
         />

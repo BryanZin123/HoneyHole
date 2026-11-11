@@ -1,5 +1,8 @@
 "use client";
 
+import { FishingPointPanel } from "./fishing-point-panel";
+import { TripVerification } from "./trip-verification";
+import type { PointDetail } from "../application/trip-verification";
 import { RefreshCoastalWarnings } from "./refresh-coastal-warnings";
 import type { WarningEvidence } from "../application/warning-provider";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -47,6 +50,14 @@ function datedSummary(d: Detail) {
   return `Available for ${d.activity.date}: ${items.join(", ") || "no usable products"}. Station references are not verified conditions at the entrance.`;
 }
 export function NearbyAreas() {
+  const [fishingPoint, setFishingPoint] = useState<Coordinates | null>(null);
+  const [pointDetail, setPointDetail] = useState<PointDetail | null>(null);
+  const [pickingFishing, setPickingFishing] = useState(false);
+  const chooseFishing = useCallback((p: Coordinates) => {
+    setFishingPoint(p);
+    setPointDetail(null);
+    setPickingFishing(false);
+  }, []);
   const [lat, setLat] = useState(""),
     [lon, setLon] = useState(""),
     [map, setMap] = useState(false),
@@ -71,6 +82,9 @@ export function NearbyAreas() {
   const invalidate = useCallback(() => {
     searchReq.current?.abort();
     evidenceReq.current?.abort();
+    setFishingPoint(null);
+    setPointDetail(null);
+    setPickingFishing(false);
     setResult(null);
     setDetails({});
     setPlan(null);
@@ -91,6 +105,9 @@ export function NearbyAreas() {
   );
   const select = useCallback((id: string) => {
     evidenceReq.current?.abort();
+    setFishingPoint(null);
+    setPointDetail(null);
+    setPickingFishing(false);
     setSelected(id);
     setConsented(false);
     setLoading(false);
@@ -205,8 +222,9 @@ export function NearbyAreas() {
         </p>
         <p>
           Access: {d?.access.access.status ?? c.access}. Regulations:{" "}
-          {d?.regulations.status ?? c.regulatoryStatus}. Hazards unresolved;
-          suitability unassessed.
+          {d?.regulations.status ?? c.regulatoryStatus}. Official warning
+          snapshots are shown in the selected entrance detail; no hazard
+          clearance or suitability established.
         </p>
         <p>
           {d
@@ -325,9 +343,15 @@ export function NearbyAreas() {
       >
         {map ? "Hide area map" : "Open area map"}
       </button>
+      <span id="nearby-area-map" />
       {map && (
         <>
-          <button onClick={() => setPick(!pick)}>
+          <button
+            onClick={() => {
+              setPick(!pick);
+              setPickingFishing(false);
+            }}
+          >
             {pick ? "Cancel center selection" : "Choose search center on map"}
           </button>
           {pick && (
@@ -340,8 +364,9 @@ export function NearbyAreas() {
             locations={candidates.filter((c) => !excluded(c))}
             selectedId={selected}
             onSelect={select}
-            picking={pick}
-            onFishingPoint={choose}
+            picking={pick || pickingFishing}
+            fishingPoint={fishingPoint}
+            onFishingPoint={pickingFishing ? chooseFishing : choose}
             label="Nearby area map"
           />
         </>
@@ -382,11 +407,13 @@ export function NearbyAreas() {
         <section aria-label="Selected entrance evidence">
           <h2>{current.name}: entrance evidence</h2>
           <p>
-            Source entrance {current.id}: {current.coordinates.latitude},{" "}
-            {current.coordinates.longitude}. No fishing coordinate has been
-            assigned. Verify current public entry and closures with the park,
-            then check restrictions and coastal warnings for the actual fishing
-            point.
+            Published park entrance {current.id}: {current.coordinates.latitude}
+            , {current.coordinates.longitude}.{" "}
+            {fishingPoint
+              ? "The user-selected fishing point is a separate entity below."
+              : "No fishing coordinate has been assigned."}{" "}
+            Verify current public entry and closures with the park, then check
+            restrictions and coastal warnings for the actual fishing point.
           </p>
           <p>
             Source retrieved {current.retrievedAt}; dataset update{" "}
@@ -421,6 +448,39 @@ export function NearbyAreas() {
                 ? "Evidence loaded for this plan"
                 : "Load entrance evidence"}
           </button>
+          {!detail && plan && (
+            <TripVerification
+              entrance={current}
+              plan={plan}
+              point={fishingPoint}
+              pointDetail={pointDetail}
+            />
+          )}
+          <button
+            onClick={() => {
+              setMap(true);
+              setPick(false);
+              setPickingFishing(!pickingFishing);
+              if (!pickingFishing)
+                requestAnimationFrame(() =>
+                  document
+                    .getElementById("nearby-area-map")
+                    ?.scrollIntoView({ block: "start" }),
+                );
+            }}
+          >
+            {pickingFishing
+              ? "Cancel fishing-point selection"
+              : "Choose an actual fishing point"}
+          </button>
+          {pickingFishing && (
+            <p role="status">
+              Use the nearby area map above: click a deliberate fishing
+              coordinate, or pan with arrow keys and press Enter. The entrance
+              is not automatically selected; public map tiles reveal the viewed
+              area.
+            </p>
+          )}
           {detail && (
             <>
               <p>
@@ -438,6 +498,18 @@ export function NearbyAreas() {
                 coordinates={current.coordinates}
                 date={plan!.date}
                 consented={consented}
+                renderSummary={(warnings, historical, failed) => (
+                  <TripVerification
+                    entrance={current}
+                    plan={plan!}
+                    detail={detail}
+                    warnings={warnings}
+                    warningHistorical={historical}
+                    warningFailed={failed}
+                    point={fishingPoint}
+                    pointDetail={pointDetail}
+                  />
+                )}
               />
               <details>
                 <summary>Sources and dated entrance conditions</summary>
@@ -473,6 +545,15 @@ export function NearbyAreas() {
                 ))}
               </details>
             </>
+          )}
+          {fishingPoint && (
+            <FishingPointPanel
+              key={`${current.id}:${fishingPoint.latitude}:${fishingPoint.longitude}:${plan!.date}`}
+              point={fishingPoint}
+              initialDate={plan!.date}
+              initialSpecies={plan!.species}
+              onEvidence={setPointDetail}
+            />
           )}
         </section>
       )}

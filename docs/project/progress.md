@@ -88,3 +88,6 @@ Implemented isolated NWS active-point provider, conservative temporal/geographic
 
 ## 2026-11-08 — Independent official-warning refresh
 Added consented single-entrance warning-only POST and UI action, shared process-level spacing across both routes, original cached timestamps, dated historical failure snapshots and alert-ID comparisons. Existing NWS parser and regulatory/ownership logic unchanged. Audit, behavior, limitations and verification: `warning-refresh.md`, `warning-refresh-verification.log`. Browser CI completion is reported after synchronization.
+
+## 2026-11-10 — Fishing Trip Verification
+Added a read-only evidence projection and selected-entrance summary with seven categories, next actions and source links. Latest warning refresh state feeds the summary directly. Reused intentional map selection and independent fishing-point panel, preserving separate consent/identity and owner-protected saves. Existing exclusions remain authoritative; current closures remain unknown. Real Moss Landing example and limitations: `trip-verification.md`; local verification: `trip-verification-results.log`. Completed remote CI must be checked after synchronization.

@@ -179,3 +179,68 @@ test("warning-only refresh preserves environment, consent and history", async ({
     true,
   );
 });
+test("trip verification separates entrance and deliberate fishing-point evidence", async ({
+  page,
+}) => {
+  await page.goto("/explore/nearby");
+  await page.getByLabel("Center latitude").fill("37.512345");
+  await page.getByLabel("Center longitude").fill("-122.512345");
+  await page.getByLabel("Target species").selectOption("barred surfperch");
+  await page.getByRole("button", { name: "Search nearby areas" }).click();
+  await page
+    .getByRole("button", { name: /Synthetic Browser Fixture SB/ })
+    .click();
+  const panel = page.getByRole("region", {
+      name: "Selected entrance evidence",
+    }),
+    trip = page.getByRole("region", { name: "Fishing Trip Verification" });
+  await expect(trip.getByText(/Fishing point not yet assessed/)).toBeVisible();
+  await expect(trip.getByText("Current closures — UNKNOWN")).toBeVisible();
+  expect(await trip.getByRole("checkbox").count()).toBe(0);
+  await panel.getByRole("checkbox").check();
+  await panel.getByRole("button", { name: "Load entrance evidence" }).click();
+  await expect(
+    panel.getByRole("button", { name: "Refresh official warnings" }),
+  ).toBeVisible();
+  await expect(trip.getByText(/County\/zone applicability/)).toBeVisible();
+  const calls: string[] = [];
+  page.on("request", (r) => calls.push(r.url()));
+  await panel
+    .getByRole("button", { name: "Choose an actual fishing point" })
+    .click();
+  const map = page.getByRole("region", { name: "Nearby area map" });
+  await map.focus();
+  await map.press("ArrowRight");
+  await page.waitForTimeout(350);
+  await map.press("Enter");
+  const point = page.getByRole("region", { name: "Your fishing point" });
+  await expect(point).toBeVisible();
+  await expect(point.getByText(/not a State Parks record/)).toBeVisible();
+  await expect(panel.getByText(/Published park entrance 991/)).toBeVisible();
+  const coords = await point
+    .getByLabel("Fishing-point coordinates")
+    .textContent();
+  expect(coords).not.toBe("37.5, -122.5");
+  expect(
+    calls.some(
+      (u) => u.includes("/fishing-point-context") || u.includes("/pins"),
+    ),
+  ).toBe(false);
+  await point
+    .getByRole("button", { name: "Load mapped shoreline context" })
+    .click();
+  await expect(
+    point.getByRole("region", { name: "Fishing planning summary" }),
+  ).toBeVisible();
+  await expect(
+    trip.getByText(
+      /Historical shoreline context cannot establish current substrate/,
+    ),
+  ).toBeVisible();
+  await expect(
+    point.getByRole("button", { name: "Load conditions for this point" }),
+  ).toBeDisabled();
+  await expect(trip.getByText(/No completion boxes/)).toBeVisible();
+  await point.getByLabel("Fishing-point date").fill("2027-01-01");
+  await expect(trip.getByText(/evidence not loaded/)).toBeVisible();
+});

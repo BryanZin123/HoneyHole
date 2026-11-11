@@ -821,3 +821,10 @@ REQ-HAB-001 species-specific documented associations, dated sources and descript
 - WARN-05: `refresh-entrance-warnings.ts`, location warnings POST: same-origin consent and canonical identity before warning-only request; `warning-refresh.test.ts`.
 - WARN-06: `entrance-warnings.ts`, `entrance-warning-service.ts`: shared process gate, concurrent requests, original cached timestamps, date-sensitive cache; unit and real server desktop/mobile tests.
 - WARN-07: `refresh-coastal-warnings.tsx`: explicit refresh, failure history, withdrawn consent/stale response protection, ID differences and unchanged environmental assessment; component/Chromium tests. No scheduled retries, private storage or recommendation activation.
+
+## Fishing Trip Verification (2026-11-10)
+- TRIP-01: pure `application/trip-verification.ts` derives seven evidence categories, provenance and next steps; no provider calls or acknowledgments changing authority; projection tests.
+- TRIP-02: `presentation/trip-verification.tsx` and warning summary composition preserve latest/current/historical/failed snapshot distinctions; UI tests and retained refresh regression suite.
+- TRIP-03: nearby intentional point selection reuses ExploreMap/FishingPointPanel, initial trip date/species, independent point result and privacy consent; no entrance conclusions transferred; desktop/mobile Chromium coverage.
+- TRIP-04: existing exclusion precedence, source/activity identity mismatch, stale legal reviews, unknown current closures and historical habitat remain conservative; domain and existing API/account/persistence tests.
+- TRIP-05: actual bounded Moss Landing demonstration recorded separately from synthetic fixtures; no safety, legal or catch claims; State Parks commercial use unresolved.

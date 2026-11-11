@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import type { Coordinates } from "../domain/geography";
 import type { WarningEvidence } from "../application/warning-provider";
 import { CoastalWarnings } from "./coastal-warnings";
@@ -15,12 +15,18 @@ export function RefreshCoastalWarnings({
   coordinates,
   date,
   consented,
+  renderSummary,
 }: {
   initial?: WarningEvidence;
   id: string;
   coordinates: Coordinates;
   date: string;
   consented: boolean;
+  renderSummary?: (
+    evidence: WarningEvidence | undefined,
+    historical: boolean,
+    failed: boolean,
+  ) => ReactNode;
 }) {
   const [current, setCurrent] = useState(initial),
     [historical, setHistorical] = useState<WarningEvidence>(),
@@ -124,6 +130,11 @@ export function RefreshCoastalWarnings({
   // Withdrawal aborts the request; a new click after renewed consent starts a new request.
   return (
     <div>
+      {renderSummary?.(
+        current,
+        historicalOnly,
+        message.startsWith("Unknown — refresh unsuccessful"),
+      )}
       <button disabled={!consented || busy} onClick={() => void refresh()}>
         Refresh official warnings
       </button>
