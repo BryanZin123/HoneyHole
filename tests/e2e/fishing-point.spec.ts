@@ -23,6 +23,9 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
   await expect(
     map.locator('[title="Synthetic Browser Fixture SB"]'),
   ).toBeVisible();
+  // Fix the viewport to a known pilot entrance before a separate deliberate click.
+  // Fitting multiple discovery records can put this screen position outside the pilot.
+  await map.locator('[title="Synthetic Browser Fixture SB"]').click();
   let pointCalls = 0;
   page.on("request", (r) => {
     if (r.url().includes("/api/v1/fishing-point-context")) pointCalls++;
@@ -59,6 +62,7 @@ test("intentional fishing point, ordered shoreline evidence and private restart 
     .getByRole("button", { name: "Load mapped shoreline context" })
     .click();
   const detail = await (await received).json();
+  expect(detail.shoreline.status).not.toBe("outside-pilot");
   expect(detail.environmentConsent).toBe(false);
   expect(detail.environment).toBeNull();
   expect(detail.point.coordinates).toEqual({ latitude, longitude });

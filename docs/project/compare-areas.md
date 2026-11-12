@@ -25,3 +25,5 @@ State Parks commercial licensing remains unresolved. Current closures, comprehen
 Windows checkout was not accessed or modified.
 
 Final evidence-detail review added original hourly/grid/pressure/tide retrieval times and NWS effective/expiration/end times and product links to the reused projection. Regression suite: 432 passed. First commit c95e4d8a0d71cf2c561198f4aee71e514ed54496 synchronized; run 43061395083 verify job passed; browser still installing at review time. Final follow-up commit requires its own completed CI result.
+
+CI run 43061995753: verify passed (432 tests); Chromium 27 passed, 1 failed. Both new comparison executions passed. Inspected browser failure artifact: the older desktop test clicked 37.648949074126506,-122.67951965332033 after two-fixture map fitBounds, outside the pilot longitude boundary. Production correctly returned outside-pilot without a GIS query. Corrected test setup to intentionally focus the published fixture entrance before its separate offset map click, and assert pilot coverage explicitly; no production geometry/validation relaxed. Complete browser rerun required.
